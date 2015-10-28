@@ -3,28 +3,28 @@ home:
   defaults: { _controller: AppBundle:Default:index, active:false }
 
 general:
-  path: /general/{active}
-  defaults: { _controller: AppBundle:General:index, active:false }
+  path: /rules/general/{active}
+  defaults: { _controller: AppBundle:Rules:general, active:false }
 
 power:
-  path: /power/{active}
-  defaults: { _controller: AppBundle:Power:index, active:false }
+  path: /rules/power/{active}
+  defaults: { _controller: AppBundle:Rules:power, active:false }
 
 terrain:
-  path: /terrain/{active}
-  defaults: { _controller: AppBundle:Terrain:index, active:false }
+  path: /rules/terrain/{active}
+  defaults: { _controller: AppBundle:Rules:terrain, active:false }
 
 turn:
-  path: /turn/{active}
-  defaults: { _controller: AppBundle:Turn:index, active:false }
+  path: /rules/turn/{active}
+  defaults: { _controller: AppBundle:Rules:turn, active:false }
 
 unit:
-  path: /unit/{active}
-  defaults: { _controller: AppBundle:Unit:index, active:false }
+  path: /rules/unit/{active}
+  defaults: { _controller: AppBundle:Rules:unit, active:false }
 
 house_rules:
-  path: /houserules/{active}
-  defaults: { _controller: AppBundle:HouseRule:index, active:false }
+  path: /rules/houserules/{active}
+  defaults: { _controller: AppBundle:Rules:houseRules, active:false }
 
 battle_calculator:
   path: /battlecalculator/{active}
