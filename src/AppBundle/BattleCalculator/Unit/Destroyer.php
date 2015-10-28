@@ -18,6 +18,7 @@ class Destroyer extends SeaUnit
         $this->attack = 2;
         $this->defense = 2;
         $this->addTag(Unit::DENIES_SURPRISE_STRIKE);
+        $this->addTag(Unit::DENIES_CANT_BE_HIT_BY_AIR_UNITS);
 
         parent::__construct($logger);
     }

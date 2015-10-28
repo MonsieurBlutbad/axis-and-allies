@@ -57,6 +57,8 @@ class Side
         $this->logger = $logger;
         $this->type = $type;
         $this->units = $units;
+        foreach($this->units as $unit)
+            $unit->setSide($this);
 
         if($this->type === self::ATTACKER)
             $this->combineArms();
@@ -166,27 +168,38 @@ class Side
 
     /**
      * @param Unit $hitBy
-     * @param null $hitsClass
+     * @param array $allowedClasses
+     * @return Unit|null
      */
-    public function applyHit(Unit $hitBy, $hitsClass = null)
+    public function applyHit(Unit $hitBy, $allowedClasses = [])
     {
-        if($this->logger && $hitsClass)
-            $this->logger->info('Applying hit only to class '. $hitsClass, ['hitBy' => $hitBy->getName()]);
+        if($this->logger && $allowedClasses)
+            $this->logger->info('Applying hit only to classes '. $allowedClasses, ['hitBy' => $hitBy->getName()]);
 
         if(count($this->units) > 0) {
             foreach ($this->units as $unit) {
                 /* @var Unit $unit */
-                if($hitsClass && ! $unit instanceof $hitsClass)
-                    continue;
-
+                /* Skip units that are already in casualties (hit earlier this round) */
                 if( in_array($unit, $this->casualties, true)) {
                     continue;
                 }
 
+                /* Hit only allowed classes (i.e. Antiaircraft Artillery may only hit Air Units */
+                if($allowedClasses && ! in_array(get_class($unit), $allowedClasses))
+                    continue;
+
+                /* Skip if an air unit tries to hit a unit that can't be hit by air units unless countered (i.e. Subs) */
                 if(
                     $hitBy instanceof AirUnit &&
                     $unit->hasTag(Unit::CANT_BE_HIT_BY_AIR_UNITS) &&
-                    ! $hitBy->hasTag(Unit::DENIES_CANT_BE_HIT_BY_AIR_UNITS)
+                    ! count($hitBy->getSide()->getUnitsByTag(Unit::DENIES_CANT_BE_HIT_BY_AIR_UNITS)) > 0
+                )
+                    continue;
+
+                /* Skip if a unit that can't hit air units tries to hit an air unit */
+                if(
+                    $unit instanceof AirUnit &&
+                    $hitBy->hasTag(Unit::CANT_HIT_AIR_UNITS)
                 )
                     continue;
 
@@ -198,40 +211,17 @@ class Side
                     $this->orderUnits();
                 }
 
-                break;
+                return $unit;
             }
         }
+
+        return null;
     }
 
     /**
      *
      */
-    public function finishRound()
-    {
-        if($this->logger)
-            $this->logger->notice('finishing round',  [$this->getType()]);
-
-        $this->cleanUpCasualties();
-    }
-
-    /**
-     *
-     */
-    public function startRound()
-    {
-        if($this->logger)
-            $this->logger->notice('starting round',  [$this->getType()]);
-
-        if($this->type === self::ATTACKER)
-            $this->combineArms();
-
-        $this->orderUnits();
-    }
-
-    /**
-     *
-     */
-    private function cleanUpCasualties()
+    public function removeCasualties()
     {
         if($this->logger)
             $this->logger->info('cleaning up casualties', ['type' => $this->getType(), 'casualties' => count($this->casualties)]);
@@ -247,6 +237,8 @@ class Side
                 }
             }
         }
+
+        $this->orderUnits();
     }
 
     /**
@@ -283,8 +275,10 @@ class Side
      *
      */
     private function orderUnits() {
-        if($this->type === self::ATTACKER)
+        if($this->type === self::ATTACKER) {
+            $this->combineArms();
             $this->orderUnitsByAttack();
+        }
         if($this->type === self::DEFENDER)
             $this->orderUnitsByDefense();
 

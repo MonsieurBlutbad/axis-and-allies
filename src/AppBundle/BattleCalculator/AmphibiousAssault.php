@@ -18,9 +18,6 @@ class AmphibiousAssault extends LandBattle
      */
     protected function beforeFirstRound()
     {
-        if($this->logger)
-            $this->logger->notice('Coastal Bombardment begins');
-
         $this->coastalBombardment();
 
         parent::beforeFirstRound();
@@ -31,6 +28,9 @@ class AmphibiousAssault extends LandBattle
      */
     private function coastalBombardment()
     {
+        if($this->logger)
+            $this->logger->notice('Coastal Bombardment begins');
+
         foreach($this->attacker->getUnitsByClass(SeaUnit::class) as $unit) {
             /* @var SeaUnit $unit */
             if($unit->getCoastalBombardment() > 0) {
@@ -44,8 +44,7 @@ class AmphibiousAssault extends LandBattle
             }
         }
 
-        $this->attacker->finishRound();
-        $this->defender->finishRound();
+        $this->removeCasualties();
     }
 
 }

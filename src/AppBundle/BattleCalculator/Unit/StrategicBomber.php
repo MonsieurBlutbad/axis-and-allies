@@ -18,7 +18,6 @@ class StrategicBomber extends AirUnit
         $this->cost = 12;
         $this->attack = 4;
         $this->defense = 1;
-        $this->addCombination([Destroyer::class => StrategicBomberDestroyer::class]);
 
         parent::__construct($logger);
     }

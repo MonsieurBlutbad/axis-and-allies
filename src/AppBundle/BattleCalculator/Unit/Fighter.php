@@ -18,7 +18,6 @@ class Fighter extends AirUnit
         $this->cost = 10;
         $this->attack = 3;
         $this->defense = 4;
-        $this->combinations[Destroyer::class] = new FighterDestroyer();
 
         parent::__construct($logger);
     }

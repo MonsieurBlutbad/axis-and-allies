@@ -20,9 +20,6 @@ class LandBattle extends Battle
      */
     protected function beforeFirstRound()
     {
-        if($this->logger)
-            $this->logger->notice('Anti Air Attack begins');
-
         $this->antiAirAttack();
     }
 
@@ -31,6 +28,9 @@ class LandBattle extends Battle
      */
     private function antiAirAttack()
     {
+        if($this->logger)
+            $this->logger->notice('Anti Air Attack');
+
         foreach($this->defender->getUnits() as $unit) {
             /* @var Unit $unit */
             if($unit->hasTag(Unit::AIR_DEFENSE)) {
@@ -41,7 +41,7 @@ class LandBattle extends Battle
 
                 for($i = 0; $i < min(3, $attackerAirUnitCount); $i ++) {
                     if($this->hasHit(1))
-                        $this->attacker->applyHit($unit, AirUnit::class);
+                        $this->attacker->applyHit($unit, [AirUnit::class]);
                 }
             }
         }
@@ -49,9 +49,8 @@ class LandBattle extends Battle
 
     /**
      * @param Unit $unit
-     * @param $side
      */
-    protected function attackRoll(Unit $unit, $side)
+    protected function attackRoll(Unit $unit)
     {
         if($unit instanceof SeaUnit) {
             if($this->logger)
@@ -59,7 +58,7 @@ class LandBattle extends Battle
             return;
         }
 
-        parent::attackRoll($unit, $side);
+        parent::attackRoll($unit);
     }
 
 

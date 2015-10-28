@@ -22,7 +22,6 @@ class TacticalBomber extends AirUnit
         $this->defense = 3;
         $this->combinations[Fighter::class] = new TacticalBomberFighter();
         $this->combinations[Tank::class] = new TacticalBomberTank();
-        $this->combinations[Destroyer::class] = new TacticalBomberDestroyer();
 
         parent::__construct($logger);
     }

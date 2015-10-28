@@ -97,9 +97,24 @@ abstract class Battle
      */
     protected function round()
     {
-        $this->attacker->startRound();
-        $this->defender->startRound();
+        $this->fire();
+        $this->removeCasualties();
+    }
 
+    /**
+     *
+     */
+    protected function removeCasualties()
+    {
+        $this->attacker->removeCasualties();
+        $this->defender->removeCasualties();
+    }
+
+    /**
+     *
+     */
+    protected function fire()
+    {
         if($this->logger)
             $this->logger->notice('Attacker rolls');
 
@@ -110,33 +125,30 @@ abstract class Battle
         }
 
         if($this->logger)
-            $this->logger->notice('Defender rolls');
+        $this->logger->notice('Defender rolls');
 
         foreach($this->defender->getUnits() as $unit) {
             /* @var $unit Unit */
-            if($unit->getDefense() > 0)
+            if ($unit->getDefense() > 0)
                 $this->attackRoll($unit, Side::DEFENDER);
         }
-
-        $this->attacker->finishRound();
-        $this->defender->finishRound();
     }
+
 
     /**
      * @param Unit $unit
-     * @param $side
      */
-    protected function attackRoll(Unit $unit, $side)
+    protected function attackRoll(Unit $unit)
     {
         if($this->logger)
             $this->logger->info($unit->getName() . ' rolls', [spl_object_hash($unit)]);
 
-        if($side === Side::ATTACKER) {
+        if($unit->getSide()->getType() === Side::ATTACKER) {
             if($this->hasHit($unit->getAttack())) {
                 $this->defender->applyHit($unit);
             }
         }
-        elseif($side === Side::DEFENDER) {
+        elseif($unit->getSide()->getType() === Side::DEFENDER) {
             if($this->hasHit($unit->getDefense())) {
                 $this->attacker->applyHit($unit);
             }

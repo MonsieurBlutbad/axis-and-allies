@@ -3,6 +3,7 @@
 namespace AppBundle\BattleCalculator\Unit;
 
 use AppBundle\BattleCalculator\CombinedArms\CombinedArms;
+use AppBundle\BattleCalculator\Side;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
@@ -10,6 +11,7 @@ use Symfony\Bridge\Monolog\Logger;
  */
 abstract class Unit
 {
+    // TODO outsource to tag class
     const AIR_DEFENSE                     = 'air_defense';
     const CHOSEN_LAST                     = 'chosen_last';
     const SURPRISE_STRIKE                 = 'surprise_strike';
@@ -58,6 +60,11 @@ abstract class Unit
      * @var Unit
      */
     protected $combinedWith  = null;
+
+    /**
+     * @var Side
+     */
+    protected $side;
 
     /**
      * @var Logger
@@ -321,6 +328,22 @@ abstract class Unit
     public function isDead()
     {
         return $this->hitPoints <= 0;
+    }
+
+    /**
+     * @return Side
+     */
+    public function getSide()
+    {
+        return $this->side;
+    }
+
+    /**
+     * @param Side $side
+     */
+    public function setSide($side)
+    {
+        $this->side = $side;
     }
 
 }
