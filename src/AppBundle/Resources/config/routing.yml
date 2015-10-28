@@ -2,6 +2,10 @@ home:
   path: /
   defaults: { _controller: AppBundle:Default:index, active:false }
 
+rules:
+  path: /rules
+  defaults: { _controller: AppBundle:Rules:index }
+
 general:
   path: /rules/general/{active}
   defaults: { _controller: AppBundle:Rules:general, active:false }

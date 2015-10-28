@@ -1,4 +1,4 @@
-@import '../components/bootstrap/less/bootstrap.less';
+@import '../bower_components/bootstrap/less/bootstrap.less';
 
 @import 'variables.less';
 
@@ -13,6 +13,14 @@ h5 {
 }
 
 .rule-panel {
+  &.rule-panel-transparent {
+    .panel-primary {
+      background: none;
+    }
+    .panel-body {
+      background:rgba(211, 219, 215, 0.85);
+    }
+  }
   .panel-primary > a {
     color: #fff;
     &:hover {
@@ -70,3 +78,4 @@ hr {
     }
   }
 }
+
