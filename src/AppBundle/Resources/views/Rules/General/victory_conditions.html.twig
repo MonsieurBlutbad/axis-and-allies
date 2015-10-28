@@ -1,0 +1,24 @@
+{% block title %}
+    Victory Conditions
+{% endblock %}
+
+{% block body %}
+<div class="alert-info alert">
+    <h5>Axis Victory</h5>
+    <ul>
+        <li>control 8 victory cities on the Europe map for a complete round of play and one Axis capital (Berlin, Rome or Tokyo)
+        <br><em>or</em>
+        </li>
+        <li>control 6 victory cities on the Pacific map for a complete round of play and one Axis capital (Berlin, Rome or Tokyo)</li>
+    </ul>
+</div>
+<div class="alert-info alert">
+    <h5>Allied Victory</h5>
+    <ul>
+        <li>control Berlin, Rome or Tokyo for a complete round of play and one Allied capital (Washington, London, Paris or Moscow)</li>
+    </ul>
+</div>
+<p>
+    See <a class="btn btn-link" href="{{ path('house_rules', { 'active': 'victory_objectives'}) }}#heading-victory_objectives">House Rules<span class="glyphicon glyphicon-new-window"></span></a> for alternative victory conditions.
+</p>
+{% endblock %}

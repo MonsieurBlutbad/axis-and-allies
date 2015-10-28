@@ -1,0 +1,78 @@
+{% block title %}
+    5. Non-Combat Movement
+{% endblock %}
+
+{% block body %}
+    <div class="alert alert-info">
+        In this phase, you can move any of your units that didn’t move in the Combat Move phase or participate in combat
+        during your turn and land your air units.
+    </div>
+    {% import 'AppBundle:Macro:button_collapse.html.twig' as buttonCollapse %}
+    {{ buttonCollapse.create('non_combat_movement_land_units', 'Land Units', block('land_units')) }}
+    {{ buttonCollapse.create('non_combat_movement_air_units', 'Air Units', block('air_units')) }}
+    {{ buttonCollapse.create('non_combat_movement_sea_units', 'Sea Units', block('sea_units')) }}
+{% endblock %}
+
+{% block air_units %}
+    <ul>
+        <li>
+            Air units can move a number of spaces up to their move values, less the number of spaces they might have moved during the Combat Move phase
+        </li>
+        <li>An air unit must end its move in an eligible
+            landing space.</li>
+        <li>Air units can land in any territory that
+            was friendly (but not friendly neutral) at the start of the
+            current turn including any territory that was
+            just captured or converted from a friendly neutral by you
+            this turn</li>
+        <li>Fighters and Tactical Bombers can land on a friendly Carrier</li>
+        <li>Fighters and Tactical Bombers can land on a sea zone (even a hostile one), if you will be deploying a previously purchased Carrier in that zone</li>
+        <li>In order for a fighter or tactical bomber to land on an
+            existing carrier, both units must END their movement
+            in the same sea zone.</li>
+        <li>Air units that can’t move to an eligible
+            landing space by the end of the
+            Noncombat Move phase are
+            destroyed.</li>
+        <li><strong>Stranded defending air units</strong> also land during this phase. These are carrier air units whose aircraft carrier has been
+            damaged or destroyed in combat or scrambled air units or fighter interceptors whose
+            original territory is now under enemy control. These units are allowed movement of up to one space to find a friendly
+            territory or carrier on which to land. If no landing space can be found, they are lost. This movement occurs before the
+            acting player makes any noncombat movements.</li>
+    </ul>
+{% endblock %}
+
+{% block sea_units %}
+    <ul>
+        <li>
+            A sea unit can move a number of spaces up to their move values
+        </li>
+        <li>A sea unit can move through any friendly sea
+            zone</li>
+        <li>It can’t move into or through a hostile sea zone</li>
+        <li><strong>Submarines</strong> can move through
+            and even into hostile sea zones, but must end their turn, when they enter a sea zone containing at least one enemy destroyer</li>
+        <li><strong>Transports</strong> can move to a friendly coastal territory and load OR offload cargo</li>
+        <li><strong>Aircraft carriers</strong> must move to sea zones to allow friendly fighters and bombers to land if they can, if they are the only
+            eligible landing space air units</li>
+    </ul>
+{% endblock %}
+
+{% block land_units %}
+    <ul>
+        <li>
+            A land unit can move a number of spaces up to their move values
+        </li>
+        <li>A land unit can move into any friendly or
+            friendly neutral territory, including territories that were
+            captured in the current turn</li>
+        <li>It can’t move into or through
+            a hostile territory or an unfriendly neutral
+            or strict neutral territory</li>
+        <li>If your power isn’t at war, you
+            can’t move your units into territories belonging to another
+            friendly power or a friendly neutral</li>
+        <li>This is the only phase in which <strong>Antiaircraft
+            Artillery</strong> can move</li>
+    </ul>
+{% endblock %}

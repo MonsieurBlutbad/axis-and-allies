@@ -1,0 +1,65 @@
+{% extends 'AppBundle:Rules/Power:power.html.twig' %}
+
+{% block title %}
+    Japan
+{% endblock %}
+
+{% block startingConditionsBody %}
+    <ul>
+        <li>
+            At war with
+            <ul><li>China</li></ul>
+        </li>
+        <li>
+            Considers movement of units into China by any other Allied power as an act of war against it
+        </li>
+        <li>
+            When not yet at war with the United States, Japan may not end the movement of its sea units within 2 sea zones of the United States’ mainland territories (Western United States and Alaska)
+        </li>
+        <li>
+            May declare war on the United Kingdom, ANZAC, the United States, France, or the Soviet Union at the beginning of the Combat Move phase of any of its turns
+        </li>
+        <li>
+            A declaration of war by Japan against either the United Kingdom or ANZAC will immediately result in a state of war between Japan and both of those powers
+        </li>
+        <li>
+            A state of war between Japan and France or between Japan and the Soviet Union will not affect relations between Japan and the United States, and vice versa
+        </li>
+        <li>
+            May attack Dutch territories only if a state of war exists between it and the United Kingdom and ANZAC
+        </li>
+        <li>Starting Income: 26 IPCs</li>
+    </ul>
+{% endblock %}
+
+{% block nationalObjectivesHeader %}
+    National Objectives <small>"The Greater East Asia Co-Prosperity Sphere"</small>
+{% endblock %}
+
+{% block nationalObjectivesBody %}
+    {% import 'AppBundle:Macro:national_objectives.html.twig' as nationalObjectives %}
+    {{ nationalObjectives.create(
+        [
+            {
+                reward: '10 IPCs',
+                condition: 'Japan is not at war with the United States, has not attacked French Indo-China, and has not made an unprovoked declaration of war against United Kingdom/ANZAC',
+                theme: '"Strategic resource trade with the United States"'
+            },
+            {
+                reward: '5 IPCs',
+                condition: 'Japan Is at War with the Western Allies (United States, United Kingdom/ANZAC and/or France) and Axis powers control all of the following territories: Guam, Midway, Wake Island, Gilbert Islands, and Solomon Islands',
+                theme: '"Strategic outer defense perimeter"'
+            },
+            {
+                reward: '5 IPCs (per territory)',
+                condition: ' Axis powers control India (Calcutta), New South Wales (Sydney), Hawaiian Islands (Honolulu) and/or Western United States (San Francisco)',
+                theme: '"Major Allied power centers"'
+            },
+            {
+                reward: '5 IPCs',
+                condition: ' Axis powers control all of the following territories: Sumatra, Java, Borneo, and Celebes',
+                theme: '"Strategic resource centers"'
+            }
+        ]
+    ) }};
+{% endblock %}

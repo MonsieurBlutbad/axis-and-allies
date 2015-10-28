@@ -1,0 +1,330 @@
+{% block title %}
+    4. Conduct Combat
+{% endblock %}
+
+{% block body %}
+    <div class="alert alert-info">
+        <h5>Combat Sequence</h5>
+        <ol>
+            <li>Kamikaze Strikes (only Japan)</li>
+            <li>Strategic and tactical bombing raids</li>
+            <li>Amphibious assaults</li>
+            <li>General combat</li>
+        </ol>
+    </div>
+    {% import 'AppBundle:Macro:button_collapse.html.twig' as buttonCollapse %}
+    {{ buttonCollapse.create('conduct_combat_kamikaze_strikes', 'Kamikaze Strikes', block('kamikaze_strikes')) }}
+    {{ buttonCollapse.create('conduct_combat_strategic_and_tactical_bombing_raids', 'Strategic And Tactical Bombing Raids', block('strategic_and_tactical_bombing_raids')) }}
+    {{ buttonCollapse.create('conduct_combat_amphibious_assaults', 'Amphibious Assaults', block('amphibious_assaults')) }}
+    {{ buttonCollapse.create('conduct_combat_general_combat', 'General Combat', block('general_combat')) }}
+{% endblock %}
+
+{% block kamikaze_strikes %}
+    <div class="alert alert-info">
+        Kamikaze Strikes are a special defensive measure, that the Japanese player can take, when he is attacked in or is amphibiously assaulted from a sea zone marked with a Kamikaze symbol. Japan can choose to do as many Kamikaze Strikes as it wants up to 6 total per game
+    </div>
+    <div class="alert alert-danger">
+        Kamikaze Strikes can only attack surface warships, not Transports or Submarines
+    </div>
+
+    <h5>Kamikaze Strike Sequence</h5>
+    <ol>
+        <li>
+            The Japanese player declares how many Kamikaze Strikes he will make and which enemy ships will be struck for each Strike
+        </li>
+        <li>
+            The Japanese player removes a Kamikaze token for each Strike he conducts
+        </li>
+        <li>
+            The Japanese player rolls a die for each Kamikaze Strike (hit on 2 or less)
+        </li>
+        <li>
+            Destroyed ships have to be removed immediately and will not participate in any subsequent battles
+        </li>
+        <li>
+            Ships attacked by Kamikaze Strikes may not bombard in a subsequent Amphibious Assault
+        </li>
+    </ol>
+{% endblock %}
+
+{% block strategic_and_tactical_bombing_raids %}
+	<div class="alert alert-info">
+		A Strategic or Tactical Bombing Raid is an air assault on a facility 
+    </div>
+    <div class="alert alert-info">
+        <h5>Strategic or Tactical Bombing Raid Sequence</h5>
+        <ol>
+             <li>The attacking players announces which facilities he wants to bomb with which aircraft</li>
+             <li>The defending player decides if he wants to send interceptors</li>
+             <li>If the defending player sends intercepters an Air Battle is fought (one round, all units have A/D values of 1)</li>
+		    <li>Built-In AA fires once on each bombing aircraft (hits on 1)
+             <li>Bombing Raid, Strategic Bombers do 1d6+2 and Tactical Bombers 1d6 damage to the facility</li>
+			<li>Aircraft returns to a friendly territory during the Non-Combat Phase</li>
+        </ol>
+    </div>
+	<div class="alert alert-danger">Antiaircraft Artillery does not help in defending facilities</div>
+    <ul>
+        <li><strong>Strategic Bombers: </strong>bomb enemy industrial complexes, air bases, and naval bases</li>
+        <li><strong>Tactical Bombers: </strong>bomb enemy air and naval bases (but not industrial complexes)</li>
+        <li><strong>Fighters (attacking player): </strong>participate in strategic bombing raids as escorts</li>
+        <li><strong>Fighters (defending player)</strong>
+            <ul>
+                <li>Any number of defending fighters based in a territory that is about to be strategically and/or tactically bombed can be committed to participate in the defense of that territory’s facilities as interceptors</li>
+                <li>The number of defending fighters that will intercept is decided by the owning player(s) after the attacker’s Combat Move phase is completed and before the Conduct Combat phase begins</li>
+                <li>If the territory of the raid is captured, the intercepting fighters can move 1 space to land in a friendly territory or on a friendly aircraft carrier. If no such landing space is available, the fighters are lost</li>
+            </ul>
+        </li>
+    </ul>
+    <h5>Air Battle</h5>
+    <ul>
+        <li>If the defender has elected to commit fighter interceptors, an air battle will be fought immediately before the bombing raid is conducted</li>
+        <li>Only one air battle is fought in each territory, even if more than one facility in that territory is being bombed</li>
+        <li>The attacking bombers and fighter escorts and the defending fighter interceptors will be the only units participating in this special combat</li>
+        <li>The combat lasts for only one round</li>
+        <li>All of the air units have attack and defense values of 1</li>
+        <li>After the air battle is complete, or if there were no defending fighter interceptors, surviving fighter escorts are considered to have retreated. They don’t participate in the actual bombing raid, are not subject to antiaircraft fire, and will remain in the territory until the Noncombat Move phase</li>
+    </ul>
+    <h5>Bombing Raid</h5>
+    <ul>
+        <li>Any surviving attacking bombers carry out the bombing raid</li>
+        <li>Bombers may choose their target facility individually, if more than one is available</li>
+        <li>Each facility has its own antiaircraft system and rolls one die against each bomber directly attacking it . For each “1” rolled, a bomber of the attacker’s choice is immediately removed</li>
+        <li>Each surviving Bomber deals damage to the facility it attacked</li>
+        <li><strong>Strategic Bombers Damage: </strong>1d6 + 2</li>
+        <li><strong>Tactical Bombers Damage: </strong>1d6</li>
+        <li>Major Industrial Complexes have a damage cap of 20</li>
+        <li>Minor Industrial Complexes, Air Bases and Naval Bases have a damage cap of 6</li>
+        <li>The Bombers can’t participate in any other combat this turn and must return to a friendly territory during the Noncombat Move phase.</li>
+    </ul>
+{% endblock %}
+
+{% block amphibious_assaults %}
+    <div class="alert alert-info">
+        <h5>Amphibious Assault Sequence</h5>
+        <ol>
+            <li>Sea combat, if defending units are present</li>
+            <li>Battleship and Cruiser Bombardment, if no Sea Combat was fought (Battleships hit on 4, Cruisers on 3)</li>
+            <li>Land combat</li>
+        </ol>
+    </div>
+    <h5>1. Sea Combat</h5>
+    <ul>
+        <li>If there are defending surface warships and/or scrambled air units, sea combat occurs</li>
+        <li>If there are only defending submarines and/or transports, the attacker can choose to ignore those units or conduct sea combat</li>
+        <li>If sea combat occurs, all attacking and defending sea units present must participate in the battle</li>
+        <li>Conduct the sea combat using the rules for General Combat </li>
+    </ul>
+    <h5>2. Battleship and Cruiser Bombardment</h5>
+    <ul>
+        <li>If there was NOT a combat in the sea zone from which you are offloading units from transports, any accompanying battleships and cruisers in that sea zone can conduct a one-time bombardment of one coastal territory or island group being attacked</li>
+        <li>The number of ships that can make bombardment attacks is limited to 1 ship per land unit being offloaded from the transports in that coastal territory</li>
+        <li>If more than one territory is being assaulted from the same sea zone and there are multiple battleships and/or cruisers, each ship may support only one assault. However, the ships’ bombardment may be split in any way that the attacker chooses</li>
+        <li><strong>Battleships: </strong>hit on 4 or less</li>
+        <li><strong>Cruisers: </strong>hit on 3 or less</li>
+        <li>For each hit, the defender will move a defending unit behind the casualty strip.</li>
+        <li>These casualties will be able to defend during the land combat step before they are eliminated</li>
+    </ul>
+    <h5>3. Land Combat</h5>
+    <ul>
+        <li>
+            If there was no sea battle, or the sea zone has been
+            cleared of all defending enemy units except transports
+            and submarines that submerged during the sea battle, and
+            the attacker still has land units committed to the coastal
+            territory, move all attacking and defending units to the
+            battle strip and conduct combat using the General Combat
+            rules
+        </li>
+        <li>
+            Attacking land units can come from transports (seaborne),
+            and they can come from neighboring territories that
+            are adjacent to the attacked territory
+        </li>
+        <li>
+            If no land units (carried as cargo) survived the sea
+            combat, or if the attacking sea units withdrew from the
+            sea combat, then any other units that were designated to
+            participate in the land attack (including air units) must
+            still conduct one round of land combat in a regular attack
+            on the intended hostile territory before they can retreat.
+        </li>
+        <li>Attacking seaborne units can’t retreat.</li>
+        <li>Attacking overland land units and air units can retreat</li>
+    </ul>
+    <h5>Air Units</h5>
+    <ul>
+        <li>Each attacking air unit can participate in the sea battle or the attack on the coastal territory; this must be declared and can't be changed later</li>
+        <li>
+            Scrambled air units are placed
+            after the amphibious assault is announced and attacking
+            air units (if any) are assigned to the sea battle or the
+            coastal territory
+        </li>
+        <li>
+            At the end of the amphibious assault,
+            all air units remain in place; they will land during the
+            Noncombat Move phase
+        </li>
+    </ul>
+{% endblock %}
+
+{% block general_combat %}
+    <div class="alert alert-info">
+        <h5>General Combat Sequence</h5>
+        <ol>
+            <li>Place Units along the Battle Strip</li>
+            <li>Submarine surprise strike or submerge (sea battles only)</li>
+            <li>Attacking units fire</li>
+            <li>Defending units fire</li>
+            <li>Remove defender’s casualties</li>
+            <li>Press attack or retreat</li>
+            <li>Conclude combat</li>
+        </ol>
+    </div>
+
+    <h5>1. Place Units along the Battle Strip</h5>
+    <ul>
+        <li>Place all of the attacking and defending units from the battle onto their respective
+            sides aligned with the numbered columns that contain
+            those units’ names and silhouettes</li>
+        <li>The number in a unit’s column identifies that unit’s
+            attack or defense value. An attacking or defending unit
+            must roll its column’s attack or defense value number or
+            less in order to score a hit</li>
+        <li>Some units, such as transports, attacking aircraft carriers,
+            and defending AAA units, have no combat value and
+            are not represented on the battle strip. Place these units
+            beside the battle strip, as they are still participants in the
+            battle and may be taken as casualties</li>
+        <li>Cargo doesn’t roll attacks, nor can it take a hit. It’s lost with the ship carrying it if that ship is destroyed </li>
+    </ul>
+
+    <h5>2. Submarine Surprise Strike or Submerge (Sea Battles Only)</h5>
+    <ul>
+        <li>If the opposing side has no destroyer in the battle, both attacking and defending submarines can choose to either make a Surprise Strike die roll or submerge</li>
+        <li>Submerged Submarines don't participate in the upcoming battle. They are removed from the Battle Strip and returned to the game board in the contested sea zone</li>
+        <li>Each attacking submarine conducting a Surprise Strike rolls one die, hitting with a 2 or less for the attacking player, and with a 1 or less for the defending player</li>
+        <li>For each hit, the attacked player takes one sea unit and moves it behind the casualty strip (undamaged capital ships are not removed, but take damage)</li>
+        <li>Transports
+            can be chosen as casualties only if there are no other
+            eligible units. Submerged submarines can’t be chosen as
+            casualties since they have been removed from the battle</li>
+        <li>Once all attacking and defending submarines that
+            conducted a Surprise Strike have fired, the generated casualties are removed from the game</li>
+        <li>Submarines that submerged or fired on this step may not attack or defend on step 3 and 4</li>
+    </ul>
+
+    <h5>3. Attacking Units Fire</h5>
+    <ul>
+        <li>All units with the same attack value are rolled at the same time</li>
+        <li>An attacking unit scores a hit if you roll its attack value or less</li>
+        <li>After the attacking player has rolled for all attacking
+            units, the defender chooses 1 unit for each hit scored and
+            moves it behind the casualty strip (where they can still fire back on step 4)</li>
+        <li>As many hits as possible must be assigned</li>
+    </ul>
+
+    <h5>4. Defending Units Fire</h5>
+    <ul>
+        <li>Defending units roll one die for each unit with a defense
+            value, including units behind the casualty strip</li>
+        <li>Roll for units with the same
+            defense value at the same time.</li>
+        <li> A defending unit scores a
+            hit if you roll its defense value or less</li>
+        <li>After the defending player has rolled for each defending
+            unit with a defense value, the attacker chooses 1 unit for
+            each hit scored and removes it from play</li>
+        <li>As many hits
+            as possible must be assigned</li>
+    </ul>
+
+    <h5>5. Remove Defenders's Casualties</h5>
+    <ul>
+        <li>Remove the defender’s units that are behind the casualty
+            strip from play</li>
+    </ul>
+
+    <h5>6. Press Attack or Retreat</h5>
+    <ul>
+        <li>Combat rounds (steps 2–5) continue unless one of the
+            following two conditions occurs (in this order):
+        </li>
+        <li>1. Attacker and/or Defender Loses All Units
+            <ul>
+                <li>
+                    In a sea battle, if both sides have only transports
+                    remaining, the attacker’s transports can remain in the
+                    contested sea zone or retreat per the rules in Condition B
+                    below, if possible.
+                </li>
+            </ul>
+        </li>
+        <li>2. Attacker Retreats
+            <ul>
+                <li>
+                    Move all attacking land and sea units in that combat
+                    that are on the battle strip to a single adjacent friendly
+                    space from which at least 1 of the attacking land or sea
+                    units moved.
+                </li>
+                <li>Retreating air units remain in the contested space
+                    temporarily. They complete their retreat movement during
+                    the Noncombat Move phase using the same rules as an air
+                    unit involved in a successful battle.
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h5>7. Conclude Combat</h5>
+    <ul>
+        <li>
+            If you win a combat as the attacker in a territory and
+            you have 1 or more surviving land units there, you take
+            control of it. Otherwise, it remains in the defender’s
+            control. (If all units on both sides were destroyed, the
+            territory remains in the defender’s control.)
+        </li>
+        <li>Air units can’t capture a territory</li>
+        <li>If you have captured the territory, place your control
+            marker on the territory and adjust the national production
+            levels. Your national production increases by the value of
+            the captured territory; the loser’s production decreases by
+            the same amount.</li>
+        <li>Any industrial complex, air base, and/or naval base
+            located in the captured territory is now controlled by your
+            side</li>
+        <li> If you capture a
+            major industrial complex, it is immediately downgraded
+            to a minor one</li>
+        <li>You cannot use any facility you captured until the next turn</li>
+        <li><strong>Liberating a Territory</strong>
+            <ul>
+                <li>If you capture a territory that was originally controlled
+                    by another member of your side, you “liberate” the
+                    territory. You don’t take control of it; instead, the
+                    original controller regains the territory and the national
+                    production level is adjusted</li>
+                <li>A major industrial
+                    complex that was downgraded to a minor upon capture is
+                    not automatically upgraded upon liberation</li>
+                <li>If the original controller’s (the power whose territory
+                    you just liberated) capital is in enemy hands at the end
+                    of the turn in which you would otherwise have liberated
+                    the territory, you capture the territory instead</li>
+                <li>You cannot use any facility you liberated until the next turn</li>
+            </ul>
+        </li>
+        <li><strong>Capturing Capitals</strong>
+            <ul>
+                <li>When you capture a Capital from a power you collect all unspent IPCs from the treasury
+                    of the original controller of the captured capital</li>
+                <li>The original controller of the captured capital is still in
+                    the game but can’t collect income from any territories he
+                    or she still controls and can’t buy new units. The player
+                    skips all but the Combat Move, Conduct Combat, and
+                    Noncombat Move phases until the capital is liberated.</li>
+            </ul>
+        </li>
+{% endblock %}

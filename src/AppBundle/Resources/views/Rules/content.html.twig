@@ -1,0 +1,76 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block pageHeader %}
+    Rules
+{% endblock %}
+
+{% block title %}
+    Content
+{% endblock %}
+
+{% block body %}
+    <ul>
+        <li>
+            <a href="{{ path('general') }}"><strong>General</strong></a>
+            <ul>
+                <li><a href="{{ path('general', {active: 'victory_conditions'}) }}">Victory Conditions</a></li>
+                <li><a href="{{ path('general', {active: 'order_of_play'}) }}">Order of Play</a></li>
+                <li><a href="{{ path('general', {active: 'starting_income'}) }}">Starting Income</a></li>
+                <li><a href="{{ path('general', {active: 'turn_sequence'}) }}">Turn Sequence</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{{ path('terrain') }}"><strong>Terrain</strong></a>
+            <ul>
+                <li><a href="{{ path('terrain', {active: 'territories'}) }}">Territories</a></li>
+                <li><a href="{{ path('terrain', {active: 'sea_zones'}) }}">Sea Zones</a></li>
+                <li><a href="{{ path('terrain', {active: 'islands'}) }}">Islands</a></li>
+                <li><a href="{{ path('terrain', {active: 'canals_and_narrow_straits'}) }}">Canals and Narrow Straits</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{{ path('power') }}"><strong>Powers</strong></a>
+            <ul>
+                <li><a href="{{ path('power', {active: 'germany'}) }}">Germany</a></li>
+                <li><a href="{{ path('power', {active: 'soviet_union'}) }}">Soviet Union</a></li>
+                <li><a href="{{ path('power', {active: 'japan'}) }}">Japan</a></li>
+                <li><a href="{{ path('power', {active: 'united_states'}) }}">United States</a></li>
+                <li><a href="{{ path('power', {active: 'china'}) }}">China</a></li>
+                <li><a href="{{ path('power', {active: 'united_kingdom'}) }}">United Kingdom</a></li>
+                <li><a href="{{ path('power', {active: 'italy'}) }}">Italy</a></li>
+                <li><a href="{{ path('power', {active: 'anzac'}) }}">ANZAC</a></li>
+                <li><a href="{{ path('power', {active: 'france'}) }}">France</a></li>
+                <li><a href="{{ path('power', {active: 'dutch_territories'}) }}">Dutch Territories</a></li>
+                <li><a href="{{ path('power', {active: 'neutral_territories'}) }}">Neutral Territories</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{{ path('unit') }}"><strong>Units</strong></a>
+            <ul>
+                <li><a href="{{ path('unit', {active: 'facilities'}) }}">Facilities</a></li>
+                <li><a href="{{ path('unit', {active: 'land_units'}) }}">Land Units</a></li>
+                <li><a href="{{ path('unit', {active: 'air_units'}) }}">Air Units</a></li>
+                <li><a href="{{ path('unit', {active: 'sea_units'}) }}">Sea Units</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{{ path('turn') }}"><strong>Turn</strong></a>
+            <ul>
+                <li><a href="{{ path('turn', {active: 'research_and_development'}) }}">1. Research & Development</a></li>
+                <li><a href="{{ path('turn', {active: 'repair_damaged_Units'}) }}">2a. Repair Damaged Units</a></li>
+                <li><a href="{{ path('turn', {active: 'purchase_new_units'}) }}">2b. Purchase New Units</a></li>
+                <li><a href="{{ path('turn', {active: 'combat_movement'}) }}">3. Combat Movement</a></li>
+                <li><a href="{{ path('turn', {active: 'conduct_combat'}) }}">4. Conduct Combat</a></li>
+                <li><a href="{{ path('turn', {active: 'non_combat_movement'}) }}">5. Non-Combat Movement</a></li>
+                <li><a href="{{ path('turn', {active: 'mobilize_new_units'}) }}">6. Mobilize New Units</a></li>
+                <li><a href="{{ path('turn', {active: 'collect_income'}) }}">7. Collect Income</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{{ path('house_rules') }}"><strong>House Rules</strong></a>
+            <ul>
+                <li><a href="{{ path('house_rules', {active: 'victory_objectives'}) }}">Victory Objectives (Cliffside Bunker House Rule)</a></li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}
