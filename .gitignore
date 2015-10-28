@@ -11,4 +11,4 @@
 /bin/
 /composer.phar
 /.idea/
-/src/AppBundle
+/src/AppBundle/Resources/public/bower_components
