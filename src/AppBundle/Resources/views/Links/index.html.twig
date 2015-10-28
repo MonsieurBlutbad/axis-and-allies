@@ -1,0 +1,12 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% import 'AppBundle:Macro:accordion.html.twig' as accordion %}
+
+{% block pageHeader %}
+    Links
+{% endblock %}
+
+{% block content %}
+    {{ accordion.create(sections) }}
+{% endblock %}
+

@@ -1,0 +1,11 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% import 'AppBundle:Macro:accordion.html.twig' as accordion %}
+
+{% block pageHeader %}
+    Turn
+{% endblock %}
+
+{% block content %}
+    {{ accordion.create(sections) }}
+{% endblock %}

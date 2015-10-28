@@ -1,0 +1,52 @@
+{% extends 'AppBundle:Power:power.html.twig' %}
+
+{% block title %}
+    ANZAC
+{% endblock %}
+
+{% block startingConditionsBody %}
+    <ul>
+        <ul>
+            <li>Germany</li>
+            <li>Italy</li>
+        </ul>
+        <li>
+            May declare war on Japan at the beginning of the Combat Move phase of any of its turns, resulting in a state of war between Japan and both ANZAC and the United Kingdom
+        </li>
+        <li>
+            May not move units into or through China when not yet at war with Japan
+        </li>
+        <li>
+            May move units into Dutch territories as a noncombat movement at any time, as long as those territories have not been captured by an Axis power
+        </li>
+        <li>
+            May take control of Dutch territories (gaining their IPC income) by moving land units into them
+        </li>
+        <li>
+            Considers attacks against any Dutch territories to be acts of war against it (until a Dutch territory has once been captured by an Axis power)
+        </li>
+        <li>Starting Income: 10 IPCs</li>
+    </ul>
+{% endblock %}
+
+{% block nationalObjectivesHeader %}
+    National Objectives <small>"Assist the United Kingdom militarily and assure its own defense"</small>
+{% endblock %}
+
+{% block nationalObjectivesBody %}
+    {% import 'AppBundle:Macro:national_objectives.html.twig' as nationalObjectives %}
+    {{ nationalObjectives.create(
+        [
+            {
+                reward: '5 IPCs',
+                condition: 'ANZAC is at War with Japan, an Allied power controls Malaya and ANZAC controls all of its original territories',
+                theme:  '"Malaya considered strategic cornerstone to Far East British Empire"'
+            },
+            {
+                reward: '5 IPCs',
+                condition: 'The Allies (not including the Dutch) control Dutch New Guinea, New Guinea, New Britain, and the Solomon Islands',
+                theme: '"Strategic outer defense perimeter"'
+            }
+        ]
+    ) }}
+{% endblock %}

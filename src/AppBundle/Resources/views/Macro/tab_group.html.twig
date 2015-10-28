@@ -1,0 +1,43 @@
+{% macro create(tabs) %}
+    {{ _self.open() }}
+    {{ _self.tabs(tabs) }}
+    {{ _self.close() }}
+{% endmacro %}
+
+{% macro open() %}
+    <div>
+{% endmacro %}
+
+{% macro tabs(tabs) %}
+    {{ _self.tabHeaders(tabs) }}
+    {{ _self.tabBodies(tabs) }}
+{% endmacro %}
+
+{% macro tabHeaders(tabs) %}
+    <ul class="nav nav-tabs" role="tablist">
+        {% for tab in tabs %}
+            {{ _self.tabHeader(tab.title, loop.index == 1, loop.index ) }}
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% macro tabHeader(title, active = false, index = 0) %}
+    <li role="presentation"{% if active %} class="active"{% endif %}><a href="#{{ index }}" aria-controls="{{ title|raw }}" role="tab" data-toggle="tab">{{ title|raw }}</a></li>
+{% endmacro %}
+
+
+{% macro tabBodies(tabs) %}
+    <div class="tab-content">
+        {% for tab in tabs %}
+            {{ _self.tabBody(tab.body, loop.index == 1, loop.index ) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro tabBody(body, active, index = 0) %}
+    <div role="tabpanel" class="tab-pane{% if active %} active{% endif %}" id="{{ index }}">{{ body|raw }}</div>
+{% endmacro %}
+
+{% macro close() %}
+    </div>
+{% endmacro %}

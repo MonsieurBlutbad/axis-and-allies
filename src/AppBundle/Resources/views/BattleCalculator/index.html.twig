@@ -1,0 +1,33 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% import 'AppBundle:Macro:accordion.html.twig' as accordion %}
+
+{% block pageHeader %}
+    Battle Calculator
+{% endblock %}
+
+{% block content %}
+    {{ accordion.open }}
+        {% include 'AppBundle:BattleCalculator:land_battle.html.twig'
+            with {
+                'form': landBattle.formView,
+                'result': landBattle.result,
+                'active':  landBattle.result? true : false
+            }
+        %}
+        {% include 'AppBundle:BattleCalculator:amphibious_assault.html.twig'
+            with {
+                'form': amphibiousAssault.formView,
+                'result': amphibiousAssault.result,
+                'active': amphibiousAssault.result? true : false
+            }
+        %}
+        {% include 'AppBundle:BattleCalculator:sea_battle.html.twig'
+            with {
+                'form': seaBattle.formView,
+                'result': seaBattle.result,
+                'active':  seaBattle.result? true : false
+            }
+        %}
+    {{ accordion.close }}
+{% endblock %}

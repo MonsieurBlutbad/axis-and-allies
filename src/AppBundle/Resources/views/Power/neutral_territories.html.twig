@@ -1,0 +1,79 @@
+{% extends 'AppBundle:Power:power.html.twig' %}
+
+{% block title %}
+    Neutral Territories
+{% endblock %}
+
+{% block body %}
+    {{  block('startingConditions') }}
+    {% import 'AppBundle:Macro:button_collapse.html.twig' as buttonCollapse %}
+    {{ buttonCollapse.create( 'friendly-neutrals', 'Friendly Neutrals', block('friendlyNeutrals')) }}
+    {{ buttonCollapse.create( 'unfriendly-neutrals', 'Unfriendly Neutrals', block('unfriendlyNeutrals')) }}
+    {{ buttonCollapse.create( 'strict-neutrals', 'Strict Neutrals', block('strictNeutrals')) }}
+{% endblock %}
+
+{% block startingConditionsBody %}
+    <ul>
+        <li>
+            Neutral territories begin the game not being controlled by any power
+        </li>
+        <li>
+            Each neutral territory is treated as a separate entity
+        </li>
+        <li>Neutral territories are not linked as countries in any way</li>
+        <li>
+            Unlike powers, war is never declared on neutral territories - they are simply attacked
+        </li>
+        <li>
+            Neutral territories can have their own standing army, indicated by the infantry silhouette, that will be placed on the map if and when the territory’s neutrality is compromised
+        </li>
+    </ul>
+{% endblock %}
+
+{% block friendlyNeutrals %}
+    <ul>
+        <li>
+            Neutral territories that are sympathetic to your alliance (Pro-Axis or Pro-Allied)
+        </li>
+        <li>May not be attacked</li>
+        <li>Air Units may not fly over it</li>
+        <li>Land-units may not move through it</li>
+        <li>When you move into a Friendly Neutral Territory you gain control over the territory and its standing army, which may be used freely on your next turn</li>
+    </ul>
+{% endblock %}
+
+{% block unfriendlyNeutrals %}
+    <ul>
+        <li>
+            Neutral territories that are sympathetic to the side opposing your side (Pro-Axis or Pro-Allied)
+        </li>
+        <li>Moving into an Unfriendly Neutral territory is considered a combat move</li>
+        <li>Before the neutral territory can be taken control of by the invading power, all of the neutral’s standing army units must be eliminated</li>
+        <li>Air Units may not fly over it unless they are attacking it</li>
+        <li>When a neutral territory is invaded, it’s no longer considered neutral and immediately becomes part of the alliance opposing the power that attacked it</li>
+        <li>If the attack upon the formerly neutral territory is unsuccessful (the territory is not captured), any remaining defending units stay in the territory but can’t move</li>
+    </ul>
+{% endblock %}
+
+{% block strictNeutrals %}
+    <ul>
+        <li>
+            Strict Neutral territories can only be controlled by invading them
+        </li>
+        <li>Moving into a Strict Neutral territory is considered a combat move</li>
+        <li>Before the neutral territory can be taken control of by the invading power, all of the neutral’s standing army units must be eliminated</li>
+        <li>Air Units may not fly over it unless they are attacking it</li>
+        <li>An attack upon a Strict Neutral Territory will turn all remaining Strict Neutral Territories into Friendly Neutral territories for the opposing side of the attacker</li>
+    </ul>
+    <div class="alert alert-info">
+        <h5>Soviet-Mongolian Defense Pact</h5>
+        <ul>
+            <li>The Mongolian territories will never become pro-Axis unless one or more of them is attacked by the Soviet Union</li>
+            <li>If Japan attacks any Soviet-controlled territory that is adjacent to any Mongolian territory, all Mongolian territories that are still strict neutral or pro-Allies, or have joined the Allies as a result of a failed Japanese attack, are placed under the control of the Soviet Union at the end of Japan’s Conduct Combat phase</li>
+            <li>Exception: If the Soviet Union attacks Korea or any Japan-controlled territory bordering these Mongolian territories while Mongolia is still a strict neutral, Mongolia will remain neutral and not ally itself with the Soviet Union</li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block mongolians %}
+{% endblock %}

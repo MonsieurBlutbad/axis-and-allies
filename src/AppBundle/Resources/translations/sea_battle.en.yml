@@ -1,0 +1,14 @@
+infantry: Infantry
+artillery: Artillery
+mechanized_infantry: Mechanized Infantry
+tank: Tank
+antiaircraft_artillery: Antiaircraft Artillery
+fighter: Fighter
+tactical_bomber: Tactical Bomber
+strategic_bomber: Strategic Bomber
+transport: Transport
+submarine: Submarine
+destroyer: Destroyer
+cruiser: Cruiser
+aircraft_carrier: Aircraft Carrier
+battleship: Battleship

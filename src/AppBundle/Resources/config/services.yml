@@ -1,0 +1,4 @@
+services:
+    app.template_renderer:
+        class: AppBundle\Renderer\TemplateRenderer
+        arguments: [@twig]

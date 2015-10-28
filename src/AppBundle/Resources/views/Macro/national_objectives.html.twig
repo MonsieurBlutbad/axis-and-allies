@@ -1,0 +1,34 @@
+{% macro create(rows) %}
+    {{ _self.open() }}
+    {{ _self.rows(rows) }}
+    {{ _self.close() }}
+{% endmacro %}
+
+{% macro open() %}
+    <table class="table table-bordered table-national-objectives">
+        <tbody>
+{% endmacro %}
+
+{% macro rows(rows) %}
+    {% for row in rows %}
+        {{ _self.row(row.reward, row.condition, row.theme) }}
+    {% endfor %}
+{% endmacro %}
+
+{% macro row(reward, condition, theme) %}
+    <tr class="national-objective">
+        <td class="reward">{{ reward }}</td>
+        <td class="condition-and-theme">
+            <span class="condition">
+                {{ condition }}
+            </span>
+            <br>
+            <span class="theme text-muted">{{ theme }}</span>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% macro close() %}
+        </tbody>
+    </table>
+{% endmacro %}

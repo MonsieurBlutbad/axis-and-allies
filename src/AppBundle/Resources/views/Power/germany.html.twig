@@ -1,0 +1,67 @@
+{% extends 'AppBundle:Power:power.html.twig' %}
+
+{% block title %}
+    Germany
+{% endblock %}
+
+{% block startingConditionsBody %}
+    <ul>
+        <li>
+            At war with
+            <ul>
+                <li>France</li>
+                <li>United Kingdom</li>
+                <li>ANZAC</li>
+            </ul>
+        </li>
+        <li>
+            May declare war on the United States, the Soviet Union or China at the beginning of the Combat Move phase of any turn
+        </li>
+        <li>
+            A state of war with one of these tree powers won't affect its relations with the other two
+        </li>
+        <li>Starting Income: 30 IPCs</li>
+    </ul>
+{% endblock %}
+
+{% block nationalObjectivesHeader %}
+    National Objectives <small>"Lebensraum"</small>
+{% endblock %}
+
+{% block nationalObjectivesBody %}
+    {% import 'AppBundle:Macro:national_objectives.html.twig' as nationalObjectives %}
+    {{ nationalObjectives.create(
+        [
+            {
+                reward : '5 IPCs',
+                condition : 'Germany Is Not at War with the Soviet Union',
+                theme : '"Beneficial trade with the Soviet Union"'
+            },
+            {
+                reward : '5 IPCs (per territory)',
+                condition : 'Germany controls Novgorod (Leningrad), Volgograd (Stalingrad), and/or Russia (Moscow)',
+                theme : '"Beneficial trade with the Soviet Union"'
+            },
+            {
+                reward : '5 IPCs',
+                condition : 'Axis power controls Caucasus',
+                theme : '"Control of vital Soviet oil production"'
+            },
+            {
+                reward : '5 IPCs',
+                condition : 'Germany Is at War with the United Kingdom and France and at least 1 German land unit is in Axis-controlled Egypt',
+                theme : '"Gateway to the Middle East oilfields (high propaganda value)"'
+            },
+            {
+                reward : '5 IPCs',
+                condition : 'Germany controls both Denmark and Norway while Sweden is neither pro-Allies nor Allies-controlled',
+                theme : '"Access to iron ore and other strategic resources"'
+            },
+            {
+                reward : '2 IPCs (per territory)',
+                condition : 'Germany controls Iraq, Persia, and/or Northwest Persia',
+                theme : '"Access to strategic oil reserves"'
+            }
+        ]
+    ) }}
+{% endblock %}

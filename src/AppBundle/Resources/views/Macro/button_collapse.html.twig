@@ -1,0 +1,12 @@
+{% macro create(id, header, body) %}
+    <h4>
+        <a class="btn btn-default btn-block text-wrap" data-toggle="collapse" href="#{{ id }}" aria-expanded="false" aria-controls="collapseExample">
+            {{ header|raw }}
+        </a>
+    </h4>
+
+    <div class="collapse" id="{{ id }}">
+        {{ body|raw }}
+    </div>
+{% endmacro %}
+

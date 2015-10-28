@@ -1,0 +1,66 @@
+{% extends 'AppBundle:Power:power.html.twig' %}
+
+{% block title %}
+    France
+{% endblock %}
+
+{% block body %}
+    {{  block('startingConditions')  }}
+    {{  block('controllingPlayer')  }}
+    {{  block('troopBonus')  }}
+{% endblock %}
+
+{% block startingConditionsBody %}
+    <ul>
+        <ul>
+            <li>Germany</li>
+            <li>Italy</li>
+        </ul>
+        <li>
+            France may declare war on Japan at the beginning of the Combat Move phase of any of its turns
+        </li>
+        <li>Starting Income: 19 IPCs</li>
+    </ul>
+{% endblock %}
+
+{% block troopBonus %}
+    {% import 'AppBundle:Macro:button_collapse.html.twig' as buttonCollapse %}
+    {{ buttonCollapse.create( block('title')|trim|lower|replace(' ', '-') ~ '-troop-bonus', block('troopBonusHeader'), block('TroopBonusBody')) }}
+{% endblock %}
+
+{% block troopBonusHeader %}
+    Troop Bonus
+{% endblock %}
+
+{% block TroopBonusBody %}
+    {% import 'AppBundle:Macro:national_objectives.html.twig' as nationalObjectives %}
+    {{ nationalObjectives.create(
+        [
+            {
+                reward: '12 IPCs worth of any French units (only once and placed immediatly)',
+                condition: 'The territory France is liberated by the Allies',
+                theme: '"National liberation and national prestige"'
+            }
+        ]
+    ) }}
+{% endblock %}
+
+{% block controllingPlayer %}
+    {% import 'AppBundle:Macro:button_collapse.html.twig' as buttonCollapse %}
+    {{ buttonCollapse.create( block('title')|trim|lower|replace(' ', '-') ~ '-controlling-player', block('controllingPlayerHeader'), block('controllingPlayerBody')) }}
+{% endblock %}
+
+{% block controllingPlayerHeader %}
+    Controlling Player
+{% endblock %}
+
+{% block controllingPlayerBody %}
+    <ul>
+        <li>
+            The player controlling France will manage all the events related to France that occur during any power’s turn
+        </li>
+        <li>
+            France will be managed as a separately controlled power, including the French IPC economy
+        </li>
+    </ul>
+{% endblock %}

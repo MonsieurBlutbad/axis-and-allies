@@ -1,0 +1,56 @@
+{% extends 'AppBundle:Power:power.html.twig' %}
+
+{% block title %}
+    China
+{% endblock %}
+
+{% block startingConditionsBody %}
+    <ul>
+        <li>
+            At war with
+            <ul><li>Japan</li></ul>
+        </li>
+       <li>
+            May not declare war on an European Axis power, unless
+            <ul>
+                <li>
+                    an European Axis power declares war on it first
+                    <br>
+                    <em>or</em>
+                </li>
+                <li>
+                    an European Axis power moves its units into which Chinese units are allowed to move
+                    <br>
+                    <em>or</em>
+                </li>
+                <li>
+                    A state of war between China and one Axis power won’t affect its relations with the other Axis powers
+                </li>
+            </ul>
+        </li>
+        <li>Starting Income: 12 IPCs</li>
+    </ul>
+{% endblock %}
+
+{% block nationalObjectivesHeader %}
+    National Objectives <small>"Resist Japanese expansion"</small>
+{% endblock %}
+
+{% block nationalObjectivesBody %}
+    <table class="table table-bordered table-national-objective">
+        <tbody>
+            <tr>
+                <td class="reward">
+                    <span class="text-nowrap">6 IPCs</span> + permission to purchase artillery,
+
+                </td>
+                <td class="condition">
+                    China is at War and the Burma Road is totally open. Allied powers must control India, Burma, Yunnan, and Szechwan for this to occur
+                </td>
+                <td class="theme">
+                    "Chinese military supply line corridor"
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

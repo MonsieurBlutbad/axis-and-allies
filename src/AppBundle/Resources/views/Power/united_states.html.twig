@@ -1,0 +1,89 @@
+{% extends 'AppBundle:Power:power.html.twig' %}
+
+{% block title %}
+    United States
+{% endblock %}
+
+{% block startingConditionsBody %}
+    <ul>
+        <li>
+            Not at war
+        </li>
+        <li>
+            While it’s not at war with Japan, the United States may not
+            <ul>
+                <li>
+                    move any units into or through China
+                </li>
+                <li>
+                    end the movement of its sea units in sea zones that are adjacent to Japan-controlled territories
+                </li>
+            </ul>
+        </li>
+        <li>
+            While not at war with Germany or Italy, the United States may end the movement of its sea units on the Europe map only in sea zones that are adjacent to U.S. territories
+            <ul>
+                <li>
+                    Exception: U.S. warships (not transports) may also conduct long-range patrols into sea zone 102
+                </li>
+            </ul>
+        </li>
+        <li>
+            May not declare war on any Axis Power until the Collect Income phase of its third turn, unless
+            <ul>
+                <li>
+                    an Axis power declares war on it first
+                    <br>
+                    <em>or</em>
+                </li>
+                <li>
+                    an Axis power captures London or any territory in North America
+                    <br>
+                    <em>or</em>
+                </li>
+                <li>
+                    Japan makes an unprovoked declaration of war against the UK or ANZAC
+                </li>
+            </ul>
+        </li>
+        <li>Starting Income: 52 IPCs</li>
+
+    </ul>
+{% endblock %}
+
+{% block nationalObjectivesHeader %}
+    National Objectives <small>"The Arsenal of Democracy"</small>
+{% endblock %}
+
+{% block nationalObjectivesBody %}
+    {% import 'AppBundle:Macro:national_objectives.html.twig' as nationalObjectives %}
+    {{ nationalObjectives.create(
+        [
+            {
+                reward: '10 IPCs',
+                condition: 'The United States controls all of the following territories: Eastern United States, Central United States, and Western United States',
+                theme: '"Basic national sovereignty"'
+            },
+            {
+                reward: '5 IPCs',
+                condition: 'The United States controls all of the following territories: Alaska, Aleutian Islands, Hawaiian Islands, Johnston Island, and Line Islands',
+                theme: '"National sovereignty issues"'
+            },
+            {
+                reward: '5 IPCs',
+                condition: 'The United States controls all of the following territories: Mexico, South Eastern Mexico, Central America, and West Indies',
+                theme: '"Defense treaty and trade obligations"'
+            },
+            {
+                reward: '5 IPCs',
+                condition: 'The United States controls Philippines',
+                theme: '"Center of American influence in Asia"'
+            },
+            {
+                reward: '5 IPCs',
+                condition: 'At least 1 United States land unit in the territory France',
+                theme: '"Great Alliance collaboration"'
+            }
+        ]
+    ) }}
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'AppBundle:Power:power.html.twig' %}
+
+{% block title %}
+    Soviet Union
+{% endblock %}
+
+{% block startingConditionsBody %}
+    <ul>
+        <li>
+           Not at war
+        </li>
+        <li>
+            May not declare war on any European Axis Power until turn 4, unless
+            <ul>
+                <li>
+                    declared war upon by European Axis Power first
+                    <br>
+                    <em>or</em>
+                </li>
+                <li>
+                    London is captured by an Axis power
+                </li>
+            </ul>
+        </li>
+        <li>
+            May declare war on Japan at the beginning of the Combat Move phase of any turn
+        </li>
+        <li>
+            If the Soviet Union is at war with Axis Powers on only one map (Europe or Pacific) it is still considered a neutral power on the other map
+        </li>
+        <li>Starting Income: 37 IPCs</li>
+    </ul>
+{% endblock %}
+
+{% block nationalObjectivesHeader %}
+    National Objectives <small>"The Great Patriotic War"</small>
+{% endblock %}
+
+{% block nationalObjectivesBody %}
+    {% import 'AppBundle:Macro:national_objectives.html.twig' as nationalObjectives %}
+    {{ nationalObjectives.create(
+        [
+            {
+                reward: '5 IPCs',
+                condition: 'Soviet Union Is at War in Europe, sea zone 125 is free of Axis warships, Soviet Union controls Archangel, and Axis Powers control no territory originally controlled by the Soviet Union',
+                theme: '"National prestige and access to Allied Lend-Lease material"'
+            },
+            {
+                reward: '3 IPCs (per territory)',
+                condition: 'Soviet Union controls an original German, Italian, or pro-Axis neutral territory',
+                theme: '"Propaganda value and spread of communism"'
+            },
+            {
+                reward: '10 IPCs (once)',
+                condition: 'Soviet Union controls Berlin for the first time',
+                theme: '"National prestige"'
+            }
+        ])
+    }}
+{% endblock %}

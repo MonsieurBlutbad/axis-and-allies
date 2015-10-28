@@ -1,0 +1,39 @@
+home:
+  path: /
+  defaults: { _controller: AppBundle:Default:index, active:false }
+
+general:
+  path: /general/{active}
+  defaults: { _controller: AppBundle:General:index, active:false }
+
+power:
+  path: /power/{active}
+  defaults: { _controller: AppBundle:Power:index, active:false }
+
+terrain:
+  path: /terrain/{active}
+  defaults: { _controller: AppBundle:Terrain:index, active:false }
+
+turn:
+  path: /turn/{active}
+  defaults: { _controller: AppBundle:Turn:index, active:false }
+
+unit:
+  path: /unit/{active}
+  defaults: { _controller: AppBundle:Unit:index, active:false }
+
+house_rules:
+  path: /houserules/{active}
+  defaults: { _controller: AppBundle:HouseRule:index, active:false }
+
+battle_calculator:
+  path: /battlecalculator/{active}
+  defaults: { _controller: AppBundle:BattleCalculator:index, active:false }
+
+downloads:
+  path: /downloads/{active}
+  defaults: { _controller: AppBundle:Default:downloads, active:false }
+
+links:
+    path: /links/{active}
+    defaults: { _controller: AppBundle:Default:links, active:false }

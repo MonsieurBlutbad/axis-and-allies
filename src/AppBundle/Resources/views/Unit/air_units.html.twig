@@ -1,0 +1,131 @@
+{% block title %}
+    Air Units
+{% endblock %}
+
+{% block body %}
+    <div class="alert alert-info">
+        <ul>
+            <li>Air units can attack and defend in territories</li>
+            <li>Air units can attack in sea zones</li>
+            <li>Air units stationed on Carriers can defend in sea zones</li>
+            <li>Fighters and Tactical Bombers can defend an adjacent sea zone, if their territory has an operative Air Base (Scrambling)</li>
+            <li>Air units can land in friendly territories (but not in just captured ones)</li>
+            <li>Fighters and Tactical Bombers can land on friendly Carriers</li>
+            <li>Air units can move through hostile territories and sea zones</li>
+            <li>Air units can hit submarines only if a friendly destroyer is in the battle.</li>
+            <li>During noncombat movement and new unit mobilization, you must provide for safe landing of as many air units as possible after all combats are resolved</li>
+            <li>Air Units that cannot land during the Non-Combat-Phase are removed</li>
+        </ul>
+    </div>
+    <div class="alert alert-danger">
+        You cannot deliberately send air units into combat
+        situations that place them out of range of a place to land
+        afterward. In the Combat Move phase, prior to rolling any
+        battles, you must be able to demonstrate some possible
+        way (however remote the possibility is) for all your
+        attacking air units to land safely that turn
+    </div>
+    {% import 'AppBundle:Macro:button_collapse.html.twig' as buttonCollapse %}
+    {{ buttonCollapse.create('unit_air_units_fighter', 'Fighter', block('fighter')) }}
+    {{ buttonCollapse.create('unit_air_units_tactical_bomber', 'Tactical Bomber', block('tactical_bomber')) }}
+    {{ buttonCollapse.create('unit_air_units_strategic_bomber', 'Strategic Bomber', block('strategic_bomber')) }}
+{% endblock %}
+
+{% block fighter %}
+    <table class="table table-bordered">
+        <tr>
+            <td><strong>Cost</strong></td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Attack</strong>
+            </td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Defense</strong>
+            </td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Move</strong>
+            </td>
+            <td>4</td>
+        </tr>
+    </table>
+    <h5>Unit Characteristics</h5>
+    <ul>
+        <li><strong>Carrier Operations: </strong>can land on and take off from a friendly carrier</li>
+        <li><strong>Fighter Escorts: </strong> can participate in strategic and tactical bombing raids as escort to defend the Bombers from intercepting Fighters</li>
+        <li><strong>Fighter Interceptors: </strong> can defend against a strategic and tactical bombing raids when they are in the territory that is to be bombed</li>
+        <li><strong>Air Superiority: </strong> Raises the attack of a Tactical Bomber to 4 when paired
+    </ul>
+{% endblock %}
+
+{% block tactical_bomber %}
+    <table class="table table-bordered">
+        <tr>
+            <td><strong>Cost</strong></td>
+            <td>11</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Attack</strong>
+            </td>
+            <td>3 (4 when paired with a Fighter or Tank)</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Defense</strong>
+            </td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Move</strong>
+            </td>
+            <td>4</td>
+        </tr>
+    </table>
+    <h5>Unit Characteristics</h5>
+    <ul>
+        <li><strong>Carrier Operations: </strong>Can land on and take off from a friendly carrier</li>
+        <li><strong>Air Superiority: </strong>Attacks with 4 when paired with a Fighter</li>
+        <li><strong>Combined Arms: </strong>Attacks with 4 when paired with a Tank</li>
+        <li><strong>Tactical Bombing Raid: </strong>Can attack enemy facilities</li>
+    </ul>
+{% endblock %}
+
+{% block strategic_bomber %}
+    <table class="table table-bordered">
+        <tr>
+            <td><strong>Cost</strong></td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Attack</strong>
+            </td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Defense</strong>
+            </td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Move</strong>
+            </td>
+            <td>6</td>
+        </tr>
+    </table>
+    <h5>Unit Characteristics</h5>
+    <ul>
+        <li><strong>Strategic Bombing Raid: </strong>Can attack enemy facilities</li>
+    </ul>
+{% endblock %}

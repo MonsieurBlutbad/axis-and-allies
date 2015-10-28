@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Axis and Allies{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
+    </head>
+    <body>
+        {% block header %}
+            {% block navigation %}
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+							<a href="{{ path('home') }}">
+	                            <img src="{{ asset('bundles/app/images/logo-invert222.jpg') }}" alt="Axis and Allies Logo" height="50"/>
+							</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown{% if app.request.get('_route') in ['general', 'terrain', 'power', 'unit', 'turn', 'house_rules'] %} active{% endif %}">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                        Rules <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li{% if app.request.get('_route') == 'general' %} class="active"{% endif %}>
+                                            <a href="{{ path('general') }}">
+                                                General
+                                                {% if app.request.get('_route') == 'general' %} <span class="sr-only">(current)</span>{% endif %}
+                                            </a>
+                                        </li>
+                                        <li{% if app.request.get('_route') == 'terrain' %} class="active"{% endif %}>
+                                            <a href="{{ path('terrain') }}">
+                                                Terrain
+                                                {% if app.request.get('_route') == 'terrain' %} <span class="sr-only">(current)</span>{% endif %}
+                                            </a>
+                                        </li>
+                                        <li{% if app.request.get('_route') == 'power' %} class="active"{% endif %}>
+                                            <a href="{{ path('power') }}">
+                                                Powers
+                                                {% if app.request.get('_route') == 'power' %} <span class="sr-only">(current)</span>{% endif %}
+                                            </a>
+                                        </li>
+                                        <li{% if app.request.get('_route') == 'unit' %} class="active"{% endif %}>
+                                            <a href="{{ path('unit') }}">
+                                                Units
+                                                {% if app.request.get('_route') == 'unit' %} <span class="sr-only">(current)</span>{% endif %}
+                                            </a>
+                                        </li>
+                                        <li{% if app.request.get('_route') == 'turn' %} class="active"{% endif %}>
+                                            <a href="{{ path('turn') }}">
+                                                Turn
+                                                {% if app.request.get('_route') == 'turn' %} <span class="sr-only">(current)</span>{% endif %}
+                                            </a>
+                                        </li>
+                                        <li{% if app.request.get('_route') == 'house_rules' %} class="active"{% endif %}>
+                                            <a href="{{ path('house_rules') }}">
+                                                House Rules
+                                                {% if app.request.get('_route') == 'house_rules' %} <span class="sr-only">(current)</span>{% endif %}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li{% if app.request.get('_route') == 'battle_calculator' %} class="active"{% endif %}>
+                                    <a href="{{ path('battle_calculator') }}">
+                                        Battle Calculator
+                                        {% if app.request.get('_route') == 'battle_calculator' %} <span class="sr-only">(current)</span>{% endif %}
+                                    </a>
+                                </li>
+                                <li{% if app.request.get('_route') == 'downloads' %} class="active"{% endif %}>
+                                    <a href="{{ path('downloads') }}">
+                                        Downloads
+                                        {% if app.request.get('_route') == 'downloads' %} <span class="sr-only">(current)</span>{% endif %}
+                                    </a>
+                                </li>
+                                <li{% if app.request.get('_route') == 'links' %} class="active"{% endif %}>
+                                    <a href="{{ path('links') }}">
+                                        Links
+                                        {% if app.request.get('_route') == 'links' %} <span class="sr-only">(current)</span>{% endif %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            {% endblock %}
+        {% endblock %}
+
+        {% block body %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h1 class="page-header">{% block pageHeader %}{% endblock %}</h1>
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block footer %}
+        {% endblock %}
+
+        {% block javascripts %}{% endblock %}
+
+		{% block piwik %}
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//generalzombie.de/analytics/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//generalzombie.de/analytics/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+		{% endblock %}
+
+    </body>
+</html>

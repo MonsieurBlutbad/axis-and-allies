@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {% stylesheets 'bundles/app/css/style.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts '@AppBundle/Resources/public/components/jquery/jquery-1.11.3.min.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% javascripts '@AppBundle/Resources/public/components/bootstrap/dist/js/bootstrap.min.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

@@ -1,0 +1,216 @@
+{% block title %}
+    Land Units
+{% endblock %}
+
+{% block body %}
+    <div class="alert alert-info">
+        <ul>
+            <li>
+                All Land Units can attack, move and defend only in territories
+            </li>
+            <li>
+                Infantry, Artillery, Mechanized Infantry and Tanks can capture hostile territories and convert friendly neutrals
+            </li>
+            <li>
+                All Land Units can be carried by transports
+            </li>
+        </ul>
+    </div>
+    {% import 'AppBundle:Macro:button_collapse.html.twig' as buttonCollapse %}
+    {{ buttonCollapse.create('unit_land_units_infantry', 'Infantry', block('infantry')) }}
+    {{ buttonCollapse.create('unit_land_units_artillery', 'Artillery', block('artillery')) }}
+    {{ buttonCollapse.create('unit_land_units_mechanized_infantry', 'Mechanized Infantry', block('mechanized_infantry')) }}
+    {{ buttonCollapse.create('unit_land_units_tank', 'Tank', block('tank')) }}
+    {{ buttonCollapse.create('unit_land_units_antiaircraft_artillery', 'Antiaircraft Artillery (AAA)', block('antiaircraft_artillery')) }}
+{% endblock %}
+
+{% block infantry %}
+    <table class="table table-bordered">
+        <tr>
+            <td><strong>Cost</strong></td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Attack</strong>
+            </td>
+            <td>1 (2 when supported by artillery)</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Defense</strong>
+            </td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Move</strong>
+            </td>
+            <td>1</td>
+        </tr>
+    </table>
+    <h5>Unit Characteristics</h5>
+    <ul>
+        <li>
+            <strong>Supported by Artillery: </strong>Attacks with 2 when attacking together with an Artillery (one-per-one)
+        </li>
+    </ul>
+{% endblock %}
+
+{% block artillery %}
+    <table class="table table-bordered">
+        <tr>
+            <td><strong>Cost</strong></td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Attack</strong>
+            </td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Defense</strong>
+            </td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Move</strong>
+            </td>
+            <td>1</td>
+        </tr>
+    </table>
+    <h5>Unit Characteristics</h5>
+    <ul>
+        <li>
+            <strong>Supports Infantry: </strong>Each Artillery can raise an Infantry's Attack to 2 when attacking together (one-per-one)
+        </li>
+        <li>
+            <strong>Supports Mechanized Infantry: </strong>Each Artillery can raise an Mechanized Infantry's Attack to 2 when attacking together (one-per-one)
+        </li>
+    </ul>
+{% endblock %}
+
+{% block mechanized_infantry %}
+    <table class="table table-bordered">
+        <tr>
+            <td><strong>Cost</strong></td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Attack</strong>
+            </td>
+            <td>1 (2 when supported by artillery)</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Defense</strong>
+            </td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Move</strong>
+            </td>
+            <td>2</td>
+        </tr>
+    </table>
+    <h5>Unit Characteristics</h5>
+    <ul>
+        <li>
+            <strong>Blitz: </strong>Mechanized Infantry can blitz when paired with a Tank
+        </li>
+        <li>
+            <strong>Supported by Artillery: </strong>Attacks with 2 when attacking together with an Artillery (one-per-one)
+        </li>
+    </ul>
+{% endblock %}
+
+{% block tank %}
+    <table class="table table-bordered">
+        <tr>
+            <td><strong>Cost</strong></td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Attack</strong>
+            </td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Defense</strong>
+            </td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Move</strong>
+            </td>
+            <td>2</td>
+        </tr>
+    </table>
+    <h5>Unit Characteristics</h5>
+    <ul>
+        <li>
+            <strong>Blitz: </strong>Can move through unoccupied hostile territory and capture it without needing to stop
+        </li>
+        <li>
+            <strong>Combined Arms (Tactical Bomber): </strong>increases the Tactical Bomber's attack number from 3 to 4
+        </li>
+        <li>
+            <strong>Combined Arms (Mechanized Infantry): </strong>allows Mechanized Infantry to blitz alongside the Tank
+        </li>
+    </ul>
+{% endblock %}
+
+{% block antiaircraft_artillery %}
+    <table class="table table-bordered">
+        <tr>
+            <td><strong>Cost</strong></td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Attack</strong>
+            </td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Defense</strong>
+            </td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Move</strong>
+            </td>
+            <td>1 (non-combat only)</td>
+        </tr>
+    </table>
+    <h5>Unit Characteristics</h5>
+    <ul>
+        <li>
+            <strong>Limited Move: </strong>Can only move during the Non-Combat Phase
+        </li>
+        <li>
+            <strong>No Combat Value: </strong>Cannot fire in the defending units fire step, but can be taken as casualty. Can never attack.
+        </li>
+        <li>
+            <strong>Air Defense: </strong>
+            <ul>
+                <li>Can fire at an enemy air unit when that unit attacks or lands in the territory containing the AAA.</li>
+                <li>Fires only once before the first round of combat</li>
+                <li>Can fire upon up to 3 enemy air units, but only once on each</li>
+                <li>For each “1” rolled, the attacker must remove 1 air unit</li>
+                <li>Can not defend facilities against strategic or tactical bombing</li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}
+

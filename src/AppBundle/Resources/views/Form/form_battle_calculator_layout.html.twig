@@ -1,0 +1,90 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{%- endblock form_widget_simple -%}
+
+{%- block choice_widget_collapsed -%}
+    {%- if required and placeholder is none and not placeholder_in_choices and not multiple -%}
+        {% set required = false %}
+    {%- endif -%}
+    <select class="form-control" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {%- if placeholder is not none -%}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder|trans({}, translation_domain) }}</option>
+        {%- endif -%}
+        {%- if preferred_choices|length > 0 -%}
+            {% set options = preferred_choices %}
+            {{- block('choice_widget_options') -}}
+            {%- if choices|length > 0 and separator is not none -%}
+                <option disabled="disabled">{{ separator }}</option>
+            {%- endif -%}
+        {%- endif -%}
+        {%- set options = choices -%}
+        {{- block('choice_widget_options') -}}
+    </select>
+{%- endblock choice_widget_collapsed -%}
+
+{%- block number_widget -%}
+    {# type="number" doesn't work with floats #}
+    {%- set type = type|default('number') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock number_widget -%}
+
+{%- block submit_widget -%}
+    {%- set type = type|default('submit') -%}
+    {{ block('button_widget') }}
+{%- endblock submit_widget -%}
+
+{%- block button_widget -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+            '%name%': name,
+            '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button class="btn btn-default" type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
+{%- endblock button_widget -%}
+
+{# Rows #}
+{%- block form_row -%}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                {{- form_widget(form) -}}
+                {{- form_label(form) -}}
+                {{- form_errors(form) -}}
+            </div>
+        </div>
+    </div>
+{%- endblock form_row -%}
+
+{%- block button_row -%}
+    <div>
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock button_row -%}
+
+{# Misc #}
+{%- block form -%}
+    {{ form_start(form) }}
+    {{- form_widget(form) -}}
+    {{ form_end(form) }}
+{%- endblock form -%}
+
+{%- block form_start -%}
+    {% set method = method|upper %}
+    {%- if method in ["GET", "POST"] -%}
+    {% set form_method = method %}
+{%- else -%}
+    {% set form_method = "POST" %}
+{%- endif -%}
+    <form class="battle-calculator-form form-inline" name="{{ name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    {%- if form_method != method -%}
+    <input type="hidden" name="_method" value="{{ method }}" />
+{%- endif -%}
+{%- endblock form_start -%}

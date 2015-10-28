@@ -1,0 +1,70 @@
+{% block title %}
+    6. Mobilize New Units
+{% endblock %}
+
+{% block body %}
+    <div class="alert alert-info">
+        Move the newly purchased units from the mobilization zone on the game board to eligible spaces you have controlled
+        <strong>since the start of your turn</strong>
+    </div>
+    <div class="alert alert-info">
+        If for some reason you cannot place all purchased units, you choose which ones to put back and get your IPCs refunded
+    </div>
+    <div class="alert alert-danger">
+        You can’t use industrial complexes that you captured or purchased this turn or that are owned by a friendly power.
+    </div>
+    <h5>Production Limit</h5>
+    <ul>
+        <li>
+            <strong>Major Industrial Complex: </strong>10 units (-1 per damage)
+        </li>
+        <li>
+            <strong>Minor Industrial Complex: </strong>3 Units (-1 per damage)
+        </li>
+        <li>If you purchased more units than you can mobilize, you must return the over-produced units to the box and the cost of the units is reimbursed to you.</li>
+    </ul>
+    <h5>Placement Rules</h5>
+    <ul>
+        <li>
+            <strong>Land Units and Strategic Bombers</strong>
+            <ul>
+                <li>Only in territories containing eligible industrial complexes</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Sea Units</strong>
+            <ul>
+                <li>Only in sea zones (even hostile ones) adjacent to territories containing eligible industrial complexes</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Fighters and Tactical Bombers</strong>
+            <ul>
+                <li>
+                    in territories containing an eligible industrial complex
+                </li>
+                <li>
+                    in sea zones containing an aircraft carrier owned by your power (even a newly purchased one) in a sea zone (even a hostile one) adjacent to a territory containing an eligible industrial complex
+                </li>
+            </ul>
+        </li>
+        <li>
+            <strong>Facilities</strong>
+            <ul>
+                <li>
+                    <strong>Major Industrial Complexes:</strong> only in originally controlled territories with an IPC value of 3 or higher, but not on Islands
+                </li>
+                <li>
+                    <strong>Minor Industrial Complexes:</strong> only in territories with an IPC value of 2 or higher, but not on Islands
+                </li>
+                <li>
+                    <strong>Air Base:</strong> in any controlled territory
+                </li>
+                <li>
+                    <strong>Naval Base:</strong> in any controlled territory with a coastline
+                </li>
+                <li><div class="alert alert-danger">You can't have more than one facility of the same type per territory</div></li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}
