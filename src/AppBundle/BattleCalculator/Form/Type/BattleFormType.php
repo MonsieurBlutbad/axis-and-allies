@@ -9,13 +9,13 @@
 namespace AppBundle\BattleCalculator\Form\Type;
 
 use AppBundle\BattleCalculator\Calculator;
-use AppBundle\BattleCalculator\Form\BattleCalculatorForm;
+use AppBundle\BattleCalculator\Form\BattleForm;
 use AppBundle\BattleCalculator\Settings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BattleCalculatorFormType extends AbstractType
+class BattleFormType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -37,6 +37,7 @@ class BattleCalculatorFormType extends AbstractType
                 'required' => true,
                 'data' => Calculator::LAND_BATTLE
             ])
+            ->add('t')
             ->add('accuracy', 'choice', [
                 'choices' => [
                     Settings::ACCURACY_DEBUG => 'Debug',
@@ -409,7 +410,7 @@ class BattleCalculatorFormType extends AbstractType
      */
     public function getName()
     {
-        return 'battle_calculator_form';
+        return 'battle_form';
     }
 
     /**
@@ -418,7 +419,7 @@ class BattleCalculatorFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\BattleCalculator\Form\BattleCalculatorForm',
+            'data_class' => 'AppBundle\BattleCalculator\Form\BattleForm',
         ));
     }
 }
