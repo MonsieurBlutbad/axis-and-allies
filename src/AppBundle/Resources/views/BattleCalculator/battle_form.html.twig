@@ -15,12 +15,18 @@
             <div class="panel-body">
                 {{ form_start(form) }}
                     <div class="row">
-                        <div class="col-xs-12">
-                            <fieldset>
+                        <fieldset>
+                            <div class="col-xs-12">
                                 {{ form_widget(form.type) }}
                                 {{ form_errors(form.type) }}
-                            </fieldset>
-                        </div>
+                            </div>
+                            <div class="col-xs-12">
+                                {{ form_label(form.accuracy) }}
+                                {{ form_widget(form.accuracy) }}
+                                {{ form_errors(form.accuracy) }}
+                            </div>
+                        </fieldset>
+
                         {# TODO: find a dynamic solution for this (maybe fieldsets?) #}
                         <div class="col-xs-12 col-sm-6">
                             <fieldset>
@@ -57,13 +63,6 @@
                                 {{ form_row(form.defender_cruiser) }}
                                 {{ form_row(form.defender_aircraft_carrier) }}
                                 {{ form_row(form.defender_battleship) }}
-                            </fieldset>
-                        </div>
-                        <div class="col-xs-12">
-                            <fieldset>
-                                {{ form_label(form.accuracy) }}
-                                {{ form_widget(form.accuracy) }}
-                                {{ form_errors(form.accuracy) }}
                             </fieldset>
                         </div>
                         <div class="col-xs-12">

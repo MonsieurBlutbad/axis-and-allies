@@ -5,26 +5,32 @@
 $(function()
 {
     var $type = $('#battle_calculator_form_type');
-    var $battleFields = {
-        land_battle: $('input.land-battle'),
-        amphibious_assault: $('input.amphibious-assault'),
-        sea_battle:  $('input.sea-battle')
+    var $formGroups = {
+        land_battle: $('input.land_battle').parent('div.form-group'),
+        amphibious_assault: $('input.amphibious_assault').parent('div.form-group'),
+        sea_battle:  $('input.sea_battle').parent('div.form-group')
     };
-    console.log('si');
+
+    var $unitInputs = $('input.land_battle, input.sea_battle, input.amphibious_assault');
+
+    updateFields();
+
+    $unitInputs.
 
     $type.change(
         function()
         {
-            var type = this.value;
-            console.log($battleFields[type]);
-            $battleFields.each( function(battleFieldsByType, battleType) {
-                console.log(battleType);
-                battleFieldsByType.each( function(battleField) {
-
-                })
-            })
+            updateFields();
         }
     );
+
+    function updateFields()
+    {
+        for(var type in $formGroups)
+            $formGroups[type].hide();
+        $formGroups[$type[0].value].show();
+
+    }
 
 
 });
