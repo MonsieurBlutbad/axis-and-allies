@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\BattleCalculator\Calculation;
 use AppBundle\BattleCalculator\Calculator;
 use AppBundle\BattleCalculator\Form\BattleForm;
-use AppBundle\BattleCalculator\Form\BattleForm;
 use AppBundle\BattleCalculator\Form\Type\BattleFormType;
 use AppBundle\BattleCalculator\BattleResult;
 use AppBundle\BattleCalculator\Settings;

@@ -37,7 +37,6 @@ class BattleFormType extends AbstractType
                 'required' => true,
                 'data' => Calculator::LAND_BATTLE
             ])
-            ->add('t')
             ->add('accuracy', 'choice', [
                 'choices' => [
                     Settings::ACCURACY_DEBUG => 'Debug',

@@ -35,8 +35,8 @@ abstract class Battle
 
     function __construct($attackingUnits, $defendingUnits, Logger $logger = null) {
         $this->logger = $logger;
-        $this->attacker = new Side(Side::ATTACKER, $attackingUnits, $logger);
-        $this->defender = new Side(Side::DEFENDER, $defendingUnits, $logger);
+        $this->attacker = new Attacker($attackingUnits, $logger);
+        $this->defender = new Defender($defendingUnits, $logger);
     }
     /**
      * @return Side

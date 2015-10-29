@@ -4,7 +4,7 @@
 
 $(function()
 {
-    var $typeSelect = $('#battle_calculator_form_type');
+    var $typeSelect = $('#battle_form_type');
 
     var $formGroups = {
         land_battle: $('input.land_battle').parent('div.form-group'),
