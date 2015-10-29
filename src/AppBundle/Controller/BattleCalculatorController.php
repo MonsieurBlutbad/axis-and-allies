@@ -38,6 +38,8 @@ class BattleCalculatorController extends Controller
         $battleCalculatorForm = new BattleCalculatorForm();
         $form = $this->createForm(new BattleCalculatorFormType(), $battleCalculatorForm);
 
+        $form->handleRequest($request);
+
         return $this->render(
             'AppBundle:BattleCalculator:index2.html.twig',
             [
