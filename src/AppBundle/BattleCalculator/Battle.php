@@ -24,7 +24,7 @@ abstract class Battle
     protected $defender;
 
     /**
-     * @var Result
+     * @var BattleResult
      */
     protected $result;
 
@@ -80,7 +80,7 @@ abstract class Battle
                 $this->logger->notice('End of Battle Round', ['round' => $round, 'attackerRemainingUnits' => count($this->attacker->getUnits()), 'defenderRemainingUnits' => count($this->defender->getUnits())]);
         }
 
-        $this->result = (new Result($this));
+        $this->result = (new BattleResult($this));
 
         return $this->result;
     }

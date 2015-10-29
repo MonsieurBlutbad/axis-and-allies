@@ -53,7 +53,7 @@ class Calculator
     private $settings;
 
     /**
-     * @var Result[]
+     * @var BattleResult[]
      */
     private $results = [];
 
@@ -109,7 +109,7 @@ class Calculator
     /**
      * Loops through all battles and returns their result in an array.
      *
-     * @return Result[]
+     * @return BattleResult[]
      */
     public function getResults()
     {
@@ -178,7 +178,7 @@ class Calculator
                     break;
             }
 
-            /** @var Result $result */
+            /** @var BattleResult $result */
             $result = $battle->getResult();
 
             $this->results[] = $result;

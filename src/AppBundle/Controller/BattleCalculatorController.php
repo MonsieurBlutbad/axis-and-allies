@@ -7,7 +7,7 @@ use AppBundle\BattleCalculator\Calculator;
 use AppBundle\BattleCalculator\Form\BattleForm;
 use AppBundle\BattleCalculator\Form\BattleForm;
 use AppBundle\BattleCalculator\Form\Type\BattleFormType;
-use AppBundle\BattleCalculator\Result;
+use AppBundle\BattleCalculator\BattleResult;
 use AppBundle\BattleCalculator\Settings;
 use AppBundle\BattleCalculator\Unit\AircraftCarrier;
 use AppBundle\BattleCalculator\Unit\AntiaircraftArtillery;
@@ -72,7 +72,7 @@ class BattleCalculatorController extends Controller
                 : null
         );
 
-        /** @var Result[] $results */
+        /** @var BattleResult[] $results */
        $results = $battleCalculator->getResults();
 
         /** @var Calculation $result */

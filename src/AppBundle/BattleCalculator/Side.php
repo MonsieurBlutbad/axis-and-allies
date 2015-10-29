@@ -354,4 +354,18 @@ class Side
         );
     }
 
+    /**
+     * Returns true if any unit of this side has the given tag.
+     *
+     * @param $tag
+     * @return bool
+     */
+    public function hasTag($tag)
+    {
+        foreach($this->units as $unit)
+            if($unit->hasTag($tag))
+                return true;
+        return false;
+    }
+
 }
