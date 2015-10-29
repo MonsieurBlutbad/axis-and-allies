@@ -1,0 +1,25 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% import 'AppBundle:Macro:accordion.html.twig' as accordion %}
+
+{% block pageHeader %}
+    Battle Calculator
+{% endblock %}
+
+{% block content %}
+    {{ accordion.open }}
+    {% include 'AppBundle:BattleCalculator:battle_form.html.twig'
+        with {
+            'form': form,
+            'active':  true
+        }
+    %}
+    {{ accordion.close }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@AppBundle/Resources/public/js/battleCalculator.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

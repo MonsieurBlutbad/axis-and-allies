@@ -4,7 +4,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\BattleCalculator\Calculation;
 use AppBundle\BattleCalculator\Calculator;
+use AppBundle\BattleCalculator\Form\BattleCalculatorForm;
 use AppBundle\BattleCalculator\Form\BattleForm;
+use AppBundle\BattleCalculator\Form\Type\BattleCalculatorFormType;
 use AppBundle\BattleCalculator\Result;
 use AppBundle\BattleCalculator\Settings;
 use AppBundle\BattleCalculator\Unit\AircraftCarrier;
@@ -27,6 +29,23 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BattleCalculatorController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function index2Action(Request $request)
+    {
+        $battleCalculatorForm = new BattleCalculatorForm();
+        $form = $this->createForm(new BattleCalculatorFormType(), $battleCalculatorForm);
+
+        return $this->render(
+            'AppBundle:BattleCalculator:index2.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
+    }
+
     /**
      * @param Request $request
      * @param null $active

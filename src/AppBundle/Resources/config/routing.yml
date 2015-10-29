@@ -33,6 +33,9 @@ house_rules:
 battle_calculator:
   path: /battlecalculator/{active}
   defaults: { _controller: AppBundle:BattleCalculator:index, active:false }
+battle_calculator2:
+  path: /battlecalculator2
+  defaults: { _controller: AppBundle:BattleCalculator:index2 }
 
 downloads:
   path: /downloads/{active}
