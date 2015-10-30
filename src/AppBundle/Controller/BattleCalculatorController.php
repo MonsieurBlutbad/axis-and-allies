@@ -17,7 +17,7 @@ class BattleCalculatorController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index2Action(Request $request)
+    public function indexAction(Request $request)
     {
         /** @var BattleForm $battleCalculatorForm */
         $battleCalculatorForm = new BattleForm();
