@@ -38,6 +38,7 @@ abstract class Battle
         $this->attacker = new Attacker($attackingUnits, $logger);
         $this->defender = new Defender($defendingUnits, $logger);
     }
+
     /**
      * @return Side
      */
@@ -143,12 +144,12 @@ abstract class Battle
         if($this->logger)
             $this->logger->info($unit->getName() . ' rolls', [spl_object_hash($unit)]);
 
-        if($unit->getSide()->getType() === Side::ATTACKER) {
+        if($unit->getSide() instanceof Attacker) {
             if($this->hasHit($unit->getAttack())) {
                 $this->defender->applyHit($unit);
             }
         }
-        elseif($unit->getSide()->getType() === Side::DEFENDER) {
+        elseif($unit->getSide() instanceof Defender) {
             if($this->hasHit($unit->getDefense())) {
                 $this->attacker->applyHit($unit);
             }

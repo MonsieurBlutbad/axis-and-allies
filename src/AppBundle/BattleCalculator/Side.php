@@ -20,11 +20,6 @@ abstract class Side
     const DEFENDER = 'defender';
 
     /**
-     * @var string
-     */
-    protected $type;
-
-    /**
      * @var Unit[]
      */
     protected $units = [];
@@ -50,34 +45,10 @@ abstract class Side
     protected $logger;
 
     /**
-     * @param $type
      * @param $units
      * @param Logger $logger
      */
-    function __construct($type, $units, Logger $logger = null)
-    {
-        if($type !== self::ATTACKER && $type !== self::DEFENDER)
-            throw new \InvalidArgumentException();
-
-        $this->logger = $logger;
-        $this->type = $type;
-        $this->units = $units;
-        foreach($this->units as $unit)
-            $unit->setSide($this);
-
-        if($this->type === self::ATTACKER)
-            $this->combineArms();
-
-        $this->orderUnits();
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+    abstract function __construct($units, Logger $logger = null);
 
     /**
      * @return Unit[]

@@ -61,7 +61,7 @@ class Attacker extends Side
     private function combineArms()
     {
         if($this->logger)
-            $this->logger->info('combining arms', [$this->getType()]);
+            $this->logger->info('combining arms');
 
         foreach($this->units as $unit) {
             if( ! $unit->getCombinations() > 0)

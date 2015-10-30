@@ -9,20 +9,6 @@
 namespace AppBundle\BattleCalculator;
 
 use AppBundle\BattleCalculator\Form\BattleForm;
-use AppBundle\BattleCalculator\Unit\AircraftCarrier;
-use AppBundle\BattleCalculator\Unit\AntiaircraftArtillery;
-use AppBundle\BattleCalculator\Unit\Artillery;
-use AppBundle\BattleCalculator\Unit\Battleship;
-use AppBundle\BattleCalculator\Unit\Cruiser;
-use AppBundle\BattleCalculator\Unit\Destroyer;
-use AppBundle\BattleCalculator\Unit\Fighter;
-use AppBundle\BattleCalculator\Unit\Infantry;
-use AppBundle\BattleCalculator\Unit\MechanizedInfantry;
-use AppBundle\BattleCalculator\Unit\StrategicBomber;
-use AppBundle\BattleCalculator\Unit\Submarine;
-use AppBundle\BattleCalculator\Unit\TacticalBomber;
-use AppBundle\BattleCalculator\Unit\Tank;
-use AppBundle\BattleCalculator\Unit\Transport;
 use AppBundle\BattleCalculator\Unit\Unit;
 use Symfony\Bridge\Monolog\Logger;
 
