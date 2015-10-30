@@ -31,7 +31,7 @@ class BattleCalculatorController extends Controller
             $result = $this->getResult($battleCalculatorForm);
 
         return $this->render(
-            'AppBundle:BattleCalculator:index2.html.twig',
+            'AppBundle:BattleCalculator:index.html.twig',
             [
                 'form' => $form->createView(),
                 'result' => isset($result)? $result : null,

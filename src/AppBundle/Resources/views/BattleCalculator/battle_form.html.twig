@@ -15,7 +15,7 @@
             <div class="panel-body">
                 {{ form_start(form) }}
                     <div class="row">
-                        <fieldset>
+                        <fieldset class="settings-fieldset">
                             <div class="col-xs-12">
                                 {{ form_widget(form.type) }}
                                 {{ form_errors(form.type) }}
@@ -29,7 +29,7 @@
 
                         {# TODO: find a dynamic solution for this (maybe fieldsets?) #}
                         <div class="col-xs-12 col-sm-6">
-                            <fieldset>
+                            <fieldset class="attacker-fieldset">
                                 <legend>Attacker</legend>
                                 {{ form_row(form.attacker_infantry) }}
                                 {{ form_row(form.attacker_mechanized_infantry) }}
@@ -47,7 +47,7 @@
                             </fieldset>
                         </div>
                         <div class="col-xs-12 col-sm-6">
-                            <fieldset>
+                            <fieldset class="defender-fieldset">
                                 <legend>Defender</legend>
                                 {{ form_row(form.defender_infantry) }}
                                 {{ form_row(form.defender_mechanized_infantry) }}

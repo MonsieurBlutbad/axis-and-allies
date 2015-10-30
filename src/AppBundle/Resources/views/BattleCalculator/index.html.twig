@@ -8,26 +8,18 @@
 
 {% block content %}
     {{ accordion.open }}
-        {% include 'AppBundle:BattleCalculator:land_battle.html.twig'
-            with {
-                'form': landBattle.formView,
-                'result': landBattle.result,
-                'active':  landBattle.result? true : false
-            }
-        %}
-        {% include 'AppBundle:BattleCalculator:amphibious_assault.html.twig'
-            with {
-                'form': amphibiousAssault.formView,
-                'result': amphibiousAssault.result,
-                'active': amphibiousAssault.result? true : false
-            }
-        %}
-        {% include 'AppBundle:BattleCalculator:sea_battle.html.twig'
-            with {
-                'form': seaBattle.formView,
-                'result': seaBattle.result,
-                'active':  seaBattle.result? true : false
-            }
-        %}
+    {% include 'AppBundle:BattleCalculator:battle_form.html.twig'
+        with {
+            'form': form,
+            'active':  true
+        }
+    %}
     {{ accordion.close }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@AppBundle/Resources/public/js/battleCalculator.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
