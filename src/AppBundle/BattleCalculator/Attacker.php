@@ -116,4 +116,18 @@ class Attacker extends Side
         });
     }
 
+    /**
+     * @return number
+     */
+    public function getCombatPower()
+    {
+        return array_sum(
+            array_map(
+                function(Unit $unit) {
+                    return $unit->getAttack();
+                }, $this->units
+            )
+        );
+    }
+
 }
