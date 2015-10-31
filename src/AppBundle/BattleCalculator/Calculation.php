@@ -60,7 +60,7 @@ class Calculation {
         $defenderLostUnitsTotal = 0;
         $defenderLostIpcTotal = 0;
         foreach($results as $result) {
-            /* @var $result Result */
+            /* @var $result BattleResult */
             if($result->getWinner() === Side::ATTACKER)
                 $attackerWinsTotal ++;
             $attackerRemainingUnitsTotal += $result->getAttackerRemainingUnits();

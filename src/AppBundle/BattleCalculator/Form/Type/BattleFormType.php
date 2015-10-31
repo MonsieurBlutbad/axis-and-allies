@@ -9,13 +9,13 @@
 namespace AppBundle\BattleCalculator\Form\Type;
 
 use AppBundle\BattleCalculator\Calculator;
-use AppBundle\BattleCalculator\Form\BattleCalculatorForm;
+use AppBundle\BattleCalculator\Form\BattleForm;
 use AppBundle\BattleCalculator\Settings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BattleCalculatorFormType extends AbstractType
+class BattleFormType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -59,7 +59,9 @@ class BattleCalculatorFormType extends AbstractType
                         'form-control ' .
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT ,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_mechanized_infantry', 'number', [
@@ -70,7 +72,9 @@ class BattleCalculatorFormType extends AbstractType
                         'form-control ' .
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_artillery', 'number', [
@@ -81,7 +85,9 @@ class BattleCalculatorFormType extends AbstractType
                         'form-control ' .
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_tank', 'number', [
@@ -89,9 +95,12 @@ class BattleCalculatorFormType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' =>
+                        'form-control ' .
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_fighter', 'number', [
@@ -103,7 +112,9 @@ class BattleCalculatorFormType extends AbstractType
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT. ' ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_tactical_bomber', 'number', [
@@ -115,7 +126,9 @@ class BattleCalculatorFormType extends AbstractType
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT. ' ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_strategic_bomber', 'number', [
@@ -127,7 +140,9 @@ class BattleCalculatorFormType extends AbstractType
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT. ' ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_transport', 'number', [
@@ -137,7 +152,9 @@ class BattleCalculatorFormType extends AbstractType
                     'class' =>
                         'form-control ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_submarine', 'number', [
@@ -147,7 +164,9 @@ class BattleCalculatorFormType extends AbstractType
                     'class' =>
                         'form-control ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_destroyer', 'number', [
@@ -157,7 +176,9 @@ class BattleCalculatorFormType extends AbstractType
                     'class' =>
                         'form-control ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_cruiser', 'number', [
@@ -168,7 +189,9 @@ class BattleCalculatorFormType extends AbstractType
                         'form-control ' .
                         Calculator::AMPHIBIOUS_ASSAULT . ' ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_aircraft_carrier', 'number', [
@@ -178,7 +201,9 @@ class BattleCalculatorFormType extends AbstractType
                     'class' =>
                         'form-control ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('attacker_battleship', 'number', [
@@ -189,7 +214,9 @@ class BattleCalculatorFormType extends AbstractType
                         'form-control ' .
                         Calculator::AMPHIBIOUS_ASSAULT . ' ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
 
@@ -201,7 +228,9 @@ class BattleCalculatorFormType extends AbstractType
                         'form-control ' .
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT ,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_mechanized_infantry', 'number', [
@@ -212,7 +241,9 @@ class BattleCalculatorFormType extends AbstractType
                         'form-control ' .
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_artillery', 'number', [
@@ -223,7 +254,9 @@ class BattleCalculatorFormType extends AbstractType
                         'form-control ' .
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_tank', 'number', [
@@ -234,7 +267,9 @@ class BattleCalculatorFormType extends AbstractType
                         'form-control ' .
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_antiaircraft_artillery', 'number', [
@@ -245,7 +280,9 @@ class BattleCalculatorFormType extends AbstractType
                         'form-control ' .
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_fighter', 'number', [
@@ -257,7 +294,9 @@ class BattleCalculatorFormType extends AbstractType
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT. ' ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_tactical_bomber', 'number', [
@@ -269,7 +308,9 @@ class BattleCalculatorFormType extends AbstractType
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT. ' ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_strategic_bomber', 'number', [
@@ -281,7 +322,9 @@ class BattleCalculatorFormType extends AbstractType
                         Calculator::LAND_BATTLE . ' ' .
                         Calculator::AMPHIBIOUS_ASSAULT. ' ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_transport', 'number', [
@@ -291,7 +334,9 @@ class BattleCalculatorFormType extends AbstractType
                     'class' =>
                         'form-control ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_submarine', 'number', [
@@ -301,7 +346,9 @@ class BattleCalculatorFormType extends AbstractType
                     'class' =>
                         'form-control ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_destroyer', 'number', [
@@ -311,7 +358,9 @@ class BattleCalculatorFormType extends AbstractType
                     'class' =>
                         'form-control ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_cruiser', 'number', [
@@ -321,7 +370,9 @@ class BattleCalculatorFormType extends AbstractType
                     'class' =>
                         'form-control ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_aircraft_carrier', 'number', [
@@ -331,7 +382,9 @@ class BattleCalculatorFormType extends AbstractType
                     'class' =>
                         'form-control ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
             ->add('defender_battleship', 'number', [
@@ -341,7 +394,9 @@ class BattleCalculatorFormType extends AbstractType
                     'class' =>
                         'form-control ' .
                         Calculator::SEA_BATTLE,
-                    'placeholder' => 0
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
                 ]
             ])
 
@@ -354,7 +409,7 @@ class BattleCalculatorFormType extends AbstractType
      */
     public function getName()
     {
-        return 'battle_calculator_form';
+        return 'battle_form';
     }
 
     /**
@@ -363,7 +418,7 @@ class BattleCalculatorFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\BattleCalculator\Form\BattleCalculatorForm',
+            'data_class' => 'AppBundle\BattleCalculator\Form\BattleForm',
         ));
     }
 }

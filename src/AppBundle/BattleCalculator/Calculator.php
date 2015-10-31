@@ -8,20 +8,7 @@
 
 namespace AppBundle\BattleCalculator;
 
-use AppBundle\BattleCalculator\Unit\AircraftCarrier;
-use AppBundle\BattleCalculator\Unit\AntiaircraftArtillery;
-use AppBundle\BattleCalculator\Unit\Artillery;
-use AppBundle\BattleCalculator\Unit\Battleship;
-use AppBundle\BattleCalculator\Unit\Cruiser;
-use AppBundle\BattleCalculator\Unit\Destroyer;
-use AppBundle\BattleCalculator\Unit\Fighter;
-use AppBundle\BattleCalculator\Unit\Infantry;
-use AppBundle\BattleCalculator\Unit\MechanizedInfantry;
-use AppBundle\BattleCalculator\Unit\StrategicBomber;
-use AppBundle\BattleCalculator\Unit\Submarine;
-use AppBundle\BattleCalculator\Unit\TacticalBomber;
-use AppBundle\BattleCalculator\Unit\Tank;
-use AppBundle\BattleCalculator\Unit\Transport;
+use AppBundle\BattleCalculator\Form\BattleForm;
 use AppBundle\BattleCalculator\Unit\Unit;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -52,7 +39,7 @@ class Calculator
     private $settings;
 
     /**
-     * @var Result[]
+     * @var BattleResult[]
      */
     private $results = [];
 
@@ -62,18 +49,18 @@ class Calculator
     private $logger;
 
     /**
-     * @param $data
+     * @param $battleCalculatorForm
      * @param Logger $logger
      */
-    function __construct($data, Logger $logger = null)
+    function __construct(BattleForm $battleCalculatorForm, Logger $logger = null)
     {
-        $extractedUnits = $this->getUnitsFromData($data);
-        $this->attackerUnits = $extractedUnits[0];
-        $this->defenderUnits = $extractedUnits[1];
+        $units = $battleCalculatorForm->getUnits($logger);
+        $this->attackerUnits = $units['attacker'];
+        $this->defenderUnits = $units['defender'];
 
-        $this->settings = new Settings( intval($data['accuracy']), true );
+        $this->settings = new Settings( intval($battleCalculatorForm->getAccuracy()), true );
 
-        $this->type = $data['type'];
+        $this->type = $battleCalculatorForm->getType();
         if(! in_array($this->type, [self::LAND_BATTLE, self::AMPHIBIOUS_ASSAULT, self::SEA_BATTLE]))
             throw new \InvalidArgumentException();
 
@@ -108,7 +95,7 @@ class Calculator
     /**
      * Loops through all battles and returns their result in an array.
      *
-     * @return Result[]
+     * @return BattleResult[]
      */
     public function getResults()
     {
@@ -177,95 +164,13 @@ class Calculator
                     break;
             }
 
-            /** @var Result $result */
+            /** @var BattleResult $result */
             $result = $battle->getResult();
 
             $this->results[] = $result;
         }
 
         return $this->results;
-    }
-
-
-    /**
-     * Extracts units from the submitted form data.
-     *
-     * @param $data
-     * @return array
-     */
-    private function getUnitsFromData($data) {
-        $attackingUnits = [];
-        $defendingUnits = [];
-        foreach($data as $inputField => $inputValue) {
-            if(is_numeric($inputValue) && $inputValue > 0) {
-                if(preg_match('/^.*(attacker_)(\w+)$/', $inputField, $matches)) {
-                    $name = $matches[2];
-                    for($i = 0; $i < $inputValue; $i++)
-                        $attackingUnits[] = $this->getUnitFromName($name);
-                }
-                elseif(preg_match('/^.*(defender_)(\w+)$/', $inputField, $matches)) {
-                    $name = $matches[2];
-                    for($i = 0; $i < $inputValue; $i++)
-                        $defendingUnits[] = $this->getUnitFromName($name);
-                }
-            }
-        }
-        return [$attackingUnits, $defendingUnits];
-    }
-
-    /**
-     * @param $name
-     * @return AircraftCarrier|Battleship|Cruiser
-     */
-    private function getUnitFromName($name)
-    {
-        switch($name) {
-            case 'infantry':
-                return new Infantry($this->logger);
-                break;
-            case 'artillery':
-                return new Artillery($this->logger);
-                break;
-            case 'mechanized_infantry':
-                return new MechanizedInfantry($this->logger);
-                break;
-            case 'tank':
-                return new Tank($this->logger);
-                break;
-            case 'antiaircraft_artillery':
-                return new AntiaircraftArtillery($this->logger);
-                break;
-            case 'fighter':
-                return new Fighter($this->logger);
-                break;
-            case 'tactical_bomber':
-                return new TacticalBomber($this->logger);
-                break;
-            case 'strategic_bomber':
-                return new StrategicBomber($this->logger);
-                break;
-            case 'transport':
-                return new Transport($this->logger);
-                break;
-            case 'submarine':
-                return new Submarine($this->logger);
-                break;
-            case 'destroyer':
-                return new Destroyer($this->logger);
-                break;
-            case 'cruiser':
-                return new Cruiser($this->logger);
-                break;
-            case 'aircraft_carrier':
-                return new AircraftCarrier($this->logger);
-                break;
-            case 'battleship':
-                return new Battleship($this->logger);
-                break;
-            default:
-                throw new \InvalidArgumentException();
-                break;
-        }
     }
 
     /**

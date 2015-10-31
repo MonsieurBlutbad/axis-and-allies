@@ -24,7 +24,7 @@ abstract class Battle
     protected $defender;
 
     /**
-     * @var Result
+     * @var BattleResult
      */
     protected $result;
 
@@ -35,9 +35,10 @@ abstract class Battle
 
     function __construct($attackingUnits, $defendingUnits, Logger $logger = null) {
         $this->logger = $logger;
-        $this->attacker = new Side(Side::ATTACKER, $attackingUnits, $logger);
-        $this->defender = new Side(Side::DEFENDER, $defendingUnits, $logger);
+        $this->attacker = new Attacker($attackingUnits, $logger);
+        $this->defender = new Defender($defendingUnits, $logger);
     }
+
     /**
      * @return Side
      */
@@ -80,7 +81,7 @@ abstract class Battle
                 $this->logger->notice('End of Battle Round', ['round' => $round, 'attackerRemainingUnits' => count($this->attacker->getUnits()), 'defenderRemainingUnits' => count($this->defender->getUnits())]);
         }
 
-        $this->result = (new Result($this));
+        $this->result = (new BattleResult($this));
 
         return $this->result;
     }
@@ -143,12 +144,12 @@ abstract class Battle
         if($this->logger)
             $this->logger->info($unit->getName() . ' rolls', [spl_object_hash($unit)]);
 
-        if($unit->getSide()->getType() === Side::ATTACKER) {
+        if($unit->getSide() instanceof Attacker) {
             if($this->hasHit($unit->getAttack())) {
                 $this->defender->applyHit($unit);
             }
         }
-        elseif($unit->getSide()->getType() === Side::DEFENDER) {
+        elseif($unit->getSide() instanceof Defender) {
             if($this->hasHit($unit->getDefense())) {
                 $this->attacker->applyHit($unit);
             }
