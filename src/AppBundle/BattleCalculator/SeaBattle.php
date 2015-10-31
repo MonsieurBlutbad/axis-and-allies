@@ -24,6 +24,9 @@ class SeaBattle extends Battle
         $this->surpriseStrike();
         $this->removeCasualties();
 
+        if( count($this->attacker->getUnits()) <= 0 || count($this->defender->getUnits()) )
+            return;
+
         $this->fire();
         $this->removeCasualties();
     }
@@ -33,27 +36,48 @@ class SeaBattle extends Battle
      */
     protected function surpriseStrike()
     {
+        if($this->logger) {
+            $this->logger->info('Surprise Attack Attacker');
+        }
         $unitsWithSurpriseStrike = $this->attacker->getUnitsByTag(Unit::SURPRISE_STRIKE);
         if(count($unitsWithSurpriseStrike) > 0) {
             if(! count($this->defender->getUnitsByTag(Unit::DENIES_SURPRISE_STRIKE)) > 0) {
                 foreach($unitsWithSurpriseStrike as $unit) {
                     /* @var $unit Unit */
-                    if($unit->getAttack() > 0)
+                    if($unit->getAttack() > 0) {
                         $this->attackRoll($unit, [SeaUnit::class]);
+                    }
+                }
+            } else {
+                if($this->logger) {
+                    $this->logger->info('Surprise Attack denied by Unit with ' . Unit::DENIES_SURPRISE_STRIKE);
                 }
             }
+        } else {
+            if($this->logger) {
+                $this->logger->info('No units with surprise attack');
+            }
         }
-
+        if($this->logger) {
+            $this->logger->info('Surprise Defender Defender');
+        }
         $unitsWithSurpriseStrike = $this->defender->getUnitsByTag(Unit::SURPRISE_STRIKE);
         if(count($unitsWithSurpriseStrike) > 0) {
             if(! count($this->attacker->getUnitsByTag(Unit::DENIES_SURPRISE_STRIKE)) > 0) {
                 foreach($unitsWithSurpriseStrike as $unit) {
                     /* @var $unit Unit */
-                    if($unit->getDefense() > 0)
+                    if($unit->getDefense() > 0) {
                         $this->attackRoll($unit, [SeaUnit::class]);
+                    }
+                }
+            } else {
+                if($this->logger) {
+                    $this->logger->info('Surprise Attack denied by Unit with ' . Unit::DENIES_SURPRISE_STRIKE);
                 }
             }
-        }
+    } else
+            if($this->logger)
+                $this->logger->info('No units with surprise attack');
     }
 
     /**
