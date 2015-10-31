@@ -73,7 +73,7 @@ class Defender extends Side
                     }
                     return $a->getDefense() - $b->getDefense();
                 }
-                return $a->getHitPoints() - $b->getHitPoints();
+                return $b->getHitPoints() - $a->getHitPoints();
             }
             return $a->hasTag('chosen_last')? +1 : -1;
         });
