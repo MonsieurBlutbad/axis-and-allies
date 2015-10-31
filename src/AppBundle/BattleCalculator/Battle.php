@@ -8,6 +8,7 @@
 
 namespace AppBundle\BattleCalculator;
 
+use AppBundle\BattleCalculator\Unit\AirUnit;
 use AppBundle\BattleCalculator\Unit\Unit;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -70,7 +71,7 @@ abstract class Battle
             $this->logger->notice('Main Battle Phase begins');
 
         $round = 0;
-        while(count($this->attacker->getUnits()) > 0 && count($this->defender->getUnits()) > 0) {
+        while(count($this->attacker->getUnits()) > 0 && count($this->defender->getUnits()) > 0 && !$this->isStalemate()) {
             $round ++;
             if($this->logger)
                 $this->logger->notice('New Battle Round', ['round' => $round]);
@@ -181,6 +182,29 @@ abstract class Battle
         if(count($this->defender->getUnits()) <= 0)
             return Side::ATTACKER;
         return null;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isStalemate()
+    {
+        $attackerCantAttack = false;
+        $defenderCantAttack = false;
+        if(
+            count($this->attacker->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->attacker->getUnits())
+            && count($this->defender->getUnitsByClass(AirUnit::class)) === count($this->defender->getUnits())
+        )
+            $attackerCantAttack = true;
+        if(
+            count($this->defender->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->defender->getUnits())
+            && count($this->attacker->getUnitsByClass(AirUnit::class)) === count($this->attacker->getUnits())
+        )
+            $defenderCantAttack = true;
+        $stalemate = $attackerCantAttack && $defenderCantAttack;
+        if($this->logger)
+            $this->logger->info('stalemate check', [$stalemate]);
+        return $stalemate;
     }
 
     /**
