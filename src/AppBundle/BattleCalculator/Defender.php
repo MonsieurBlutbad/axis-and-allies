@@ -28,6 +28,8 @@ class Defender extends Side
             $unit->setSide($this);
 
         $this->orderUnits();
+        $this->createUnitsByTypeAndTag();
+
     }
 
     /**
@@ -47,6 +49,7 @@ class Defender extends Side
         }
 
         $this->orderUnits();
+        $this->createUnitsByTypeAndTag();
     }
 
     /**
@@ -73,7 +76,7 @@ class Defender extends Side
                     }
                     return $a->getDefense() - $b->getDefense();
                 }
-                return $a->getHitPoints() - $b->getHitPoints();
+                return $b->getHitPoints() - $a->getHitPoints();
             }
             return $a->hasTag('chosen_last')? +1 : -1;
         });

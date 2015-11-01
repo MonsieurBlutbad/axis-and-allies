@@ -97,20 +97,7 @@ abstract class Battle
     /**
      * Performs a single battle round.
      */
-    protected function round()
-    {
-        $this->fire();
-        $this->removeCasualties();
-    }
-
-    /**
-     *
-     */
-    protected function removeCasualties()
-    {
-        $this->attacker->removeCasualties();
-        $this->defender->removeCasualties();
-    }
+    abstract function round();
 
     /**
      *
@@ -122,7 +109,7 @@ abstract class Battle
 
         foreach($this->attacker->getUnits() as $unit) {
             /* @var $unit Unit */
-            if($unit->getAttack() > 0)
+            if($unit->getAttack() > 0 && ! $unit->getHasShot())
                 $this->attackRoll($unit, Side::ATTACKER);
         }
 
@@ -131,7 +118,7 @@ abstract class Battle
 
         foreach($this->defender->getUnits() as $unit) {
             /* @var $unit Unit */
-            if ($unit->getDefense() > 0)
+            if ($unit->getDefense() > 0 && ! $unit->getHasShot())
                 $this->attackRoll($unit, Side::DEFENDER);
         }
     }
@@ -149,11 +136,15 @@ abstract class Battle
             if($this->hasHit($unit->getAttack())) {
                 $this->defender->applyHit($unit);
             }
+
+            $unit->setHasShot(true);
         }
         elseif($unit->getSide() instanceof Defender) {
             if($this->hasHit($unit->getDefense())) {
                 $this->attacker->applyHit($unit);
             }
+
+            $unit->setHasShot(true);
         }
 
     }

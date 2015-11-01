@@ -195,7 +195,7 @@ class BattleFormType extends AbstractType
                 ]
             ])
             ->add('attacker_aircraft_carrier', 'number', [
-                'label' => 'Cruiser',
+                'label' => 'Aircraft Carrier',
                 'required' => false,
                 'attr' => [
                     'class' =>
@@ -376,7 +376,7 @@ class BattleFormType extends AbstractType
                 ]
             ])
             ->add('defender_aircraft_carrier', 'number', [
-                'label' => 'Cruiser',
+                'label' => 'Aircraft Carrier',
                 'required' => false,
                 'attr' => [
                     'class' =>
