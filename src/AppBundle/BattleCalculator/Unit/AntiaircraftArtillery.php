@@ -11,12 +11,24 @@ use Symfony\Bridge\Monolog\Logger;
 
 class AntiaircraftArtillery extends LandUnit
 {
+    const NAME    = 'antiaircraft_artillery';
+    const COST    = 5;
+    const ATTACK  = 0;
+    const DEFENSE = 0;
+    const HIT_POINTS = 1;
+
+    const LAND_BATTLE = true;
+    const AMPHIBIOUS_ASSAULT = true;
+    const SEA_BATTLE = false;
+
     function __construct(Logger $logger = null)
     {
-        $this->name = 'antiaircraft_artillery';
-        $this->cost = 5;
-        $this->attack = 0;
-        $this->defense = 0;
+        $this->name = self::NAME;
+        $this->cost = self::COST;
+        $this->attack = self::ATTACK;
+        $this->defense = self::DEFENSE;
+        $this->hitPoints = self::HIT_POINTS;
+
         $this->addTag(Unit::AIR_DEFENSE);
         $this->addTag(Unit::CANT_ATTACK);
 

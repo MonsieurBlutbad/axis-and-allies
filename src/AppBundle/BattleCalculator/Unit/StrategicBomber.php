@@ -12,12 +12,23 @@ use Symfony\Bridge\Monolog\Logger;
 
 class StrategicBomber extends AirUnit
 {
+    const NAME    = 'strategic_bomber';
+    const COST    = 12;
+    const ATTACK  = 4;
+    const DEFENSE = 1;
+    const HIT_POINTS = 1;
+
+    const LAND_BATTLE = true;
+    const AMPHIBIOUS_ASSAULT = true;
+    const SEA_BATTLE = true;
+
     function __construct(Logger $logger = null)
     {
-        $this->name = 'strategic_bomber';
-        $this->cost = 12;
-        $this->attack = 4;
-        $this->defense = 1;
+        $this->name = self::NAME;
+        $this->cost = self::COST;
+        $this->attack = self::ATTACK;
+        $this->defense = self::DEFENSE;
+        $this->hitPoints = self::HIT_POINTS;
 
         parent::__construct($logger);
     }

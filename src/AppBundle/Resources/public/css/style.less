@@ -47,6 +47,9 @@ hr {
 }
 
 .battle-calculator-form {
+  .unit-image {
+    width: 40px;
+  }
   input[type=number] {
     width: 75px;
   }
@@ -57,6 +60,10 @@ hr {
     margin-bottom: 20px;
   }
   margin-bottom: 20px;
+  #reset-container,
+  #swap-container {
+    margin-top: 10px;
+  }
 }
 
 .battle-calculator-result {
@@ -73,8 +80,16 @@ hr {
 
 @media(max-width: @screen-xs-max) {
   .battle-calculator-form {
-    input {
+    input, button {
       width: 100%;
+    }
+    .units {
+      label {
+        display: none;
+      }
+      input {
+        display: inline;
+      }
     }
   }
 }

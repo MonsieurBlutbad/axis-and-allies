@@ -21,6 +21,7 @@ class Settings {
     private $accuracy;
 
     // TODO: Must take territory (prioritize last land unit over air units)
+    // TODO: Keep Destroyers while subs are alive
 
     function __construct($accuracy = self::ACCURACY_DEBUG, $debug = false)
     {

@@ -11,13 +11,25 @@ use Symfony\Bridge\Monolog\Logger;
 
 class Cruiser extends SeaUnit
 {
+    const NAME    = 'cruiser';
+    const COST    = 12;
+    const ATTACK  = 3;
+    const DEFENSE = 3;
+    const COASTAL_BOMBARDMENT = 3;
+    const HIT_POINTS = 1;
+
+    const LAND_BATTLE = false;
+    const AMPHIBIOUS_ASSAULT = true;
+    const SEA_BATTLE = true;
+
     function __construct(Logger $logger = null)
     {
-        $this->name = 'cruiser';
-        $this->cost = 12;
-        $this->attack = 3;
-        $this->defense = 3;
-        $this->coastalBombardment = 3;
+        $this->name = self::NAME;
+        $this->cost = self::COST;
+        $this->attack = self::ATTACK;
+        $this->defense = self::DEFENSE;
+        $this->coastalBombardment = self::COASTAL_BOMBARDMENT;
+        $this->hitPoints = self::HIT_POINTS;
 
         parent::__construct($logger);
     }

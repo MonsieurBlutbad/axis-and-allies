@@ -14,6 +14,8 @@ $(function()
 
     var $form = $('form.battle-calculator-form');
 
+    var $reset = $('#reset');
+
     updateFields();
 
     /**
@@ -40,6 +42,21 @@ $(function()
             );
             for(var index in $unitInputs) {
                 $unitInputs[index].value = 0;
+            }
+        }
+    );
+
+    /**
+     *
+     */
+    $reset.click(
+        function(e) {
+            var $unitInputs = $(
+                'input.land_battle, input.amphibious_assault, input.sea_battle'
+            );
+
+            for(var index in $unitInputs) {
+                $unitInputs[index].value = null;
             }
         }
     );
