@@ -40,6 +40,23 @@ abstract class Side
     protected $removed = [];
 
     /**
+     * @var array
+     */
+    protected $unitsByClass = [];
+
+    /**
+     * @var array
+     */
+    protected $unitsByTag = [];
+
+    /**
+     * @var array
+     */
+    protected $blockedUnits = [];
+
+
+
+    /**
      * @var Logger
      */
     protected $logger;
@@ -205,24 +222,26 @@ abstract class Side
     /**
      *
      */
-    public function removeCasualties()
+    abstract function removeCasualties();
+
+    /**
+     *
+     */
+    protected function createUnitsByTypeAndTag()
     {
-        if($this->logger)
-            $this->logger->info('cleaning up casualties', [get_class($this), 'casualties' => count($this->casualties)]);
-
-        if(count($this->casualties) > 0) {
-            foreach($this->casualties as $casualty) {
-                $this->removeUnit($casualty);
-                $this->addLostUnit($casualty);
-                $this->removeCasualty($casualty);
-                if($casualty->getCombinedWith()) {
-                    $casualty->getCombinedWith()->setCombinedWith(null);
-                    $casualty->getCombinedWith(null);
-                }
+        $this->unitsByTag = [];
+        $this->unitsByClass = [];
+        foreach($this->units as $unit){
+            /** @var Unit $unit */
+            foreach($unit->getTags() as $tag) {
+                if(! isset($this->unitsByTag[$tag]))
+                    $this->unitsByTag[$tag] = [];
+                $this->unitsByTag[$tag][] = $unit;
             }
+            if(! isset($this->unitsByClass[get_class($unit)]))
+                $this->unitsByClass[get_class($unit)] = [];
+            $this->unitsByClass[get_class($unit)][] = $unit;
         }
-
-        $this->orderUnits();
     }
 
     /**
@@ -237,11 +256,10 @@ abstract class Side
      */
     public function getUnitsByClass($class)
     {
-        return array_filter($this->units,
-            function(Unit $unit) use ($class) {
-                return $unit instanceof $class;
-            }
-        );
+        return
+            isset($this->unitsByClass[$class])?
+                $this->unitsByClass[$class]
+                : null;
     }
 
     /**
@@ -250,11 +268,10 @@ abstract class Side
      */
     public function getUnitsByTag($tag)
     {
-        return array_filter($this->units,
-            function(Unit $unit) use ($tag) {
-                return $unit->hasTag($tag);
-            }
-        );
+        return
+            isset($this->unitsByTag[$tag])?
+                $this->unitsByTag[$tag]
+                : null;
     }
 
     /**

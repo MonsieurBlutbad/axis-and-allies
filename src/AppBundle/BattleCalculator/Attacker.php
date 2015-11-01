@@ -30,6 +30,7 @@ class Attacker extends Side
         $this->combineArms();
 
         $this->orderUnits();
+        $this->createUnitsByTypeAndTag();
     }
 
     /**
@@ -53,6 +54,7 @@ class Attacker extends Side
         }
 
         $this->orderUnits();
+        $this->createUnitsByTypeAndTag();
     }
 
     /**

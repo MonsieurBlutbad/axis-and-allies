@@ -28,6 +28,8 @@ class Defender extends Side
             $unit->setSide($this);
 
         $this->orderUnits();
+        $this->createUnitsByTypeAndTag();
+
     }
 
     /**
@@ -47,6 +49,7 @@ class Defender extends Side
         }
 
         $this->orderUnits();
+        $this->createUnitsByTypeAndTag();
     }
 
     /**

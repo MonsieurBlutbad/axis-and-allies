@@ -19,16 +19,29 @@ class SeaBattle extends Battle
     /**
      * Performs a single battle round.
      */
-    protected function round()
+    public function round()
     {
+        // TODO
+        foreach($this->attacker->getUnits() as $unit) {
+            /** @var Unit $unit */
+            $unit->setHasShot(false);
+        }
+        foreach($this->defender->getUnits() as $unit) {
+            /** @var Unit $unit */
+            $unit->setHasShot(false);
+        }
+
+        // TODO outsource this to Side
         $this->surpriseStrike();
-        $this->removeCasualties();
+        $this->attacker->removeCasualties();
+        $this->defender->removeCasualties();
 
         if( count($this->attacker->getUnits()) <= 0 || count($this->defender->getUnits()) <= 0 )
             return;
 
         $this->fire();
-        $this->removeCasualties();
+        $this->attacker->removeCasualties();
+        $this->defender->removeCasualties();
     }
 
     /**
