@@ -15,11 +15,7 @@
             <div class="panel-body">
                 {{ form_start(form) }}
                     <div class="row">
-<<<<<<< HEAD:src/AppBundle/Resources/views/BattleCalculator/battle_form.html.twig
-                        <fieldset class="settings-fieldset">
-=======
                         <fieldset class="settings">
->>>>>>> 206c103e190c38a934526dfea2b3afdcf18239e1:src/AppBundle/Resources/views/BattleCalculator/form.html.twig
                             <div class="col-xs-12">
                                 {{ form_widget(form.type) }}
                                 {{ form_errors(form.type) }}
@@ -65,9 +61,6 @@
                             </fieldset>
                         </div>
                         <div class="col-xs-12 col-sm-6">
-<<<<<<< HEAD:src/AppBundle/Resources/views/BattleCalculator/battle_form.html.twig
-                            <fieldset class="defender-fieldset">
-=======
                             <fieldset>
                                 {% set defenderUnits = [
                                     { field:  form.defender_infantry, thumb: 'infantry.png' },
@@ -85,7 +78,6 @@
                                     { field:  form.defender_aircraft_carrier, thumb: 'aircraft_carrier.png' },
                                     { field:  form.defender_battleship, thumb: 'battleship.png' },
                                 ] %}
->>>>>>> 206c103e190c38a934526dfea2b3afdcf18239e1:src/AppBundle/Resources/views/BattleCalculator/form.html.twig
                                 <legend>Defender</legend>
                                 {% for unit in defenderUnits %}
                                     <div class="units defender-units form-group">
