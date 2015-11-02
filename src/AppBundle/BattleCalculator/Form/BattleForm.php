@@ -41,137 +41,137 @@ class BattleForm
     /**
      * @var int;
      */
-    protected $attackerInfantry = 0;
+    protected $attackerInfantry;
 
     /**
      * @var int;
      */
-    protected $attackerMechanizedInfantry = 0;
+    protected $attackerMechanizedInfantry;
 
     /**
      * @var int;
      */
-    protected $attackerArtillery = 0;
+    protected $attackerArtillery;
 
     /**
      * @var int;
      */
-    protected $attackerTank = 0;
+    protected $attackerTank;
 
     /**
      * @var int;
      */
-    protected $attackerFighter = 0;
+    protected $attackerFighter;
 
     /**
      * @var int;
      */
-    protected $attackerTacticalBomber = 0;
+    protected $attackerTacticalBomber;
 
     /**
      * @var int;
      */
-    protected $attackerStrategicBomber = 0;
+    protected $attackerStrategicBomber;
 
     /**
      * @var int;
      */
-    protected $attackerTransport = 0;
+    protected $attackerTransport;
 
     /**
      * @var int;
      */
-    protected $attackerSubmarine = 0;
+    protected $attackerSubmarine;
 
     /**
      * @var int;
      */
-    protected $attackerDestroyer = 0;
+    protected $attackerDestroyer;
 
     /**
      * @var int;
      */
-    protected $attackerCruiser = 0;
+    protected $attackerCruiser;
 
     /**
      * @var int;
      */
-    protected $attackerAircraftCarrier = 0;
+    protected $attackerAircraftCarrier;
 
     /**
      * @var int;
      */
-    protected $attackerBattleship = 0;
+    protected $attackerBattleship;
 
     /**
      * @var int;
      */
-    protected $defenderInfantry = 0;
+    protected $defenderInfantry;
 
     /**
      * @var int;
      */
-    protected $defenderMechanizedInfantry = 0;
+    protected $defenderMechanizedInfantry;
 
     /**
      * @var int;
      */
-    protected $defenderArtillery = 0;
+    protected $defenderArtillery;
 
     /**
      * @var int;
      */
-    protected $defenderTank = 0;
+    protected $defenderTank;
 
     /**
      * @var int;
      */
-    protected $defenderAntiaircraftArtillery = 0;
+    protected $defenderAntiaircraftArtillery;
 
     /**
      * @var int;
      */
-    protected $defenderFighter = 0;
+    protected $defenderFighter;
 
     /**
      * @var int;
      */
-    protected $defenderTacticalBomber = 0;
+    protected $defenderTacticalBomber;
 
     /**
      * @var int;
      */
-    protected $defenderStrategicBomber = 0;
+    protected $defenderStrategicBomber;
 
     /**
      * @var int;
      */
-    protected $defenderTransport = 0;
+    protected $defenderTransport;
 
     /**
      * @var int;
      */
-    protected $defenderSubmarine = 0;
+    protected $defenderSubmarine;
 
     /**
      * @var int;
      */
-    protected $defenderDestroyer = 0;
+    protected $defenderDestroyer;
 
     /**
      * @var int;
      */
-    protected $defenderCruiser = 0;
+    protected $defenderCruiser;
 
     /**
      * @var int;
      */
-    protected $defenderAircraftCarrier = 0;
+    protected $defenderAircraftCarrier;
 
     /**
      * @var int;
      */
-    protected $defenderBattleship = 0;
+    protected $defenderBattleship;
 
     /**
      * @var array

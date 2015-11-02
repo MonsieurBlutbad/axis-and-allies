@@ -1,0 +1,191 @@
+{% form_theme form 'AppBundle:Form:form_battle_calculator_layout.html.twig' %}
+
+{% block body %}
+    <div class="panel panel-primary">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#battle-form"
+           aria-expanded="{% if active %}true{% else %}false{% endif %}" aria-controls="battle-form">
+            <div class="panel-heading" role="tab" id="heading-battle-form">
+                <h4 class="panel-title">
+                    Battle Calculator
+                </h4>
+            </div>
+        </a>
+        <div id="battle-form" class="panel-collapse collapse{% if active %} in{% endif %}" role="tabpanel"
+             aria-labelledby="heading-battle-form">
+            <div class="panel-body">
+                {{ form_start(form) }}
+                    <div class="row">
+<<<<<<< HEAD:src/AppBundle/Resources/views/BattleCalculator/battle_form.html.twig
+                        <fieldset class="settings-fieldset">
+=======
+                        <fieldset class="settings">
+>>>>>>> 206c103e190c38a934526dfea2b3afdcf18239e1:src/AppBundle/Resources/views/BattleCalculator/form.html.twig
+                            <div class="col-xs-12">
+                                {{ form_widget(form.type) }}
+                                {{ form_errors(form.type) }}
+                            </div>
+                            <div class="col-xs-12">
+                                {{ form_label(form.accuracy) }}
+                                {{ form_widget(form.accuracy) }}
+                                {{ form_errors(form.accuracy) }}
+                            </div>
+                            <div id="reset-container" class="col-xs-12">
+                                <button id="reset" class="btn btn-default">Reset</button>
+                            </div>
+                            <div id="swap-container" class="col-xs-12">
+                                <button id="swap" class="btn btn-default">Swap</button>
+                            </div>
+                        </fieldset>
+
+                        <div class="col-xs-12 col-sm-6">
+                            <fieldset class="attacker-fieldset">
+                                <legend>Attacker</legend>
+                                {% set attackerUnits = [
+                                    { field:  form.attacker_infantry, thumb: 'infantry.png' },
+                                    { field:  form.attacker_mechanized_infantry, thumb: 'mechanized_infantry.png' },
+                                    { field:  form.attacker_artillery, thumb: 'artillery.png' },
+                                    { field:  form.attacker_tank, thumb: 'tank.png' },
+                                    { field:  form.attacker_fighter, thumb: 'fighter.png' },
+                                    { field:  form.attacker_tactical_bomber, thumb: 'tactical_bomber.png' },
+                                    { field:  form.attacker_strategic_bomber, thumb: 'strategic_bomber.png' },
+                                    { field:  form.attacker_transport, thumb: 'transport.png' },
+                                    { field:  form.attacker_submarine, thumb: 'submarine.png' },
+                                    { field:  form.attacker_destroyer, thumb: 'destroyer.png' },
+                                    { field:  form.attacker_cruiser, thumb: 'cruiser.png' },
+                                    { field:  form.attacker_aircraft_carrier, thumb: 'aircraft_carrier.png' },
+                                    { field:  form.attacker_battleship, thumb: 'battleship.png' },
+                                ] %}
+                                {% for unit in attackerUnits %}
+                                    <div class="units attacker-units form-group">
+                                        <img class="unit-image" src="{{ asset('bundles/app/images/units/attacker/' ~ unit.thumb) }}">
+                                        {{ form_widget(unit.field) }}
+                                        {{ form_label(unit.field) }}
+                                    </div>
+                                {% endfor %}
+                            </fieldset>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+<<<<<<< HEAD:src/AppBundle/Resources/views/BattleCalculator/battle_form.html.twig
+                            <fieldset class="defender-fieldset">
+=======
+                            <fieldset>
+                                {% set defenderUnits = [
+                                    { field:  form.defender_infantry, thumb: 'infantry.png' },
+                                    { field:  form.defender_mechanized_infantry, thumb: 'mechanized_infantry.png' },
+                                    { field:  form.defender_artillery, thumb: 'artillery.png' },
+                                    { field:  form.defender_tank, thumb: 'tank.png' },
+                                    { field:  form.defender_antiaircraft_artillery, thumb: 'antiaircraft_artillery.png' },
+                                    { field:  form.defender_fighter, thumb: 'fighter.png' },
+                                    { field:  form.defender_tactical_bomber, thumb: 'tactical_bomber.png' },
+                                    { field:  form.defender_strategic_bomber, thumb: 'strategic_bomber.png' },
+                                    { field:  form.defender_transport, thumb: 'transport.png' },
+                                    { field:  form.defender_submarine, thumb: 'submarine.png' },
+                                    { field:  form.defender_destroyer, thumb: 'destroyer.png' },
+                                    { field:  form.defender_cruiser, thumb: 'cruiser.png' },
+                                    { field:  form.defender_aircraft_carrier, thumb: 'aircraft_carrier.png' },
+                                    { field:  form.defender_battleship, thumb: 'battleship.png' },
+                                ] %}
+>>>>>>> 206c103e190c38a934526dfea2b3afdcf18239e1:src/AppBundle/Resources/views/BattleCalculator/form.html.twig
+                                <legend>Defender</legend>
+                                {% for unit in defenderUnits %}
+                                    <div class="units defender-units form-group">
+                                        <img class="unit-image" src="{{ asset('bundles/app/images/units/defender/' ~ unit.thumb) }}">
+                                        {{ form_widget(unit.field) }}
+                                        {{ form_label(unit.field) }}
+                                    </div>
+                                {% endfor %}
+                            </fieldset>
+                        </div>
+
+                        <div class="col-xs-12">
+                            {{ form_rest(form) }}
+                        </div>
+
+                    </div>
+                {{ form_end(form) }}
+
+
+
+                <div class="row">
+
+                    <div class="col-xs-12">
+                        <div class="alert alert-info battle-calculator-result">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">
+                                                    Attacker
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>Win probability</td>
+                                            <td>
+                                                <input disabled aria-disabled="true" value="{% if result|default %}{{ (result.attackerWins * 100)|round }}%{% endif %}">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Units lost &Oslash;</td>
+                                            <td>
+                                                <input class="battle-calculator-result-input" disabled aria-disabled="true" value="{% if result|default %}{{ result.attackerLostUnits|round(1) }}{% endif %}">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>IPCs lost &Oslash;</td>
+                                            <td>
+                                                <input class="battle-calculator-result-input" disabled aria-disabled="true" value="{% if result|default %}{{ result.attackerLostIpc|round(1) }}{% endif %}">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Units remaining &Oslash;</td>
+                                            <td>
+                                                <input class="battle-calculator-result-input" disabled aria-disabled="true" value="{% if result|default %}{{ result.attackerRemainingUnits|round(1) }}{% endif %}">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">
+                                                    Defender
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>Win probability</td>
+                                            <td>
+                                                <input class="battle-calculator-result-input" disabled aria-disabled="true" value="{% if result|default %}{{ (result.defenderWins * 100)|round }}%{% endif %}">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Units lost &Oslash;</td>
+                                            <td>
+                                                <input class="battle-calculator-result-input" disabled aria-disabled="true" value="{% if result|default %}{{ result.defenderLostUnits|round(1) }}{% endif %}">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>IPCs lost &Oslash;</td>
+                                            <td>
+                                                <input class="battle-calculator-result-input" disabled aria-disabled="true" value="{% if result|default %}{{ result.defenderLostIpc|round(1) }}{% endif %}">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Units remaining &Oslash;</td>
+                                            <td>
+                                                <input class="battle-calculator-result-input" disabled aria-disabled="true" value="{% if result|default %}{{ result.defenderRemainingUnits|round(1) }}{% endif %}">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

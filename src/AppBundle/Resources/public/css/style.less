@@ -47,10 +47,18 @@ hr {
 }
 
 .battle-calculator-form {
+<<<<<<< HEAD
   input {
     &[type=number] {
       width: 75px;
     }
+=======
+  .unit-image {
+    width: 40px;
+  }
+  input[type=number] {
+    width: 75px;
+>>>>>>> 206c103e190c38a934526dfea2b3afdcf18239e1
   }
   fieldset {
     legend {
@@ -59,6 +67,10 @@ hr {
     margin-bottom: 20px;
   }
   margin-bottom: 20px;
+  #reset-container,
+  #swap-container {
+    margin-top: 10px;
+  }
 }
 
 .battle-calculator-result {
@@ -75,8 +87,16 @@ hr {
 
 @media(max-width: @screen-xs-max) {
   .battle-calculator-form {
-    input {
+    input, button {
       width: 100%;
+    }
+    .units {
+      label {
+        display: none;
+      }
+      input {
+        display: inline;
+      }
     }
   }
 }

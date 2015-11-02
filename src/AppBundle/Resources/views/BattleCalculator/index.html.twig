@@ -8,11 +8,11 @@
 
 {% block content %}
     {{ accordion.open }}
-    {% include 'AppBundle:BattleCalculator:battle_form.html.twig'
-        with {
-            'form': form,
-            'active':  true
-        }
+    {% include 'AppBundle:BattleCalculator:form.html.twig'
+    with {
+    'form': form,
+    'active':  true
+    }
     %}
     {{ accordion.close }}
 {% endblock %}

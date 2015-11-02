@@ -11,6 +11,20 @@ namespace AppBundle\BattleCalculator\Form\Type;
 use AppBundle\BattleCalculator\Calculator;
 use AppBundle\BattleCalculator\Form\BattleForm;
 use AppBundle\BattleCalculator\Settings;
+use AppBundle\BattleCalculator\Unit\AircraftCarrier;
+use AppBundle\BattleCalculator\Unit\AntiaircraftArtillery;
+use AppBundle\BattleCalculator\Unit\Artillery;
+use AppBundle\BattleCalculator\Unit\Battleship;
+use AppBundle\BattleCalculator\Unit\Cruiser;
+use AppBundle\BattleCalculator\Unit\Destroyer;
+use AppBundle\BattleCalculator\Unit\Fighter;
+use AppBundle\BattleCalculator\Unit\Infantry;
+use AppBundle\BattleCalculator\Unit\MechanizedInfantry;
+use AppBundle\BattleCalculator\Unit\StrategicBomber;
+use AppBundle\BattleCalculator\Unit\Submarine;
+use AppBundle\BattleCalculator\Unit\TacticalBomber;
+use AppBundle\BattleCalculator\Unit\Tank;
+use AppBundle\BattleCalculator\Unit\Transport;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,6 +37,39 @@ class BattleFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $attackerUnits = [
+            'Infantry' => Infantry::class,
+            'Mechanized Infantry' => MechanizedInfantry::class,
+            'Artillery' => Artillery::class,
+            'Tank' => Tank::class,
+            'Fighter' => Fighter::class,
+            'Tactical Bomber' => TacticalBomber::class,
+            'Strategic Bomber' => StrategicBomber::class,
+            'Transport' => Transport::class,
+            'Submarine' => Submarine::class,
+            'Destroyer' => Destroyer::class,
+            'Cruiser' => Cruiser::class,
+            'Aircraft Carrier' => AircraftCarrier::class,
+            'Battleship' => Battleship::class,
+        ];
+
+        $defenderUnits = [
+            'Infantry' => Infantry::class,
+            'Mechanized Infantry' => MechanizedInfantry::class,
+            'Artillery' => Artillery::class,
+            'Tank' => Tank::class,
+            'Antiaircraft Artillery' => AntiaircraftArtillery::class,
+            'Fighter' => Fighter::class,
+            'Tactical Bomber' => TacticalBomber::class,
+            'Strategic Bomber' => StrategicBomber::class,
+            'Transport' => Transport::class,
+            'Submarine' => Submarine::class,
+            'Destroyer' => Destroyer::class,
+            'Cruiser' => Cruiser::class,
+            'Aircraft Carrier' => AircraftCarrier::class,
+            'Battleship' => Battleship::class,
+        ];
+
         $builder
             ->add('type', 'choice', [
                 'choices' => [
@@ -51,357 +98,46 @@ class BattleFormType extends AbstractType
                 'required' => true,
                 'data' => Settings::ACCURACY_DEBUG
                 ])
-            ->add('attacker_infantry', 'number', [
-                'label' => 'Infantry',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT ,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_mechanized_infantry', 'number', [
-                'label' => 'Mechanized Infantry',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_artillery', 'number', [
-                'label' => 'Artillery',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_tank', 'number', [
-                'label' => 'Tank',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_fighter', 'number', [
-                'label' => 'Fighter',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT. ' ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_tactical_bomber', 'number', [
-                'label' => 'Tactical Bomber',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT. ' ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_strategic_bomber', 'number', [
-                'label' => 'Strategic Bomber',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT. ' ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_transport', 'number', [
-                'label' => 'Transport',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_submarine', 'number', [
-                'label' => 'Submarine',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_destroyer', 'number', [
-                'label' => 'Destroyer',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_cruiser', 'number', [
-                'label' => 'Cruiser',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::AMPHIBIOUS_ASSAULT . ' ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_aircraft_carrier', 'number', [
-                'label' => 'Cruiser',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('attacker_battleship', 'number', [
-                'label' => 'Battleship',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::AMPHIBIOUS_ASSAULT . ' ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-
-            ->add('defender_infantry', 'number', [
-                'label' => 'Infantry',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT ,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_mechanized_infantry', 'number', [
-                'label' => 'Mechanized Infantry',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_artillery', 'number', [
-                'label' => 'Artillery',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_tank', 'number', [
-                'label' => 'Tank',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_antiaircraft_artillery', 'number', [
-                'label' => 'Antiaircraft Artillery',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_fighter', 'number', [
-                'label' => 'Fighter',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT. ' ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_tactical_bomber', 'number', [
-                'label' => 'Tactical Bomber',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT. ' ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_strategic_bomber', 'number', [
-                'label' => 'Strategic Bomber',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::LAND_BATTLE . ' ' .
-                        Calculator::AMPHIBIOUS_ASSAULT. ' ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_transport', 'number', [
-                'label' => 'Transport',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_submarine', 'number', [
-                'label' => 'Submarine',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_destroyer', 'number', [
-                'label' => 'Destroyer',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_cruiser', 'number', [
-                'label' => 'Cruiser',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_aircraft_carrier', 'number', [
-                'label' => 'Cruiser',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-            ->add('defender_battleship', 'number', [
-                'label' => 'Battleship',
-                'required' => false,
-                'attr' => [
-                    'class' =>
-                        'form-control ' .
-                        Calculator::SEA_BATTLE,
-                    'placeholder' => 0,
-                    'min' => 0,
-                    'max' => 999,
-                ]
-            ])
-
-            ->add('Calculate', 'submit')
         ;
+        foreach($attackerUnits as $label => $unit) {
+            $builder->add('attacker_' . $unit::NAME, 'number', [
+                'label' => $label,
+                'required' => false,
+                'attr' => [
+                    'class' =>
+                        'form-control ' .
+                        ($unit::LAND_BATTLE ? Calculator::LAND_BATTLE . ' ' : '') .
+                        ($unit::AMPHIBIOUS_ASSAULT ? Calculator::AMPHIBIOUS_ASSAULT . ' ' : '') .
+                        ($unit::SEA_BATTLE ? Calculator::SEA_BATTLE . ' ' : ''),
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
+                    'data-cost' => $unit::COST,
+                    'data-battle-value' => $unit::ATTACK,
+                ]
+
+            ]);
+        }
+        foreach($defenderUnits as $label => $unit) {
+            $builder->add('defender_' . $unit::NAME, 'number', [
+                'label' => $label,
+                'required' => false,
+                'attr' => [
+                    'class' =>
+                        'form-control ' .
+                        ($unit::LAND_BATTLE ? Calculator::LAND_BATTLE . ' ' . Calculator::AMPHIBIOUS_ASSAULT . ' ' : '') .
+                        ($unit::SEA_BATTLE ? Calculator::SEA_BATTLE . ' ' : ''),
+                    'placeholder' => 0,
+                    'min' => 0,
+                    'max' => 999,
+                    'data-cost' => $unit::COST,
+                    'data-battle-value' => $unit::DEFENSE,
+                ]
+
+            ]);
+        }
+
+        $builder->add('Calculate', 'submit');
     }
 
     /**

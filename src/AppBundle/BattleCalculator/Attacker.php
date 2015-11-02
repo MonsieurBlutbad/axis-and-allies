@@ -30,6 +30,7 @@ class Attacker extends Side
         $this->combineArms();
 
         $this->orderUnits();
+        $this->createUnitsByTypeAndTag();
     }
 
     /**
@@ -53,6 +54,7 @@ class Attacker extends Side
         }
 
         $this->orderUnits();
+        $this->createUnitsByTypeAndTag();
     }
 
     /**
@@ -110,7 +112,7 @@ class Attacker extends Side
                     }
                     return $a->getAttack() - $b->getAttack();
                 }
-                return $a->getHitPoints() - $b->getHitPoints();
+                return $b->getHitPoints() - $a->getHitPoints();
             }
             return $a->hasTag('chosen_last')? +1 : -1;
         });
