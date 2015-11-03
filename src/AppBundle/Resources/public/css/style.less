@@ -47,11 +47,14 @@ hr {
 }
 
 .battle-calculator-form {
-  .unit-image {
-    width: 40px;
-  }
-  input[type=number] {
-    width: 75px;
+  .units {
+    .unit-image {
+      width: 40px;
+    }
+    input {
+      width: 75px;
+    }
+    width: 100%;
   }
   fieldset {
     legend {
@@ -84,11 +87,14 @@ hr {
       width: 100%;
     }
     .units {
+      display: inline-block;
+      width: auto;
       label {
         display: none;
       }
       input {
         display: inline;
+        width: 65px;
       }
     }
   }

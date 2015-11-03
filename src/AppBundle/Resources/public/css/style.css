@@ -6804,10 +6804,13 @@ hr {
 .battle-calculator-form {
   margin-bottom: 20px;
 }
-.battle-calculator-form .unit-image {
+.battle-calculator-form .units {
+  width: 100%;
+}
+.battle-calculator-form .units .unit-image {
   width: 40px;
 }
-.battle-calculator-form input[type=number] {
+.battle-calculator-form .units input {
   width: 75px;
 }
 .battle-calculator-form fieldset {
@@ -6835,10 +6838,15 @@ hr {
   .battle-calculator-form button {
     width: 100%;
   }
+  .battle-calculator-form .units {
+    display: inline-block;
+    width: auto;
+  }
   .battle-calculator-form .units label {
     display: none;
   }
   .battle-calculator-form .units input {
     display: inline;
+    width: 65px;
   }
 }
