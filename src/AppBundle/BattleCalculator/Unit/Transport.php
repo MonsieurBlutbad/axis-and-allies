@@ -19,7 +19,7 @@ class Transport extends SeaUnit
     const HIT_POINTS = 1;
 
     const LAND_BATTLE = false;
-    const AMPHIBIOUS_ASSAULT = true;
+    const AMPHIBIOUS_ASSAULT = false;
     const SEA_BATTLE = true;
 
     function __construct(Logger $logger = null)
