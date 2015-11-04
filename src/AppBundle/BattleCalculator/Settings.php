@@ -20,6 +20,8 @@ class Settings {
 
     private $accuracy;
 
+    private $mustTakeTerritory = false;
+
     // TODO: Must take territory (prioritize last land unit over air units)
     // TODO: Keep Destroyers while subs are alive
 
@@ -59,6 +61,22 @@ class Settings {
     public function setAccuracy($accuracy)
     {
         $this->accuracy = $accuracy;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getMustTakeTerritory()
+    {
+        return $this->mustTakeTerritory;
+    }
+
+    /**
+     * @param boolean $mustTakeTerritory
+     */
+    public function setMustTakeTerritory($mustTakeTerritory)
+    {
+        $this->mustTakeTerritory = $mustTakeTerritory;
     }
 
 }

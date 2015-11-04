@@ -9,6 +9,8 @@
 namespace AppBundle\BattleCalculator;
 
 use AppBundle\BattleCalculator\Unit\AirUnit;
+use AppBundle\BattleCalculator\Unit\LandUnit;
+use AppBundle\BattleCalculator\Unit\SeaUnit;
 use Symfony\Bridge\Monolog\Logger;
 
 use AppBundle\BattleCalculator\Unit\Unit;
@@ -18,19 +20,21 @@ class Attacker extends Side
 
     /**
      * @param Unit[] $units
+     * @param Battle $battle
      * @param Logger $logger
      */
-    function __construct($units, Logger $logger = null)
+    function __construct($units, Battle $battle, Logger $logger = null)
     {
         $this->logger = $logger;
+        $this->battle = $battle;
         $this->units = $units;
         foreach($this->units as $unit)
             $unit->setSide($this);
 
         $this->combineArms();
 
-        $this->orderUnits();
         $this->createUnitsByTypeAndTag();
+        $this->orderUnits();
     }
 
     /**
@@ -92,7 +96,20 @@ class Attacker extends Side
      */
     public function orderUnits() {
         $this->combineArms();
-        $this->orderUnitsByAttack();
+
+        if($this->battle->getCalculator()->getSettings()->getMustTakeTerritory()) {
+            $landUnits = $this->orderUnitsByAttack(
+                $this->getUnitsByType(LandUnit::class)
+            );
+            $lastLandUnit = array_pop($landUnits);
+            $otherUnits = $this->orderUnitsByAttack(
+                array_merge( $this->getUnitsByType(SeaUnit::class)? : [], $this->getUnitsByType(AirUnit::class)? : [])
+            );
+            $this->units = array_merge($landUnits, $otherUnits);
+            $this->units[] = $lastLandUnit;
+        } else {
+            $this->units = $this->orderUnitsByAttack($this->units);
+        }
 
         if($this->logger)
             $this->logger->info('ordering attacker units', [array_map(function(Unit $unit) {
@@ -101,21 +118,26 @@ class Attacker extends Side
     }
 
     /**
+     * @param Unit[] $units
      * @return mixed
      */
-    private function orderUnitsByAttack() {
-        usort( $this->units, function(Unit $a, Unit $b) {
-            if($a->hasTag('chosen_last') === $b->hasTag('chosen_last')) {
-                if ($a->getHitPoints() === $b->getHitPoints()) {
-                    if ($a->getAttack() === $b->getAttack()) {
-                        return $a->getCost() - $b->getCost();
+    private function orderUnitsByAttack($units)
+    {
+        if(count($units) > 1) {
+            usort( $units, function(Unit $a, Unit $b) {
+                if($a->hasTag('chosen_last') === $b->hasTag('chosen_last')) {
+                    if ($a->getHitPoints() === $b->getHitPoints()) {
+                        if ($a->getAttack() === $b->getAttack()) {
+                            return $a->getCost() - $b->getCost();
+                        }
+                        return $a->getAttack() - $b->getAttack();
                     }
-                    return $a->getAttack() - $b->getAttack();
+                    return $b->getHitPoints() - $a->getHitPoints();
                 }
-                return $b->getHitPoints() - $a->getHitPoints();
-            }
-            return $a->hasTag('chosen_last')? +1 : -1;
-        });
+                return $a->hasTag('chosen_last')? +1 : -1;
+            });
+        }
+        return $units;
     }
 
 }

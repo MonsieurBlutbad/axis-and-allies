@@ -119,6 +119,7 @@ class Calculator
                         array_map( function($unit) {
                             return clone $unit;
                         },$this->defenderUnits),
+                        $this,
                         $this->logger
                     );
                     break;
@@ -137,6 +138,7 @@ class Calculator
                         array_map( function($unit) {
                             return clone $unit;
                         },$this->defenderUnits),
+                        $this,
                         $this->logger
                     );
                     break;
@@ -155,6 +157,7 @@ class Calculator
                         array_map( function($unit) {
                             return clone $unit;
                         },$this->defenderUnits),
+                        $this,
                         $this->logger
                     );
                     break;
@@ -183,6 +186,14 @@ class Calculator
             unlink ($pathToLog);
         }
 
+    }
+
+    /**
+     * @return Settings
+     */
+    public function getSettings()
+    {
+        return $this->settings;
     }
 
 }

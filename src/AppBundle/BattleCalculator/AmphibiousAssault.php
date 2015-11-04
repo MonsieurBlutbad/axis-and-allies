@@ -32,7 +32,7 @@ class AmphibiousAssault extends LandBattle
         if($this->logger)
             $this->logger->notice('Coastal Bombardment begins');
 
-        foreach($this->attacker->getUnitsByClass(SeaUnit::class) as $unit) {
+        foreach($this->attacker->getUnitsByType(SeaUnit::class) as $unit) {
             /* @var SeaUnit $unit */
             if($unit->getCoastalBombardment() > 0) {
                 if($this->logger)
