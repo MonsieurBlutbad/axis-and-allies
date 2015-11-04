@@ -29,41 +29,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BattleFormType extends AbstractType
+class BattleFormDebugType extends BattleFormType
 {
-    protected $attackerUnits = [
-        'Infantry' => Infantry::class,
-        'Mechanized Infantry' => MechanizedInfantry::class,
-        'Artillery' => Artillery::class,
-        'Tank' => Tank::class,
-        'Fighter' => Fighter::class,
-        'Tactical Bomber' => TacticalBomber::class,
-        'Strategic Bomber' => StrategicBomber::class,
-        'Transport' => Transport::class,
-        'Submarine' => Submarine::class,
-        'Destroyer' => Destroyer::class,
-        'Cruiser' => Cruiser::class,
-        'Aircraft Carrier' => AircraftCarrier::class,
-        'Battleship' => Battleship::class,
-    ];
-
-    protected $defenderUnits = [
-        'Infantry' => Infantry::class,
-        'Mechanized Infantry' => MechanizedInfantry::class,
-        'Artillery' => Artillery::class,
-        'Tank' => Tank::class,
-        'Antiaircraft Artillery' => AntiaircraftArtillery::class,
-        'Fighter' => Fighter::class,
-        'Tactical Bomber' => TacticalBomber::class,
-        'Strategic Bomber' => StrategicBomber::class,
-        'Transport' => Transport::class,
-        'Submarine' => Submarine::class,
-        'Destroyer' => Destroyer::class,
-        'Cruiser' => Cruiser::class,
-        'Aircraft Carrier' => AircraftCarrier::class,
-        'Battleship' => Battleship::class,
-    ];
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -84,9 +51,20 @@ class BattleFormType extends AbstractType
                 'required' => true,
                 'data' => Calculator::LAND_BATTLE
             ])
-            ->add('accuracy', 'hidden', [
-                'data' => Settings::ACCURACY_GOOD
-            ])
+            ->add('accuracy', 'choice', [
+                'choices' => [
+                    Settings::ACCURACY_DEBUG => 'Debug',
+                    Settings::ACCURACY_FAST => 'Fast',
+                    Settings::ACCURACY_GOOD => 'Accurate',
+                    Settings::ACCURACY_EXTREME => 'Extreme'
+                ],
+                'attr' => [
+                    'class' => 'form-control '
+                ],
+                'label' => 'Accuracy',
+                'required' => true,
+                'data' => Settings::ACCURACY_DEBUG
+                ])
         ;
         foreach($this->attackerUnits as $label => $unit) {
             $builder->add('attacker_' . $unit::NAME, 'number', [

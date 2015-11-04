@@ -16,6 +16,8 @@ $(function()
 
     var $reset = $('#reset');
 
+    var $swap = $('#swap');
+
     updateFields();
 
     /**
@@ -47,10 +49,13 @@ $(function()
     );
 
     /**
-     *
+     * Sets all unit input fields to null.
      */
     $reset.click(
-        function(e) {
+        function(e)
+        {
+            e.preventDefault();
+
             var $unitInputs = $(
                 'input.land_battle, input.amphibious_assault, input.sea_battle'
             );
@@ -59,6 +64,30 @@ $(function()
                 $unitInputs[index].value = null;
             }
         }
+    );
+
+    $swap.click(
+        function(e)
+        {
+            e.preventDefault();
+
+            var $attackingUnits = $('.attacker-units input');
+
+            $attackingUnits.each(
+                function()
+                {
+                    var $attackingUnit = $(this);
+                    var name = $attackingUnit.data('name');
+                    var $defendingUnit = $('.defender-units input[data-name="' + name + '"]');
+                    if($defendingUnit) {
+                        var attackingUnitValue = $attackingUnit.val();
+                        $attackingUnit.val($defendingUnit.val());
+                        $defendingUnit.val(attackingUnitValue);
+                    }
+                }
+            )
+        }
+
     );
 
     /**

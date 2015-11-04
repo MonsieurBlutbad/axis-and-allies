@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\BattleCalculator\Calculation;
 use AppBundle\BattleCalculator\Calculator;
 use AppBundle\BattleCalculator\Form\BattleForm;
+use AppBundle\BattleCalculator\Form\Type\BattleFormDebugType;
 use AppBundle\BattleCalculator\Form\Type\BattleFormType;
 use AppBundle\BattleCalculator\BattleResult;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,7 +24,10 @@ class BattleCalculatorController extends Controller
         $battleCalculatorForm = new BattleForm();
 
         /** @var Form $form */
-        $form = $this->createForm(new BattleFormType(), $battleCalculatorForm);
+        if( $this->container->get( 'kernel' )->getEnvironment() === 'dev')
+            $form = $this->createForm(new BattleFormDebugType(), $battleCalculatorForm);
+        else
+            $form = $this->createForm(new BattleFormType(), $battleCalculatorForm);
 
         $form->handleRequest($request);
 
