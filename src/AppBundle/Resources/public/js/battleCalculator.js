@@ -172,7 +172,6 @@ $(function()
                         }
 
                         if(side === 'attacker') {
-                            console.log($input.data('name'));
                             attackerUnits[$input.data('name')] = Number($input.val());
                         }
                     }
@@ -182,14 +181,18 @@ $(function()
 
             // TODO
             if(side === 'attacker') {
-                battleValue += Math.min(
+                var infantryBonus = Math.min(
                     attackerUnits['infantry'] + attackerUnits['mechanized_infantry'],
                     attackerUnits['artillery']
                 );
-                battleValue += Math.min(
+                if(! isNaN(infantryBonus))
+                    battleValue += infantryBonus;
+                var bomberBonus = Math.min(
                     attackerUnits['tactical_bomber'],
                     attackerUnits['fighter'] + attackerUnits['tank']
                 );
+                if(! isNaN(bomberBonus))
+                    battleValue += bomberBonus;
             }
 
             metaInfos[side].units.html(units);
