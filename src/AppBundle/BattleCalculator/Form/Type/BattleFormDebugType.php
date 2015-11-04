@@ -82,6 +82,7 @@ class BattleFormDebugType extends BattleFormType
                     'data-cost' => $unit::COST,
                     'data-battle-value' => $unit::ATTACK,
                     'data-name' => $unit::NAME,
+                    'data-hit-points' => $unit::HIT_POINTS,
                 ]
 
             ]);
@@ -101,6 +102,7 @@ class BattleFormDebugType extends BattleFormType
                     'data-cost' => $unit::COST,
                     'data-battle-value' => $unit::DEFENSE,
                     'data-name' => $unit::NAME,
+                    'data-hit-points' => $unit::HIT_POINTS,
                 ]
 
             ]);

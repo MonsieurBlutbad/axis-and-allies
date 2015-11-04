@@ -27,12 +27,14 @@ $(function()
         attacker: {
             units: $('.attacker-fieldset .meta-infos .meta-info-units'),
             ipcs: $('.attacker-fieldset .meta-infos .meta-info-ipcs'),
-            battleValue: $('.attacker-fieldset .meta-infos .meta-info-battle-value')
+            battleValue: $('.attacker-fieldset .meta-infos .meta-info-battle-value'),
+            hitPoints: $('.attacker-fieldset .meta-infos .meta-info-hit-points')
         },
         defender: {
             units: $('.defender-fieldset .meta-infos .meta-info-units'),
             ipcs: $('.defender-fieldset .meta-infos .meta-info-ipcs'),
-            battleValue: $('.defender-fieldset .meta-infos .meta-info-battle-value')
+            battleValue: $('.defender-fieldset .meta-infos .meta-info-battle-value'),
+            hitPoints: $('.defender-fieldset .meta-infos .meta-info-hit-points')
         }
     };
 
@@ -115,7 +117,7 @@ $(function()
                         $defendingUnit.val(attackingUnitValue);
                     }
                 }
-            )
+            );
 
             updateMetaInfos();
         }
@@ -139,73 +141,62 @@ $(function()
     function updateMetaInfos()
     {
         for(var side in metaInfos) {
-            metaInfos[side].units.html(getMetaInfoUnits(side));
-            metaInfos[side].ipcs.html(getMetaInfoIPCs(side));
-            metaInfos[side].battleValue.html(getMetaInfoBattleValue(side));
+
+            var units = 0;
+            var ipcs = 0;
+            var battleValue = 0;
+            var hitPoints = 0;
+            var attackerUnits = [];
+
+            unitInputs[side].each(
+                function(index, input)
+                {
+                    var $input = $(input);
+
+                    // TODO
+                    if($input.hasClass($typeSelect[0].value)
+                        &&( ! ($typeSelect[0].value === 'amphibious_assault' && ! $input.hasClass('land_battle')))
+                    ) {
+                        units += Number($input.val());
+
+                        if(! isNaN($input.data('cost'))) {
+                            ipcs += Number ($input.data('cost')) * Number($input.val());
+                        }
+
+                        if(! isNaN($input.data('battle-value'))) {
+                            battleValue += Number ($input.data('battle-value')) * Number($input.val());
+                        }
+
+                        if(! isNaN($input.data('hit-points'))) {
+                            hitPoints += Number ($input.data('hit-points')) * Number($input.val());
+                        }
+
+                        if(side === 'attacker') {
+                            console.log($input.data('name'));
+                            attackerUnits[$input.data('name')] = Number($input.val());
+                        }
+                    }
+                }
+
+            );
+
+            // TODO
+            if(side === 'attacker') {
+                battleValue += Math.min(
+                    attackerUnits['infantry'] + attackerUnits['mechanized_infantry'],
+                    attackerUnits['artillery']
+                );
+                battleValue += Math.min(
+                    attackerUnits['tactical_bomber'],
+                    attackerUnits['fighter'] + attackerUnits['tank']
+                );
+            }
+
+            metaInfos[side].units.html(units);
+            metaInfos[side].ipcs.html(ipcs);
+            metaInfos[side].battleValue.html(battleValue);
+            metaInfos[side].hitPoints.html(hitPoints);
         }
     }
-
-    /**
-     *
-     */
-    function getMetaInfoUnits(side)
-    {
-        var units = 0;
-        unitInputs[side].each(
-            function(index, input)
-            {
-                var $input = $(input);
-                if($input.hasClass($typeSelect[0].value)) {
-                    units += Number($input.val());
-                }
-            }
-        );
-        return units;
-    }
-
-    /**
-     *
-     */
-    function getMetaInfoIPCs(side)
-    {
-        var ipcs = 0;
-        unitInputs[side].each(
-            function(index, input)
-            {
-                var $input = $(input);
-                if($input.hasClass($typeSelect[0].value)) {
-                    if(! isNaN($input.data('cost'))) {
-                        ipcs += Number ($input.data('cost')) * Number($input.val());
-                    }
-                }
-
-            }
-        );
-        return ipcs;
-    }
-
-
-    /**
-     *
-     */
-    function getMetaInfoBattleValue(side)
-    {
-        var battleValue = 0;
-        unitInputs[side].each(
-            function(index, input)
-            {
-                var $input = $(input);
-                if($input.hasClass($typeSelect[0].value)) {
-                    if(! isNaN($input.data('battle-value'))) {
-                        battleValue += Number ($input.data('battle-value')) * Number($input.val());
-                    }
-                }
-
-            }
-        );
-        return battleValue;
-    }
-
-
 
 });
