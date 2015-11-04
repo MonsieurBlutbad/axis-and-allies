@@ -6,7 +6,7 @@ $(function()
 {
     var $typeSelect = $('#battle_form_type');
 
-    var $formGroups = {
+    var formGroups = {
         land_battle: $('input.land_battle').parent('div.form-group'),
         amphibious_assault: $('input.amphibious_assault').parent('div.form-group'),
         sea_battle:  $('input.sea_battle').parent('div.form-group')
@@ -14,11 +14,40 @@ $(function()
 
     var $form = $('form.battle-calculator-form');
 
-    var $reset = $('#reset');
+    var $resetButton = $('#reset');
 
-    var $swap = $('#swap');
+    var $swapButton = $('#swap');
+
+    var unitInputs = {
+        attacker : $('.attacker-units input'),
+        defender: $('.defender-units input')
+    };
+
+    var metaInfos = {
+        attacker: {
+            units: $('.attacker-fieldset .meta-infos .meta-info-units'),
+            ipcs: $('.attacker-fieldset .meta-infos .meta-info-ipcs'),
+            battleValue: $('.attacker-fieldset .meta-infos .meta-info-battle-value')
+        },
+        defender: {
+            units: $('.defender-fieldset .meta-infos .meta-info-units'),
+            ipcs: $('.defender-fieldset .meta-infos .meta-info-ipcs'),
+            battleValue: $('.defender-fieldset .meta-infos .meta-info-battle-value')
+        }
+    };
 
     updateFields();
+
+    updateMetaInfos();
+
+    for(var side in unitInputs) {
+        unitInputs[side].change(
+            function()
+            {
+                updateMetaInfos();
+            }
+        )
+    }
 
     /**
      * Updates form fields when the type select field changes.
@@ -27,6 +56,8 @@ $(function()
         function()
         {
             updateFields();
+            
+            updateMetaInfos();
         }
     );
 
@@ -37,13 +68,13 @@ $(function()
         function(e)
         {
             var type = $typeSelect[0].value;
-            var $unitInputs = $(
+            var unusedUnitInputs = $(
                 'input.land_battle:not(.' + type + '), ' +
                 'input.amphibious_assault:not(.' + type + '), ' +
                 'input.sea_battle:not(.' + type + ')'
             );
-            for(var index in $unitInputs) {
-                $unitInputs[index].value = 0;
+            for(var index in unusedUnitInputs) {
+                unusedUnitInputs[index].value = 0;
             }
         }
     );
@@ -51,29 +82,28 @@ $(function()
     /**
      * Sets all unit input fields to null.
      */
-    $reset.click(
+    $resetButton.click(
         function(e)
         {
             e.preventDefault();
 
-            var $unitInputs = $(
-                'input.land_battle, input.amphibious_assault, input.sea_battle'
-            );
-
-            for(var index in $unitInputs) {
-                $unitInputs[index].value = null;
+            for(var side in unitInputs) {
+                for(var index in unitInputs[side]) {
+                    unitInputs[side][index].value = null;
+                }
             }
+
+            updateMetaInfos();
+
         }
     );
 
-    $swap.click(
+    $swapButton.click(
         function(e)
         {
             e.preventDefault();
 
-            var $attackingUnits = $('.attacker-units input');
-
-            $attackingUnits.each(
+            unitInputs.attacker.each(
                 function()
                 {
                     var $attackingUnit = $(this);
@@ -86,6 +116,8 @@ $(function()
                     }
                 }
             )
+
+            updateMetaInfos();
         }
 
     );
@@ -95,10 +127,83 @@ $(function()
      */
     function updateFields()
     {
-        for(var type in $formGroups)
-            $formGroups[type].hide();
-        $formGroups[$typeSelect[0].value].show();
+        for(var type in formGroups)
+            formGroups[type].hide();
+        formGroups[$typeSelect[0].value].show();
 
+    }
+
+    /**
+     * Updates the form to display only fields that match the battle type.
+     */
+    function updateMetaInfos()
+    {
+        for(var side in metaInfos) {
+            metaInfos[side].units.html(getMetaInfoUnits(side));
+            metaInfos[side].ipcs.html(getMetaInfoIPCs(side));
+            metaInfos[side].battleValue.html(getMetaInfoBattleValue(side));
+        }
+    }
+
+    /**
+     *
+     */
+    function getMetaInfoUnits(side)
+    {
+        var units = 0;
+        unitInputs[side].each(
+            function(index, input)
+            {
+                var $input = $(input);
+                if($input.hasClass($typeSelect[0].value)) {
+                    units += Number($input.val());
+                }
+            }
+        );
+        return units;
+    }
+
+    /**
+     *
+     */
+    function getMetaInfoIPCs(side)
+    {
+        var ipcs = 0;
+        unitInputs[side].each(
+            function(index, input)
+            {
+                var $input = $(input);
+                if($input.hasClass($typeSelect[0].value)) {
+                    if(! isNaN($input.data('cost'))) {
+                        ipcs += Number ($input.data('cost')) * Number($input.val());
+                    }
+                }
+
+            }
+        );
+        return ipcs;
+    }
+
+
+    /**
+     *
+     */
+    function getMetaInfoBattleValue(side)
+    {
+        var battleValue = 0;
+        unitInputs[side].each(
+            function(index, input)
+            {
+                var $input = $(input);
+                if($input.hasClass($typeSelect[0].value)) {
+                    if(! isNaN($input.data('battle-value'))) {
+                        battleValue += Number ($input.data('battle-value')) * Number($input.val());
+                    }
+                }
+
+            }
+        );
+        return battleValue;
     }
 
 
