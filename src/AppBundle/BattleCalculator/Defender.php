@@ -82,5 +82,17 @@ class Defender extends Side
         });
     }
 
-
+    /**
+     * @return number
+     */
+    public function getCombatPower()
+    {
+        return array_sum(
+            array_map(
+                function(Unit $unit) {
+                    return $unit->getDefense();
+                }, $this->units
+            )
+        );
+    }
 }

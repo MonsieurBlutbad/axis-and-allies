@@ -183,15 +183,22 @@ abstract class Battle
         $attackerCantAttack = false;
         $defenderCantAttack = false;
         if(
-            count($this->attacker->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->attacker->getUnits())
-            && count($this->defender->getUnitsByClass(AirUnit::class)) === count($this->defender->getUnits())
+            $this->attacker->getCombatPower() <= 0 ||
+            (
+                count($this->attacker->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->attacker->getUnits())
+                && count($this->defender->getUnitsByClass(AirUnit::class)) === count($this->defender->getUnits())
+            )
         )
             $attackerCantAttack = true;
         if(
-            count($this->defender->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->defender->getUnits())
-            && count($this->attacker->getUnitsByClass(AirUnit::class)) === count($this->attacker->getUnits())
+            $this->defender->getCombatPower() <= 0 ||
+            (
+                count($this->defender->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->defender->getUnits())
+                && count($this->attacker->getUnitsByClass(AirUnit::class)) === count($this->attacker->getUnits())
+            )
         )
             $defenderCantAttack = true;
+
         $stalemate = $attackerCantAttack && $defenderCantAttack;
         if($this->logger)
             $this->logger->info('stalemate check', [$stalemate]);
