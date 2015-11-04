@@ -18,9 +18,10 @@ class AmphibiousAssault extends LandBattle
      */
     protected function beforeFirstRound()
     {
-        $this->coastalBombardment();
-
         parent::beforeFirstRound();
+
+        $this->coastalBombardment();
+        $this->defender->removeCasualties();
     }
 
     /**
@@ -43,8 +44,6 @@ class AmphibiousAssault extends LandBattle
                 $this->attacker->removeUnit($unit);
             }
         }
-
-        $this->removeCasualties();
     }
 
 }

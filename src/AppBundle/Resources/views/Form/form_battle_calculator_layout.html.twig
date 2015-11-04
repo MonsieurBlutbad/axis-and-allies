@@ -47,7 +47,7 @@
             {% set label = name|humanize %}
         {%- endif -%}
     {%- endif -%}
-    <button class="btn btn-default" type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
+    <button class="btn btn-primary btn-block btn-lg" type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
 {%- endblock button_widget -%}
 
 {# Rows #}

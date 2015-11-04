@@ -13,16 +13,11 @@ use Symfony\Bridge\Monolog\Logger;
 
 use AppBundle\BattleCalculator\Unit\Unit;
 
-class Side
+abstract class Side
 {
 
     const ATTACKER = 'attacker';
     const DEFENDER = 'defender';
-
-    /**
-     * @var string
-     */
-    protected $type;
 
     /**
      * @var Unit[]
@@ -45,34 +40,32 @@ class Side
     protected $removed = [];
 
     /**
+     * @var array
+     */
+    protected $unitsByClass = [];
+
+    /**
+     * @var array
+     */
+    protected $unitsByTag = [];
+
+    /**
+     * @var array
+     */
+    protected $blockedUnits = [];
+
+
+
+    /**
      * @var Logger
      */
     protected $logger;
 
-    function __construct($type, $units, Logger $logger = null)
-    {
-        if($type !== self::ATTACKER && $type !== self::DEFENDER)
-            throw new \InvalidArgumentException();
-
-        $this->logger = $logger;
-        $this->type = $type;
-        $this->units = $units;
-        foreach($this->units as $unit)
-            $unit->setSide($this);
-
-        if($this->type === self::ATTACKER)
-            $this->combineArms();
-
-        $this->orderUnits();
-    }
-
     /**
-     * @return string
+     * @param $units
+     * @param Logger $logger
      */
-    public function getType()
-    {
-        return $this->type;
-    }
+    abstract function __construct($units, Logger $logger = null);
 
     /**
      * @return Unit[]
@@ -179,16 +172,17 @@ class Side
         if(count($this->units) > 0) {
             foreach ($this->units as $unit) {
                 /* @var Unit $unit */
+
                 /* Skip units that are already in casualties (hit earlier this round) */
                 if( in_array($unit, $this->casualties, true)) {
                     continue;
                 }
 
-                /* Hit only allowed classes (i.e. Antiaircraft Artillery may only hit Air Units */
+                /* Allowed Classes */
                 if($allowedClasses && ! in_array(get_class($unit), $allowedClasses))
                     continue;
 
-                /* Skip if an air unit tries to hit a unit that can't be hit by air units unless countered (i.e. Subs) */
+                /* Can't be Hit by Air Units */
                 if(
                     $hitBy instanceof AirUnit &&
                     $unit->hasTag(Unit::CANT_BE_HIT_BY_AIR_UNITS) &&
@@ -196,10 +190,17 @@ class Side
                 )
                     continue;
 
-                /* Skip if a unit that can't hit air units tries to hit an air unit */
+                /* Can't Hit Air Units */
                 if(
                     $unit instanceof AirUnit &&
                     $hitBy->hasTag(Unit::CANT_HIT_AIR_UNITS)
+                )
+                    continue;
+
+                /* Chosen Last */
+                if(
+                    $unit->hasTag(Unit::CHOSEN_LAST) &&
+                    count($unit->getSide()->getUnitsByTag(Unit::CHOSEN_LAST)) < count($unit->getSide()->getUnits())
                 )
                     continue;
 
@@ -221,112 +222,33 @@ class Side
     /**
      *
      */
-    public function removeCasualties()
-    {
-        if($this->logger)
-            $this->logger->info('cleaning up casualties', ['type' => $this->getType(), 'casualties' => count($this->casualties)]);
-
-        if(count($this->casualties) > 0) {
-            foreach($this->casualties as $casualty) {
-                $this->removeUnit($casualty);
-                $this->addLostUnit($casualty);
-                $this->removeCasualty($casualty);
-                if($casualty->getCombinedWith()) {
-                    $casualty->getCombinedWith()->setCombinedWith(null);
-                    $casualty->getCombinedWith(null);
-                }
-            }
-        }
-
-        $this->orderUnits();
-    }
+    abstract function removeCasualties();
 
     /**
      *
      */
-    private function combineArms()
+    protected function createUnitsByTypeAndTag()
     {
-        if($this->logger)
-            $this->logger->info('combining arms', [$this->getType()]);
-
-        foreach($this->units as $unit) {
-            if( ! $unit->getCombinations() > 0)
-                continue;
-            if($unit->getCombinedWith())
-                continue;
-
-            /** @var Unit[] $combinableUnits */
-            $combinableUnits = array_filter($this->units, function(Unit $u) use ($unit) {
-                return isset($unit->getCombinations()[get_class($u)]) && ! $u->getCombinedWith();
-            });
-
-            if(count($combinableUnits) > 0) {
-                /** @var Unit $combinableUnit */
-                $combinableUnit = array_values($combinableUnits)[0];
-                if($this->logger)
-                    $this->logger->info('Combining ' . $unit->getName() . ' & ' .$combinableUnit->getName());
-                $unit->setCombinedWith($combinableUnit);
-                $combinableUnit->setCombinedWith($unit);
+        $this->unitsByTag = [];
+        $this->unitsByClass = [];
+        foreach($this->units as $unit){
+            /** @var Unit $unit */
+            foreach($unit->getTags() as $tag) {
+                if(! isset($this->unitsByTag[$tag]))
+                    $this->unitsByTag[$tag] = [];
+                $this->unitsByTag[$tag][] = $unit;
             }
+            if(! isset($this->unitsByClass[get_class($unit)]))
+                $this->unitsByClass[get_class($unit)] = [];
+            $this->unitsByClass[get_class($unit)][] = $unit;
         }
     }
 
     /**
      *
      */
-    private function orderUnits() {
-        if($this->type === self::ATTACKER) {
-            $this->combineArms();
-            $this->orderUnitsByAttack();
-        }
-        if($this->type === self::DEFENDER)
-            $this->orderUnitsByDefense();
+    abstract function orderUnits();
 
-        if($this->logger)
-            $this->logger->info('ordering units', [$this->getType(), array_map(function(Unit $unit) {
-                return $unit->getName() . ' (' .
-                    ($this->type === self::ATTACKER
-                        ? $unit->getAttack()
-                        : $unit->getDefense()
-                    ). ')';
-            }, $this->units)]);
-    }
-
-    /**
-     * @return mixed
-     */
-    private function orderUnitsByAttack() {
-        usort( $this->units, function(Unit $a, Unit $b) {
-            if($a->hasTag('chosen_last') === $b->hasTag('chosen_last')) {
-                if ($a->getHitPoints() === $b->getHitPoints()) {
-                    if ($a->getAttack() === $b->getAttack()) {
-                        return $a->getCost() - $b->getCost();
-                    }
-                    return $a->getAttack() - $b->getAttack();
-                }
-                return $a->getHitPoints() - $b->getHitPoints();
-            }
-            return $a->hasTag('chosen_last')? +1 : -1;
-        });
-    }
-
-    /**
-     * @return mixed
-     */
-    private function orderUnitsByDefense() {
-        usort( $this->units, function(Unit $a, Unit $b) {
-            if($a->hasTag('chosen_last') === $b->hasTag('chosen_last')) {
-                if ($a->getHitPoints() === $b->getHitPoints()) {
-                    if ($a->getDefense() === $b->getDefense()) {
-                        return $a->getCost() - $b->getCost();
-                    }
-                    return $a->getDefense() - $b->getDefense();
-                }
-                return $a->getHitPoints() - $b->getHitPoints();
-            }
-            return $a->hasTag('chosen_last')? +1 : -1;
-        });
-    }
 
     /**
      * @param $class
@@ -334,11 +256,10 @@ class Side
      */
     public function getUnitsByClass($class)
     {
-        return array_filter($this->units,
-            function(Unit $unit) use ($class) {
-                return $unit instanceof $class;
-            }
-        );
+        return
+            isset($this->unitsByClass[$class])?
+                $this->unitsByClass[$class]
+                : null;
     }
 
     /**
@@ -347,11 +268,24 @@ class Side
      */
     public function getUnitsByTag($tag)
     {
-        return array_filter($this->units,
-            function(Unit $unit) use ($tag) {
-                return $unit->hasTag($tag);
-            }
-        );
+        return
+            isset($this->unitsByTag[$tag])?
+                $this->unitsByTag[$tag]
+                : null;
+    }
+
+    /**
+     * Returns true if any unit of this side has the given tag.
+     *
+     * @param $tag
+     * @return bool
+     */
+    public function hasTag($tag)
+    {
+        foreach($this->units as $unit)
+            if($unit->hasTag($tag))
+                return true;
+        return false;
     }
 
 }

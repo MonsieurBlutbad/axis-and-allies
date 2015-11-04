@@ -15,12 +15,32 @@ use AppBundle\BattleCalculator\Unit\Unit;
 class LandBattle extends Battle
 {
 
+    public function round()
+    {
+        // TODO
+        foreach($this->attacker->getUnits() as $unit) {
+            /** @var Unit $unit */
+            $unit->setHasShot(false);
+        }
+        foreach($this->defender->getUnits() as $unit) {
+            /** @var Unit $unit */
+            $unit->setHasShot(false);
+        }
+
+        $this->fire();
+
+        $this->attacker->removeCasualties();
+        $this->defender->removeCasualties();
+    }
+
     /**
      * Performs any battle phases that happen before the first round of regular combat.
      */
     protected function beforeFirstRound()
     {
+        // TODO outsource this to Defender
         $this->antiAirAttack();
+        $this->attacker->removeCasualties();
     }
 
     /**

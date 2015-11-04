@@ -8,6 +8,7 @@
 
 namespace AppBundle\BattleCalculator;
 
+use AppBundle\BattleCalculator\Unit\AirUnit;
 use AppBundle\BattleCalculator\Unit\Unit;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -24,7 +25,7 @@ abstract class Battle
     protected $defender;
 
     /**
-     * @var Result
+     * @var BattleResult
      */
     protected $result;
 
@@ -35,9 +36,10 @@ abstract class Battle
 
     function __construct($attackingUnits, $defendingUnits, Logger $logger = null) {
         $this->logger = $logger;
-        $this->attacker = new Side(Side::ATTACKER, $attackingUnits, $logger);
-        $this->defender = new Side(Side::DEFENDER, $defendingUnits, $logger);
+        $this->attacker = new Attacker($attackingUnits, $logger);
+        $this->defender = new Defender($defendingUnits, $logger);
     }
+
     /**
      * @return Side
      */
@@ -69,7 +71,7 @@ abstract class Battle
             $this->logger->notice('Main Battle Phase begins');
 
         $round = 0;
-        while(count($this->attacker->getUnits()) > 0 && count($this->defender->getUnits()) > 0) {
+        while(count($this->attacker->getUnits()) > 0 && count($this->defender->getUnits()) > 0 && !$this->isStalemate()) {
             $round ++;
             if($this->logger)
                 $this->logger->notice('New Battle Round', ['round' => $round]);
@@ -80,7 +82,7 @@ abstract class Battle
                 $this->logger->notice('End of Battle Round', ['round' => $round, 'attackerRemainingUnits' => count($this->attacker->getUnits()), 'defenderRemainingUnits' => count($this->defender->getUnits())]);
         }
 
-        $this->result = (new Result($this));
+        $this->result = (new BattleResult($this));
 
         return $this->result;
     }
@@ -95,20 +97,7 @@ abstract class Battle
     /**
      * Performs a single battle round.
      */
-    protected function round()
-    {
-        $this->fire();
-        $this->removeCasualties();
-    }
-
-    /**
-     *
-     */
-    protected function removeCasualties()
-    {
-        $this->attacker->removeCasualties();
-        $this->defender->removeCasualties();
-    }
+    abstract function round();
 
     /**
      *
@@ -120,7 +109,7 @@ abstract class Battle
 
         foreach($this->attacker->getUnits() as $unit) {
             /* @var $unit Unit */
-            if($unit->getAttack() > 0)
+            if($unit->getAttack() > 0 && ! $unit->getHasShot())
                 $this->attackRoll($unit, Side::ATTACKER);
         }
 
@@ -129,7 +118,7 @@ abstract class Battle
 
         foreach($this->defender->getUnits() as $unit) {
             /* @var $unit Unit */
-            if ($unit->getDefense() > 0)
+            if ($unit->getDefense() > 0 && ! $unit->getHasShot())
                 $this->attackRoll($unit, Side::DEFENDER);
         }
     }
@@ -143,15 +132,19 @@ abstract class Battle
         if($this->logger)
             $this->logger->info($unit->getName() . ' rolls', [spl_object_hash($unit)]);
 
-        if($unit->getSide()->getType() === Side::ATTACKER) {
+        if($unit->getSide() instanceof Attacker) {
             if($this->hasHit($unit->getAttack())) {
                 $this->defender->applyHit($unit);
             }
+
+            $unit->setHasShot(true);
         }
-        elseif($unit->getSide()->getType() === Side::DEFENDER) {
+        elseif($unit->getSide() instanceof Defender) {
             if($this->hasHit($unit->getDefense())) {
                 $this->attacker->applyHit($unit);
             }
+
+            $unit->setHasShot(true);
         }
 
     }
@@ -180,6 +173,29 @@ abstract class Battle
         if(count($this->defender->getUnits()) <= 0)
             return Side::ATTACKER;
         return null;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isStalemate()
+    {
+        $attackerCantAttack = false;
+        $defenderCantAttack = false;
+        if(
+            count($this->attacker->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->attacker->getUnits())
+            && count($this->defender->getUnitsByClass(AirUnit::class)) === count($this->defender->getUnits())
+        )
+            $attackerCantAttack = true;
+        if(
+            count($this->defender->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->defender->getUnits())
+            && count($this->attacker->getUnitsByClass(AirUnit::class)) === count($this->attacker->getUnits())
+        )
+            $defenderCantAttack = true;
+        $stalemate = $attackerCantAttack && $defenderCantAttack;
+        if($this->logger)
+            $this->logger->info('stalemate check', [$stalemate]);
+        return $stalemate;
     }
 
     /**

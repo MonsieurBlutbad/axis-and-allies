@@ -10,7 +10,7 @@ namespace AppBundle\BattleCalculator;
 
 use AppBundle\BattleCalculator\Unit\Unit;
 
-class Result {
+class BattleResult {
 
     /**
      * @var string

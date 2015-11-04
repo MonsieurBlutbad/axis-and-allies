@@ -62,6 +62,11 @@ abstract class Unit
     protected $combinedWith  = null;
 
     /**
+     * @var bool
+     */
+    protected $hasShot = false;
+
+    /**
      * @var Side
      */
     protected $side;
@@ -344,6 +349,22 @@ abstract class Unit
     public function setSide($side)
     {
         $this->side = $side;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getHasShot()
+    {
+        return $this->hasShot;
+    }
+
+    /**
+     * @param boolean $hasShot
+     */
+    public function setHasShot($hasShot)
+    {
+        $this->hasShot = $hasShot;
     }
 
 }
