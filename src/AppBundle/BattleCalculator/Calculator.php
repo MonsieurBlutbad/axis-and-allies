@@ -64,6 +64,10 @@ class Calculator
         if(! in_array($this->type, [self::LAND_BATTLE, self::AMPHIBIOUS_ASSAULT, self::SEA_BATTLE]))
             throw new \InvalidArgumentException();
 
+        if(in_array($this->type, [self::LAND_BATTLE, self::AMPHIBIOUS_ASSAULT])) {
+            $this->settings->setMustTakeTerritory($battleCalculatorForm->getMustTakeTerritory());
+        }
+
         if($logger && $this->settings->getDebug()) {
             // TODO
           //  $this->clearLog();
@@ -119,6 +123,7 @@ class Calculator
                         array_map( function($unit) {
                             return clone $unit;
                         },$this->defenderUnits),
+                        $this,
                         $this->logger
                     );
                     break;
@@ -137,6 +142,7 @@ class Calculator
                         array_map( function($unit) {
                             return clone $unit;
                         },$this->defenderUnits),
+                        $this,
                         $this->logger
                     );
                     break;
@@ -155,6 +161,7 @@ class Calculator
                         array_map( function($unit) {
                             return clone $unit;
                         },$this->defenderUnits),
+                        $this,
                         $this->logger
                     );
                     break;
@@ -183,6 +190,14 @@ class Calculator
             unlink ($pathToLog);
         }
 
+    }
+
+    /**
+     * @return Settings
+     */
+    public function getSettings()
+    {
+        return $this->settings;
     }
 
 }

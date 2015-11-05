@@ -18,18 +18,19 @@ class Defender extends Side
 
     /**
      * @param Unit[] $units
+     * @param Battle $battle
      * @param Logger $logger
      */
-    function __construct($units, Logger $logger = null)
+    function __construct($units, Battle $battle, Logger $logger = null)
     {
         $this->logger = $logger;
+        $this->battle = $battle;
         $this->units = $units;
         foreach($this->units as $unit)
             $unit->setSide($this);
 
-        $this->orderUnits();
         $this->createUnitsByTypeAndTag();
-
+        $this->orderUnits();
     }
 
     /**

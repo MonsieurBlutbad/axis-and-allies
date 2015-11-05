@@ -34,10 +34,16 @@ abstract class Battle
      */
     protected $logger;
 
-    function __construct($attackingUnits, $defendingUnits, Logger $logger = null) {
+    /**
+     * @var Calculator
+     */
+    protected $calculator;
+
+    function __construct($attackingUnits, $defendingUnits, Calculator $calculator, Logger $logger = null) {
         $this->logger = $logger;
-        $this->attacker = new Attacker($attackingUnits, $logger);
-        $this->defender = new Defender($defendingUnits, $logger);
+        $this->calculator = $calculator;
+        $this->attacker = new Attacker($attackingUnits, $this, $logger);
+        $this->defender = new Defender($defendingUnits, $this, $logger);
     }
 
     /**
@@ -183,19 +189,13 @@ abstract class Battle
         $attackerCantAttack = false;
         $defenderCantAttack = false;
         if(
-            $this->attacker->getCombatPower() <= 0 ||
-            (
-                count($this->attacker->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->attacker->getUnits())
-                && count($this->defender->getUnitsByClass(AirUnit::class)) === count($this->defender->getUnits())
-            )
+            count($this->attacker->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->attacker->getUnits())
+            && count($this->defender->getUnitsByType(AirUnit::class)) === count($this->defender->getUnits())
         )
             $attackerCantAttack = true;
         if(
-            $this->defender->getCombatPower() <= 0 ||
-            (
-                count($this->defender->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->defender->getUnits())
-                && count($this->attacker->getUnitsByClass(AirUnit::class)) === count($this->attacker->getUnits())
-            )
+            count($this->defender->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->defender->getUnits())
+            && count($this->attacker->getUnitsByType(AirUnit::class)) === count($this->attacker->getUnits())
         )
             $defenderCantAttack = true;
 
@@ -230,6 +230,14 @@ abstract class Battle
     {
         mt_srand();
         return mt_rand(1, $dice);
+    }
+
+    /**
+     * @return Calculator
+     */
+    public function getCalculator()
+    {
+        return $this->calculator;
     }
 
 }

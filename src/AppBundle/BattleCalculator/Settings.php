@@ -16,13 +16,22 @@ class Settings {
     const ACCURACY_GOOD    = 2000;
     const ACCURACY_EXTREME = 5000;
 
+    /**
+     * @var boolean
+     */
     private $debug;
 
+    /**
+     * @var int
+     */
     private $accuracy;
 
-    // TODO: Must take territory (prioritize last land unit over air units)
-    // TODO: Keep Destroyers while subs are alive
+    /**
+     * @var boolean
+     */
+    private $mustTakeTerritory;
 
+    // TODO: Keep Destroyers while subs are alive
     function __construct($accuracy = self::ACCURACY_DEBUG, $debug = false)
     {
         $this->accuracy = $accuracy;
@@ -30,7 +39,7 @@ class Settings {
     }
 
     /**
-     * @return mixed
+     * @return boolean
      */
     public function getDebug()
     {
@@ -38,7 +47,7 @@ class Settings {
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getAccuracy()
     {
@@ -46,7 +55,7 @@ class Settings {
     }
 
     /**
-     * @param mixed $debug
+     * @param boolean $debug
      */
     public function setDebug($debug)
     {
@@ -54,11 +63,27 @@ class Settings {
     }
 
     /**
-     * @param mixed $accuracy
+     * @param int $accuracy
      */
     public function setAccuracy($accuracy)
     {
         $this->accuracy = $accuracy;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getMustTakeTerritory()
+    {
+        return $this->mustTakeTerritory;
+    }
+
+    /**
+     * @param boolean $mustTakeTerritory
+     */
+    public function setMustTakeTerritory($mustTakeTerritory)
+    {
+        $this->mustTakeTerritory = $mustTakeTerritory;
     }
 
 }

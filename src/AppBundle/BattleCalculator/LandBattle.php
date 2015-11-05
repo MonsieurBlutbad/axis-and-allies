@@ -54,7 +54,7 @@ class LandBattle extends Battle
         foreach($this->defender->getUnits() as $unit) {
             /* @var Unit $unit */
             if($unit->hasTag(Unit::AIR_DEFENSE)) {
-                $attackerAirUnitCount = count($this->attacker->getUnitsByClass(AirUnit::class));
+                $attackerAirUnitCount = count($this->attacker->getUnitsByType(AirUnit::class));
 
                 if($this->logger)
                     $this->logger->info($unit->getName() . ' performs anti air attack', ['shots' => min(3, $attackerAirUnitCount), 'attackerAirUnitCount' => $attackerAirUnitCount, spl_object_hash($this)] );

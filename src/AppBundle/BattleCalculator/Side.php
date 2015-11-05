@@ -42,7 +42,7 @@ abstract class Side
     /**
      * @var array
      */
-    protected $unitsByClass = [];
+    protected $unitsByType = [];
 
     /**
      * @var array
@@ -54,7 +54,10 @@ abstract class Side
      */
     protected $blockedUnits = [];
 
-
+    /**
+     * @var Battle
+     */
+    protected $battle;
 
     /**
      * @var Logger
@@ -65,7 +68,7 @@ abstract class Side
      * @param $units
      * @param Logger $logger
      */
-    abstract function __construct($units, Logger $logger = null);
+    abstract function __construct($units, Battle $battle, Logger $logger = null);
 
     /**
      * @return Unit[]
@@ -230,7 +233,7 @@ abstract class Side
     protected function createUnitsByTypeAndTag()
     {
         $this->unitsByTag = [];
-        $this->unitsByClass = [];
+        $this->unitsByType = [];
         foreach($this->units as $unit){
             /** @var Unit $unit */
             foreach($unit->getTags() as $tag) {
@@ -238,9 +241,9 @@ abstract class Side
                     $this->unitsByTag[$tag] = [];
                 $this->unitsByTag[$tag][] = $unit;
             }
-            if(! isset($this->unitsByClass[get_class($unit)]))
-                $this->unitsByClass[get_class($unit)] = [];
-            $this->unitsByClass[get_class($unit)][] = $unit;
+            if(! isset($this->unitsByType[get_parent_class($unit)]))
+                $this->unitsByType[get_parent_class($unit)] = [];
+            $this->unitsByType[get_parent_class($unit)][] = $unit;
         }
     }
 
@@ -254,11 +257,11 @@ abstract class Side
      * @param $class
      * @return array
      */
-    public function getUnitsByClass($class)
+    public function getUnitsByType($class)
     {
         return
-            isset($this->unitsByClass[$class])?
-                $this->unitsByClass[$class]
+            isset($this->unitsByType[$class])?
+                $this->unitsByType[$class]
                 : null;
     }
 
