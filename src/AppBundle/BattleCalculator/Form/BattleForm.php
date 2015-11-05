@@ -44,6 +44,11 @@ class BattleForm
     protected $mustTakeTerritory = false;
 
     /**
+     * @var boolean
+     */
+    protected $keepDestroyers = false;
+
+    /**
      * @var int;
      */
     protected $attackerInfantry;
@@ -732,8 +737,6 @@ class BattleForm
         $this->defenderBattleship = $defenderBattleship;
     }
 
-
-
     /**
      * @param Logger $logger
      * @return array
@@ -770,6 +773,22 @@ class BattleForm
     protected function isClassAllowedForType($side, $class)
     {
         return in_array($class, $this->allowedClasses[$this->type][$side]);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getKeepDestroyers()
+    {
+        return $this->keepDestroyers;
+    }
+
+    /**
+     * @param boolean $keepDestroyers
+     */
+    public function setKeepDestroyers($keepDestroyers)
+    {
+        $this->keepDestroyers = $keepDestroyers;
     }
 
 }

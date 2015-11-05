@@ -49,23 +49,27 @@ class Calculator
     private $logger;
 
     /**
-     * @param $battleCalculatorForm
+     * @param $form
      * @param Logger $logger
      */
-    function __construct(BattleForm $battleCalculatorForm, Logger $logger = null)
+    function __construct(BattleForm $form, Logger $logger = null)
     {
-        $units = $battleCalculatorForm->getUnits($logger);
+        $units = $form->getUnits($logger);
         $this->attackerUnits = $units['attacker'];
         $this->defenderUnits = $units['defender'];
 
-        $this->settings = new Settings( intval($battleCalculatorForm->getAccuracy()), true );
+        $this->settings = new Settings( intval($form->getAccuracy()), true );
 
-        $this->type = $battleCalculatorForm->getType();
+        $this->type = $form->getType();
         if(! in_array($this->type, [self::LAND_BATTLE, self::AMPHIBIOUS_ASSAULT, self::SEA_BATTLE]))
             throw new \InvalidArgumentException();
 
         if(in_array($this->type, [self::LAND_BATTLE, self::AMPHIBIOUS_ASSAULT])) {
-            $this->settings->setMustTakeTerritory($battleCalculatorForm->getMustTakeTerritory());
+            $this->settings->setMustTakeTerritory($form->getMustTakeTerritory());
+        }
+
+        if($this->type === self::SEA_BATTLE) {
+            $this->settings->setKeepDestroyers($form->getKeepDestroyers());
         }
 
         if($logger && $this->settings->getDebug()) {

@@ -26,6 +26,7 @@ use AppBundle\BattleCalculator\Unit\TacticalBomber;
 use AppBundle\BattleCalculator\Unit\Tank;
 use AppBundle\BattleCalculator\Unit\Transport;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Validator\Constraints\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -98,6 +99,18 @@ class BattleFormType extends AbstractType
                     'data-placement' => 'top'
                 ]
             ])
+            ->add('keepDestroyers', 'checkbox', [
+                'label' => 'Keep Destroyers while enemy has subs',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control ' . Calculator::SEA_BATTLE,
+                ],
+                'label_attr' => [
+                    'data-toggle' => 'tooltip',
+                    'title' => 'Will not take the last Destroyer as casualty when the enemy has still subs in the battle',
+                    'data-placement' => 'top'
+                ]
+            ])
         ;
     }
 
@@ -147,6 +160,14 @@ class BattleFormType extends AbstractType
 
             ]);
         }
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addAttackerTechnologies(FormBuilderInterface $builder)
+    {
+
     }
 
     /**

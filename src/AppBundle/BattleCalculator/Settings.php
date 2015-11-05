@@ -31,6 +31,11 @@ class Settings {
      */
     private $mustTakeTerritory;
 
+    /**
+     * @var boolean
+     */
+    private $keepDestroyers;
+
     // TODO: Keep Destroyers while subs are alive
     function __construct($accuracy = self::ACCURACY_DEBUG, $debug = false)
     {
@@ -84,6 +89,22 @@ class Settings {
     public function setMustTakeTerritory($mustTakeTerritory)
     {
         $this->mustTakeTerritory = $mustTakeTerritory;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getKeepDestroyers()
+    {
+        return $this->keepDestroyers;
+    }
+
+    /**
+     * @param boolean $keepDestroyers
+     */
+    public function setKeepDestroyers($keepDestroyers)
+    {
+        $this->keepDestroyers = $keepDestroyers;
     }
 
 }

@@ -9,8 +9,10 @@
 namespace AppBundle\BattleCalculator;
 
 use AppBundle\BattleCalculator\Unit\AirUnit;
+use AppBundle\BattleCalculator\Unit\Destroyer;
 use AppBundle\BattleCalculator\Unit\LandUnit;
 use AppBundle\BattleCalculator\Unit\SeaUnit;
+use AppBundle\BattleCalculator\Unit\Submarine;
 use Symfony\Bridge\Monolog\Logger;
 
 use AppBundle\BattleCalculator\Unit\Unit;
@@ -34,7 +36,6 @@ class Attacker extends Side
         $this->combineArms();
 
         $this->createUnitsByTypeAndTag();
-        $this->orderUnits();
     }
 
     /**
@@ -57,7 +58,6 @@ class Attacker extends Side
             }
         }
 
-        $this->orderUnits();
         $this->createUnitsByTypeAndTag();
     }
 
@@ -109,6 +109,18 @@ class Attacker extends Side
             $this->units[] = $lastLandUnit;
         } else {
             $this->units = $this->orderUnitsByAttack($this->units);
+        }
+
+        if($this->battle->getCalculator()->getSettings()->getKeepDestroyers()) {
+            if(count($this->battle->getDefender()->getUnitsByType(Submarine::class)) > 0) {
+                foreach($this->units as $i => $unit) {
+                    if($unit instanceof Destroyer) {
+                        unset($this->units[$i]);
+                        $this->units[] = $unit;
+                        break;
+                    }
+                }
+            }
         }
 
         if($this->logger)

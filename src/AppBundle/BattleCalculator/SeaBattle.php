@@ -35,6 +35,8 @@ class SeaBattle extends Battle
         $this->surpriseStrike();
         $this->attacker->removeCasualties();
         $this->defender->removeCasualties();
+        $this->attacker->orderUnits();
+        $this->defender->orderUnits();
 
         if( count($this->attacker->getUnits()) <= 0 || count($this->defender->getUnits()) <= 0 )
             return;
@@ -42,6 +44,8 @@ class SeaBattle extends Battle
         $this->fire();
         $this->attacker->removeCasualties();
         $this->defender->removeCasualties();
+        $this->attacker->orderUnits();
+        $this->defender->orderUnits();
     }
 
     /**

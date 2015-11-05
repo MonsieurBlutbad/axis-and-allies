@@ -44,6 +44,8 @@ abstract class Battle
         $this->calculator = $calculator;
         $this->attacker = new Attacker($attackingUnits, $this, $logger);
         $this->defender = new Defender($defendingUnits, $this, $logger);
+        $this->attacker->orderUnits();
+        $this->defender->orderUnits();
     }
 
     /**

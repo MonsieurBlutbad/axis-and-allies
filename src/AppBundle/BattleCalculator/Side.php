@@ -241,9 +241,9 @@ abstract class Side
                     $this->unitsByTag[$tag] = [];
                 $this->unitsByTag[$tag][] = $unit;
             }
-            if(! isset($this->unitsByType[get_parent_class($unit)]))
-                $this->unitsByType[get_parent_class($unit)] = [];
-            $this->unitsByType[get_parent_class($unit)][] = $unit;
+            if(! isset($this->unitsByType[get_class($unit)]))
+                $this->unitsByType[get_class($unit)] = [];
+            $this->unitsByType[get_class($unit)][] = $unit;
         }
     }
 

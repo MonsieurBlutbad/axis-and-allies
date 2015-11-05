@@ -22,6 +22,7 @@ class AmphibiousAssault extends LandBattle
 
         $this->coastalBombardment();
         $this->defender->removeCasualties();
+        $this->defender->orderUnits();
     }
 
     /**
