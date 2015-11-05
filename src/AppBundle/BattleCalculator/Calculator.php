@@ -64,6 +64,10 @@ class Calculator
         if(! in_array($this->type, [self::LAND_BATTLE, self::AMPHIBIOUS_ASSAULT, self::SEA_BATTLE]))
             throw new \InvalidArgumentException();
 
+        if(in_array($this->type, [self::LAND_BATTLE, self::AMPHIBIOUS_ASSAULT])) {
+            $this->settings->setMustTakeTerritory($battleCalculatorForm->getMustTakeTerritory());
+        }
+
         if($logger && $this->settings->getDebug()) {
             // TODO
           //  $this->clearLog();

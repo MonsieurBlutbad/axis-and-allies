@@ -39,6 +39,11 @@ class BattleForm
     protected $accuracy;
 
     /**
+     * @var boolean
+     */
+    protected $mustTakeTerritory = false;
+
+    /**
      * @var int;
      */
     protected $attackerInfantry;
@@ -277,6 +282,22 @@ class BattleForm
     public function setAccuracy($accuracy)
     {
         $this->accuracy = $accuracy;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getMustTakeTerritory()
+    {
+        return $this->mustTakeTerritory;
+    }
+
+    /**
+     * @param boolean $mustTakeTerritory
+     */
+    public function setMustTakeTerritory($mustTakeTerritory)
+    {
+        $this->mustTakeTerritory = $mustTakeTerritory;
     }
 
     /**

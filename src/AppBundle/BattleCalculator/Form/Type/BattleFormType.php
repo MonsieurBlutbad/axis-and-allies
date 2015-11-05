@@ -66,11 +66,13 @@ class BattleFormType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    protected function addSettings(FormBuilderInterface $builder)
     {
         $builder
+            ->add('accuracy', 'hidden', [
+                'data' => Settings::ACCURACY_GOOD
+            ])
             ->add('type', 'choice', [
                 'choices' => [
                     Calculator::LAND_BATTLE => 'Land Battle',
@@ -84,10 +86,26 @@ class BattleFormType extends AbstractType
                 'required' => true,
                 'data' => Calculator::LAND_BATTLE
             ])
-            ->add('accuracy', 'hidden', [
-                'data' => Settings::ACCURACY_GOOD
+            ->add('mustTakeTerritory', 'checkbox', [
+                'label' => 'Must Take Territory',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control ' . Calculator::LAND_BATTLE . ' ' . Calculator::AMPHIBIOUS_ASSAULT,
+                ],
+                'label_attr' => [
+                    'data-toggle' => 'tooltip',
+                    'title' => 'Attacker must keep at least one land unit alive',
+                    'data-placement' => 'top'
+                ]
             ])
         ;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addUnits(FormBuilderInterface $builder)
+    {
         foreach($this->attackerUnits as $label => $unit) {
             $builder->add('attacker_' . $unit::NAME, 'number', [
                 'label' => $label,
@@ -129,6 +147,16 @@ class BattleFormType extends AbstractType
 
             ]);
         }
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $this->addSettings($builder);
+        $this->addUnits($builder);
 
         $builder->add('Calculate', 'submit');
     }

@@ -4,6 +4,8 @@
 
 $(function()
 {
+    $('[data-toggle="tooltip"]').tooltip();
+
     var $typeSelect = $('#battle_form_type');
 
     var formGroups = {
@@ -17,6 +19,8 @@ $(function()
     var $resetButton = $('#reset');
 
     var $swapButton = $('#swap');
+
+    var $mustTakeTerritory = $('#battle_form_mustTakeTerritory');
 
     var unitInputs = {
         attacker : $('.attacker-units input'),
@@ -94,6 +98,8 @@ $(function()
                     unitInputs[side][index].value = null;
                 }
             }
+
+            $mustTakeTerritory.attr('checked', false)
 
             updateMetaInfos();
 
