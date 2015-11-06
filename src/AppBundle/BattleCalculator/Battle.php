@@ -44,6 +44,12 @@ abstract class Battle
         $this->calculator = $calculator;
         $this->attacker = new Attacker($attackingUnits, $this, $logger);
         $this->defender = new Defender($defendingUnits, $this, $logger);
+        $this->attacker->setTechnologies($calculator->getTechnologies()[Side::ATTACKER]);
+        $this->defender->setTechnologies($calculator->getTechnologies()[Side::DEFENDER]);
+        $this->attacker->applyTechnologies();
+        $this->defender->applyTechnologies();
+        $this->attacker->orderUnits();
+        $this->defender->orderUnits();
     }
 
     /**
@@ -141,6 +147,10 @@ abstract class Battle
         if($unit->getSide() instanceof Attacker) {
             if($this->hasHit($unit->getAttack())) {
                 $this->defender->applyHit($unit);
+            } elseif($unit->hasTag(Unit::ATTACKS_TWICE)) {
+                if ($this->hasHit($unit->getAttack())) {
+                    $this->defender->applyHit($unit);
+                }
             }
 
             $unit->setHasShot(true);
@@ -194,11 +204,20 @@ abstract class Battle
         )
             $attackerCantAttack = true;
         if(
+            count($this->attacker->getUnitsByType(AirUnit::class)) === count($this->attacker->getUnits())
+            && count($this->defender->getUnitsByTag(Unit::CANT_BE_HIT_BY_AIR_UNITS)) === count($this->defender->getUnits())
+        )
+            $attackerCantAttack = true;
+        if(
             count($this->defender->getUnitsByTag(Unit::CANT_HIT_AIR_UNITS)) === count($this->defender->getUnits())
             && count($this->attacker->getUnitsByType(AirUnit::class)) === count($this->attacker->getUnits())
         )
             $defenderCantAttack = true;
-
+        if(
+            count($this->defender->getUnitsByType(AirUnit::class)) === count($this->defender->getUnits())
+            && count($this->attacker->getUnitsByTag(Unit::CANT_BE_HIT_BY_AIR_UNITS)) === count($this->attacker->getUnits())
+        )
+            $defenderCantAttack = true;
         $stalemate = $attackerCantAttack && $defenderCantAttack;
         if($this->logger)
             $this->logger->info('stalemate check', [$stalemate]);

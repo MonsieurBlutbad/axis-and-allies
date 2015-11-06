@@ -11,6 +11,9 @@ namespace AppBundle\BattleCalculator\Form\Type;
 use AppBundle\BattleCalculator\Calculator;
 use AppBundle\BattleCalculator\Form\BattleForm;
 use AppBundle\BattleCalculator\Settings;
+use AppBundle\BattleCalculator\Technology\HeavyBomber;
+use AppBundle\BattleCalculator\Technology\JetFighter;
+use AppBundle\BattleCalculator\Technology\SuperSubmarine;
 use AppBundle\BattleCalculator\Unit\AircraftCarrier;
 use AppBundle\BattleCalculator\Unit\AntiaircraftArtillery;
 use AppBundle\BattleCalculator\Unit\Artillery;
@@ -26,6 +29,7 @@ use AppBundle\BattleCalculator\Unit\TacticalBomber;
 use AppBundle\BattleCalculator\Unit\Tank;
 use AppBundle\BattleCalculator\Unit\Transport;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Validator\Constraints\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -64,6 +68,12 @@ class BattleFormType extends AbstractType
         'Battleship' => Battleship::class,
     ];
 
+    protected $attackerTechnologies = [
+        'Super Submarines' => SuperSubmarine::class,
+        'Jet Fighters' => JetFighter::class,
+        'Heavy Bombers' => HeavyBomber::class
+    ];
+
     /**
      * @param FormBuilderInterface $builder
      */
@@ -95,6 +105,18 @@ class BattleFormType extends AbstractType
                 'label_attr' => [
                     'data-toggle' => 'tooltip',
                     'title' => 'Attacker must keep at least one land unit alive',
+                    'data-placement' => 'top'
+                ]
+            ])
+            ->add('keepDestroyers', 'checkbox', [
+                'label' => 'Keep one Destroyer',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control ' . Calculator::SEA_BATTLE,
+                ],
+                'label_attr' => [
+                    'data-toggle' => 'tooltip',
+                    'title' => 'Will not take the last Destroyer as casualty when the enemy has still subs in the battle (for both sides)',
                     'data-placement' => 'top'
                 ]
             ])
@@ -148,6 +170,21 @@ class BattleFormType extends AbstractType
             ]);
         }
     }
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addTechnologies(FormBuilderInterface $builder)
+    {
+        foreach($this->attackerTechnologies as $label => $technology) {
+            $builder->add('technology_attacker_' . $technology::NAME, 'checkbox', [
+                'label' => $label,
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                ]
+            ]);
+        }
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -157,6 +194,7 @@ class BattleFormType extends AbstractType
     {
         $this->addSettings($builder);
         $this->addUnits($builder);
+        $this->addTechnologies($builder);
 
         $builder->add('Calculate', 'submit');
     }

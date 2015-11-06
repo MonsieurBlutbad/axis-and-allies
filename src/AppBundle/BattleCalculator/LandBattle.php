@@ -31,6 +31,8 @@ class LandBattle extends Battle
 
         $this->attacker->removeCasualties();
         $this->defender->removeCasualties();
+        $this->attacker->orderUnits();
+        $this->defender->orderUnits();
     }
 
     /**
@@ -41,6 +43,7 @@ class LandBattle extends Battle
         // TODO outsource this to Defender
         $this->antiAirAttack();
         $this->attacker->removeCasualties();
+        $this->attacker->orderUnits();
     }
 
     /**
