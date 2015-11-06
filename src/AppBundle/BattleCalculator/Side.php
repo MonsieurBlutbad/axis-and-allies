@@ -8,6 +8,7 @@
 
 namespace AppBundle\BattleCalculator;
 
+use AppBundle\BattleCalculator\Technology\Technology;
 use AppBundle\BattleCalculator\Unit\AirUnit;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -53,6 +54,11 @@ abstract class Side
      * @var array
      */
     protected $blockedUnits = [];
+
+    /**
+     * @var array
+     */
+    protected $technologies = [];
 
     /**
      * @var Battle
@@ -244,6 +250,9 @@ abstract class Side
             if(! isset($this->unitsByType[get_class($unit)]))
                 $this->unitsByType[get_class($unit)] = [];
             $this->unitsByType[get_class($unit)][] = $unit;
+            if(! isset($this->unitsByType[get_parent_class($unit)]))
+                $this->unitsByType[get_parent_class($unit)] = [];
+            $this->unitsByType[get_parent_class($unit)][] = $unit;
         }
     }
 
@@ -289,6 +298,73 @@ abstract class Side
             if($unit->hasTag($tag))
                 return true;
         return false;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTechnologies()
+    {
+        return $this->technologies;
+    }
+
+    /**
+     * @param array $technologies
+     */
+    public function setTechnologies($technologies)
+    {
+        $this->technologies = $technologies;
+    }
+
+    /**
+     * @param $technology
+     */
+    public function addTechnology($technology)
+    {
+        if(! in_array($technology, $this->technologies, true))
+            array_push($this->technologies, $technology);
+    }
+
+    /**
+     * @param $technology
+     */
+    public function removeTechnology($technology)
+    {
+        if(in_array($technology, $this->technologies, true))
+            unset($this->technologies[array_search($technology, $this->technologies, true)]);
+    }
+
+    /**
+     * @param $technology
+     * @return bool
+     */
+    public function hasTechnology($technology)
+    {
+        return in_array($technology, $this->technologies, true);
+    }
+
+    /**
+     *
+     */
+    public function applyTechnologies()
+    {
+        if($this->logger) {
+            $this->logger->info('Applying technologies', [$this]);
+        }
+        foreach($this->technologies as $technology) {
+            /** @var Technology $technology */
+            foreach($technology->getImproves() as $improves) {
+                if(isset($this->unitsByType[$improves]) && count($this->unitsByType[$improves]) > 0) {
+                    foreach($this->unitsByType[$improves] as $unit) {
+                        /** @var Unit $unit */
+                        $unit->addTechnology($technology);
+                        if ($this->logger) {
+                            $this->logger->notice($technology::NAME);
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

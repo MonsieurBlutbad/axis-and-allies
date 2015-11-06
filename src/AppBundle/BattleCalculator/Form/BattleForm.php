@@ -258,6 +258,21 @@ class BattleForm
     ];
 
     /**
+     * @var boolean
+     */
+    protected $technologyAttackerSuperSubmarine;
+
+    /**
+     * @var boolean
+     */
+    protected $technologyAttackerJetFighter;
+
+    /**
+     * @var boolean
+     */
+    protected $technologyAttackerHeavyBomber;
+
+    /**
      * @return mixed
      */
     public function getType()
@@ -750,7 +765,7 @@ class BattleForm
         $namespace = 'AppBundle\\BattleCalculator\\Unit';
         foreach($this as $key => $value) {
             if($value > 0) {
-                if(preg_match('/^.*(' . Side::ATTACKER . '|' . Side::DEFENDER . ')(\w+)$/', $key, $matches)) {
+                if(preg_match('/^(' . Side::ATTACKER . '|' . Side::DEFENDER . ')(\w+)$/', $key, $matches)) {
                     $side =$matches[1];
                     $class = $matches[2];
                     $className = $namespace . '\\' . $class;
@@ -764,6 +779,34 @@ class BattleForm
         }
         return $units;
     }
+
+    /**
+     * @return array
+     */
+    public function getTechnologies()
+    {
+        $technologies = [
+            Side::ATTACKER => [],
+            Side::DEFENDER => []
+        ];
+        $namespace = 'AppBundle\\BattleCalculator\\Technology';
+        foreach($this as $key => $value) {
+            if($value === true) {
+                if(preg_match(
+                    '/^technology(' . ucfirst(Side::ATTACKER) . '|' . ucfirst(Side::DEFENDER) . ')(\w+)$/',
+                    $key,
+                    $matches
+                )) {
+                    $side = lcfirst($matches[1]);
+                    $class = $matches[2];
+                    $className = $namespace . '\\' . $class;
+                    $technologies[$side][] = new $className();
+                }
+            }
+        }
+        return $technologies;
+    }
+
 
     /**
      * @param $side
@@ -789,6 +832,54 @@ class BattleForm
     public function setKeepDestroyers($keepDestroyers)
     {
         $this->keepDestroyers = $keepDestroyers;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isTechnologyAttackerSuperSubmarine()
+    {
+        return $this->technologyAttackerSuperSubmarine;
+    }
+
+    /**
+     * @param boolean $technologyAttackerSuperSubmarine
+     */
+    public function setTechnologyAttackerSuperSubmarine($technologyAttackerSuperSubmarine)
+    {
+        $this->technologyAttackerSuperSubmarine = $technologyAttackerSuperSubmarine;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isTechnologyAttackerJetFighter()
+    {
+        return $this->technologyAttackerJetFighter;
+    }
+
+    /**
+     * @param boolean $technologyAttackerJetFighter
+     */
+    public function setTechnologyAttackerJetFighter($technologyAttackerJetFighter)
+    {
+        $this->technologyAttackerJetFighter = $technologyAttackerJetFighter;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isTechnologyAttackerHeavyBomber()
+    {
+        return $this->technologyAttackerHeavyBomber;
+    }
+
+    /**
+     * @param boolean $technologyAttackerHeavyBomber
+     */
+    public function setTechnologyAttackerHeavyBomber($technologyAttackerHeavyBomber)
+    {
+        $this->technologyAttackerHeavyBomber = $technologyAttackerHeavyBomber;
     }
 
 }

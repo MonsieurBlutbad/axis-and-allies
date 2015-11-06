@@ -34,6 +34,11 @@ class Calculator
     private $defenderUnits;
 
     /**
+     * @var array
+     */
+    private $technologies;
+
+    /**
      * @var Settings
      */
     private $settings;
@@ -57,6 +62,7 @@ class Calculator
         $units = $form->getUnits($logger);
         $this->attackerUnits = $units['attacker'];
         $this->defenderUnits = $units['defender'];
+        $this->technologies  = $form->getTechnologies($logger);
 
         $this->settings = new Settings( intval($form->getAccuracy()), true );
 
@@ -202,6 +208,14 @@ class Calculator
     public function getSettings()
     {
         return $this->settings;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTechnologies()
+    {
+        return $this->technologies;
     }
 
 }

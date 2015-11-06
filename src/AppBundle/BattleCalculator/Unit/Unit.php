@@ -4,6 +4,7 @@ namespace AppBundle\BattleCalculator\Unit;
 
 use AppBundle\BattleCalculator\CombinedArms\CombinedArms;
 use AppBundle\BattleCalculator\Side;
+use AppBundle\BattleCalculator\Technology\Technology;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
@@ -20,6 +21,7 @@ abstract class Unit
     const DENIES_CANT_BE_HIT_BY_AIR_UNITS = 'denies_cant_be_hit_by_air_units';
     const CANT_ATTACK                     = 'cant_attack';
     const DENIES_SURPRISE_STRIKE          = 'denies_surprise_strike';
+    const ATTACKS_TWICE                     = 'rolls_twice';
 
     /**
      * @var string
@@ -55,6 +57,11 @@ abstract class Unit
      * @var array
      */
     protected $combinations = [];
+
+    /**
+     * @var array
+     */
+    protected $technologies = [];
 
     /**
      * @var Unit
@@ -140,15 +147,26 @@ abstract class Unit
      */
     public function getAttack()
     {
+        $attacks = [$this->attack];
+
         if($this->combinedWith && isset($this->combinations[get_class($this->combinedWith)])) {
             /** @var CombinedArms $combination */
             $combination =  $this->combinations[get_class($this->combinedWith)];
             if($combination::getAttack() !== null) {
-                return $combination::getAttack();
+                $attacks[] = $combination::getAttack();
             }
         }
 
-        return $this->attack;
+        if(count($this->technologies) > 0) {
+            foreach($this->technologies as $technology) {
+                /** @var Technology $technology */
+                if($technology::getAttack() !== null) {
+                    $attacks[] = $technology::getAttack();
+                }
+            }
+        }
+
+        return max($attacks);
     }
 
     /**
@@ -202,15 +220,26 @@ abstract class Unit
      */
     public function getTags()
     {
+        $tags = $this->tags;
+
         if($this->combinedWith && isset($this->combinations[get_class($this->combinedWith)])) {
             /** @var CombinedArms $combination */
             $combination =  $this->combinations[get_class($this->combinedWith)];
             if($combination::getTags() !== null) {
-                return $combination::getTags();
+                $tags = array_merge($tags, $combination::getTags());
             }
         }
 
-        return $this->tags;
+        if(count($this->technologies) > 0) {
+            foreach($this->technologies as $technology) {
+                /** @var Technology $technology */
+                if($technology::getTags() !== null) {
+                    $tags = array_merge($technology::getTags());
+                }
+            }
+        }
+
+        return $tags;
     }
 
     /**
@@ -253,7 +282,7 @@ abstract class Unit
             }
         }
 
-        return in_array($tag, $this->tags, true);
+        return in_array($tag, $this->getTags(), true);
     }
 
     /**
@@ -366,5 +395,46 @@ abstract class Unit
     {
         $this->hasShot = $hasShot;
     }
+    /**
+     * @return array
+     */
+    public function getTechnologies()
+    {
+        return $this->technologies;
+    }
 
+    /**
+     * @param array $technologies
+     */
+    public function setTechnologies($technologies)
+    {
+        $this->technologies = $technologies;
+    }
+
+    /**
+     * @param $technology
+     */
+    public function addTechnology($technology)
+    {
+        if(! in_array($technology, $this->technologies, true))
+            array_push($this->technologies, $technology);
+    }
+
+    /**
+     * @param $technology
+     */
+    public function removeTechnology($technology)
+    {
+        if(in_array($technology, $this->technologies, true))
+            unset($this->technologies[array_search($technology, $this->technologies, true)]);
+    }
+
+    /**
+     * @param $technology
+     * @return bool
+     */
+    public function hasTechnology($technology)
+    {
+        return in_array($technology, $this->technologies, true);
+    }
 }

@@ -27,6 +27,8 @@ $(function()
         defender: $('.defender-units input')
     };
 
+    var $technologyInputs = $('.attacker-technologies input');
+
     var metaInfos = {
         attacker: {
             units: $('.attacker-fieldset .meta-infos .meta-info-units'),
@@ -52,8 +54,18 @@ $(function()
             {
                 updateMetaInfos();
             }
-        )
+        );
     }
+
+    /**
+     * Updates meta infos when technology input changes.
+     */
+    $technologyInputs.change(
+        function()
+        {
+            updateMetaInfos();
+        }
+    );
 
     /**
      * Updates form fields when the type select field changes.
@@ -99,7 +111,9 @@ $(function()
                 }
             }
 
-            $mustTakeTerritory.attr('checked', false)
+            $mustTakeTerritory.attr('checked', false);
+
+            $technologyInputs.attr('checked', false);
 
             updateMetaInfos();
 
@@ -199,6 +213,16 @@ $(function()
                 );
                 if(! isNaN(bomberBonus))
                     battleValue += bomberBonus;
+                if($technologyInputs.filter('#battle_form_technology_attacker_super_submarine').is(":checked")) {
+                    var superSubmarinesBonus = attackerUnits['submarine'];
+                    if(! isNaN(superSubmarinesBonus))
+                        battleValue += superSubmarinesBonus;
+                }
+                if($technologyInputs.filter('#battle_form_technology_attacker_jet_fighter').is(":checked")) {
+                    var jetFighterBonus = attackerUnits['fighter'];
+                    if(! isNaN(jetFighterBonus))
+                        battleValue += jetFighterBonus;
+                }
             }
 
             metaInfos[side].units.html(units);
