@@ -101,12 +101,17 @@ class Attacker extends Side
             $landUnits = $this->orderUnitsByAttack(
                 $this->getUnitsByType(LandUnit::class)
             );
-            $lastLandUnit = array_pop($landUnits);
-            $otherUnits = $this->orderUnitsByAttack(
-                array_merge( $this->getUnitsByType(SeaUnit::class)? : [], $this->getUnitsByType(AirUnit::class)? : [])
-            );
-            $this->units = array_merge($landUnits, $otherUnits);
-            $this->units[] = $lastLandUnit;
+            if(count($landUnits) > 0) {
+                $lastLandUnit = array_pop($landUnits);
+                $otherUnits = $this->orderUnitsByAttack(
+                    array_merge( $this->getUnitsByType(SeaUnit::class)? : [], $this->getUnitsByType(AirUnit::class)? : [])
+                );
+                $this->units = array_merge($landUnits, $otherUnits);
+                if($lastLandUnit)
+                    $this->units[] = $lastLandUnit;
+            } else {
+                $this->units = $this->orderUnitsByAttack($this->units);
+            }
         } else {
             $this->units = $this->orderUnitsByAttack($this->units);
         }
